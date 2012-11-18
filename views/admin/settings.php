@@ -37,7 +37,7 @@
     <?php
         foreach( $tabs as $el => $name ){
             $class = ( $el == $tab ) ? ' nav-tab-active' : '';
-            echo "<a class='nav-tab$class' href='?page=wp-e-commerce-shop-styling.php&tab=$el'>$name</a>";
+            echo "<a class='nav-tab$class' href='?page=wp-ecommerce-shop-styling.php&tab=$el'>$name</a>";
         }
     ?>
     </h2>
@@ -53,7 +53,7 @@
                         <div style="float:left">
                             <h4><?php _e('You have not unlocked this feature yet','haetshopstyling'); ?></h4>
                             <p><?php _e('You can edit and even preview the invoice but it will not be published to your customers.','haetshopstyling'); ?></p>
-                            <p><a href="?page=wp-e-commerce-shop-styling.php&tab=upgrade"><?php _e('Enter your serial number','haetshopstyling'); ?></a></p>
+                            <p><a href="?page=wp-ecommerce-shop-styling.php&tab=upgrade"><?php _e('Enter your serial number','haetshopstyling'); ?></a></p>
                         </div>
                         <div style="margin-left:50px; float:left">
                             <h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
@@ -94,7 +94,7 @@
                     <?php _e("This preview shows the invoice layout. It uses data from the latest purchase, but shipping or sum values may be incorrect or empty.",'haetshopstyling'); ?>
                     </p>
                     <?php
-                    echo '<a class="button" id="invoice-preview-link" href="?page=wp-e-commerce-shop-styling.php&tab=previewinvoice"> '.__("preview invoice",'haetshopstyling').'</a><br/><br/>';
+                    echo '<a class="button" id="invoice-preview-link" href="?page=wp-ecommerce-shop-styling.php&tab=previewinvoice"> '.__("preview invoice",'haetshopstyling').'</a><br/><br/>';
                 }
                 ?>
                  
@@ -144,6 +144,15 @@
                     <td>
                         <input type="text" class="regular-text" id="haetshopstylingpaper" name="haetshopstylingfilename" value="<?php echo $options['filename']; ?>">
                         <span class="description"><?php _e('&lt;filename&gt;&lt;invoicenumber&gt;.pdf','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingdisablepdf"><?php _e('Disable PDF invoice','haetshopstyling'); ?></label></th>
+                    <td>
+                        <select  id="haetshopstylingpaper" name="haetshopstylingdisablepdf">
+                          <option value="enable" <?php echo ($options['disablepdf']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
+                          <option value="disable" <?php echo ($options['disablepdf']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
+                        </select>
                     </td>
                 </tr>
             </tbody>
@@ -340,7 +349,7 @@
                         <div style="float:left">
                             <h4><?php _e('You have not unlocked this feature yet','haetshopstyling'); ?></h4>
                             <p><?php _e('You can edit and even preview the invoice but it will not be published to your customers.','haetshopstyling'); ?></p>
-                            <p><a href="?page=wp-e-commerce-shop-styling.php&tab=upgrade"><?php _e('Enter your serial number','haetshopstyling'); ?></a></p>
+                            <p><a href="?page=wp-ecommerce-shop-styling.php&tab=upgrade"><?php _e('Enter your serial number','haetshopstyling'); ?></a></p>
                         </div>
                         <div style="margin-left:50px; float:left">
                             <h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
@@ -417,7 +426,7 @@
                         <div style="float:left">
                             <h4><?php _e('You have not unlocked this feature yet','haetshopstyling'); ?></h4>
                             <p><?php _e('You can edit the settings but it will not be published to your customers.','haetshopstyling'); ?></p>
-                            <p><a href="?page=wp-e-commerce-shop-styling.php&tab=upgrade"><?php _e('Enter your serial number','haetshopstyling'); ?></a></p>
+                            <p><a href="?page=wp-ecommerce-shop-styling.php&tab=upgrade"><?php _e('Enter your serial number','haetshopstyling'); ?></a></p>
                         </div>
                         <div style="margin-left:50px; float:left">
                             <h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
