@@ -587,6 +587,7 @@ class HaetShopStyling {
             }
         }
         $message = str_replace('{#mailcontent#}',nl2br($message),$options['mailtemplate']);
+        $message = str_replace('{#mailsubject#}',$subject,$options['mailtemplate']);
         $message = stripslashes(str_replace('\\&quot;','',$message));
         
         add_filter( 'wp_mail_content_type', create_function('', 'return "text/html";'));
@@ -644,6 +645,14 @@ class HaetShopStyling {
     function setGlobalPurchaseId( $id, $status, $old_status, $purchase_log ) {
         global $haet_purchase_id; 
         $haet_purchase_id = $id;
+    }
+    
+    function translateCartitemName($name,$id){
+        return htmlentities(stripslashes(__($name)), ENT_QUOTES, "UTF-8");
+    }
+      
+    function translateUrl($url, $original_url, $_context){
+        return qtrans_convertURL($url);
     }
 }
 
