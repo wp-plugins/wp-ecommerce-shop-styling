@@ -3,7 +3,7 @@
 Plugin Name: WP E-Commerce shop styling
 Plugin URI: http://haet.at/wp-e-commerce-shop-styling/
 Description: Style and generate PDF invoices for your wp e-commerce store, format emails and transaction results
-Version: 1.0
+Version: 1.2.1
 Author: haet webdevelopment
 Author URI: http://haet.at
 License: GPLv2 or later
@@ -52,6 +52,15 @@ if (isset($wp_haetshopstyling)) {
         if($wp_haetshopstyling->isAllowed('resultspage'))
             add_filter('wpsc_get_transaction_html_output',array(&$wp_haetshopstyling, 'transactionResultsFilter'),10,1);
         add_action('wpsc_update_purchase_log_status', array(&$wp_haetshopstyling, 'setGlobalPurchaseId'), 9, 4 );
+        
+        //Fix for qtranslate
+        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        if(is_plugin_active('qtranslate/qtranslate.php')){
+            //cart widget 
+            add_filter('wpsc_cart_item_name',array(&$wp_haetshopstyling, 'translateCartitemName'),20,2);
+            //cart widget  and cart page
+            add_filter('clean_url',array(&$wp_haetshopstyling, 'translateUrl'),20,3);
+        }
 }
 
 function haetshopstyling_init(){
