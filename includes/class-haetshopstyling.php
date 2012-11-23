@@ -587,7 +587,7 @@ class HaetShopStyling {
             }
         }
         $message = str_replace('{#mailcontent#}',nl2br($message),$options['mailtemplate']);
-        $message = str_replace('{#mailsubject#}',$subject,$options['mailtemplate']);
+        $message = str_replace('{#mailsubject#}',$subject,$message);
         $message = stripslashes(str_replace('\\&quot;','',$message));
         
         add_filter( 'wp_mail_content_type', create_function('', 'return "text/html";'));
