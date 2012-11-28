@@ -58,20 +58,7 @@
                         <div style="margin-left:50px; float:left">
                             <h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
                             <p><?php _e('Valid for all plugin updates.','haetshopstyling'); ?></p>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="LJJ5TL4GGZATY">
-                            <table>
-                            <tr><td><input type="hidden" name="on0" value="feature selection">feature selection:</td></tr><tr><td><select name="os0">
-                                    <option value="results pages">results pages $5,00 USD</option>
-                                    <option value="PDF invoices">PDF invoices $20,00 USD</option>
-                                    <option value="all together">all together $22,00 USD</option>
-                            </select> </td></tr>
-                            </table>
-                            <input type="hidden" name="currency_code" value="USD">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-                            </form>
+                            <?php echo $this->getPaypalForm(); ?>
                         </div>
                         
                         <div style="clear:both"> </div>
@@ -354,20 +341,7 @@
                         <div style="margin-left:50px; float:left">
                             <h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
                             <p><?php _e('Valid for all plugin updates.','haetshopstyling'); ?></p>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="LJJ5TL4GGZATY">
-                            <table>
-                            <tr><td><input type="hidden" name="on0" value="feature selection">feature selection:</td></tr><tr><td><select name="os0">
-                                    <option value="results pages">results pages $5,00 USD</option>
-                                    <option value="PDF invoices">PDF invoices $20,00 USD</option>
-                                    <option value="all together">all together $22,00 USD</option>
-                            </select> </td></tr>
-                            </table>
-                            <input type="hidden" name="currency_code" value="USD">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-                            </form>
+                            <?php echo $this->getPaypalForm(); ?>
                         </div>
                         
                         <div style="clear:both"> </div>
@@ -391,7 +365,9 @@
     <h3><?php _e('generating pdf invoice...','haetshopstyling'); ?></h3>
     <a href="#" onclick="window.history.back()"><?php _e('back','haetshopstyling'); ?></a>
     <?php 
+        echo '<!--';
         $this->previewInvoice(); 
+        echo '-->';
         echo '<script>window.location.href="'.HAET_SHOP_STYLING_URL.'includes/download.php?filename=preview.pdf";</script>';
     ?>
     
@@ -401,7 +377,38 @@
             case 'mailtemplate':
 ?>
     <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
-
+        <table class="form-table">
+            <tbody>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingsendername"><?php _e('Email sender name','haetshopstyling'); ?></label></th>
+                    <td>
+                        <input type="text" class="regular-text" id="haetshopstylingsendername" name="haetshopstylingsendername" value="<?php echo get_option('haet_mail_from_name'); ?>">
+                        <span class="description"><?php _e('Sender name for mails outside your store','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingfromaddress"><?php _e('From adress','haetshopstyling'); ?></label></th>
+                    <td>
+                        <input type="text" class="regular-text" id="haetshopstylingfromaddress" name="haetshopstylingfromaddress" value="<?php echo get_option('haet_mail_from'); ?>">
+                        <span class="description"><?php _e('From address for mails outside your store','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingshopsendername"><?php _e('Shop email sender name','haetshopstyling'); ?></label></th>
+                    <td>
+                        <input type="text" class="regular-text" id="haetshopstylingshopsendername" name="haetshopstylingshopsendername" value="<?php echo esc_attr( get_option( 'return_name' ) ); ?>">
+                        <span class="description"><?php _e('Sender name for mails from your store','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingshopfromaddress"><?php _e('From adress','haetshopstyling'); ?></label></th>
+                    <td>
+                        <input type="text" class="regular-text" id="haetshopstylingshopfromaddress" name="haetshopstylingshopfromaddress" value="<?php echo esc_attr( get_option( 'return_email' ) ); ?>">
+                        <span class="description"><?php _e('From address for mails from your store','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     <h2><?php _e('Global HTML Mail Template','haetshopstyling'); ?></h2>
     <textarea rows="30" cols="40" class="widefat" id="haetshopstylingmailtemplate" name="haetshopstylingmailtemplate" style="font-family:'Courier New'"><?php echo stripslashes(str_replace('\\&quot;','',$options['mailtemplate'])); ?></textarea>
@@ -431,20 +438,7 @@
                         <div style="margin-left:50px; float:left">
                             <h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
                             <p><?php _e('Valid for all plugin updates.','haetshopstyling'); ?></p>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="LJJ5TL4GGZATY">
-                            <table>
-                            <tr><td><input type="hidden" name="on0" value="feature selection">feature selection</td></tr><tr><td><select name="os0">
-                                    <option value="results pages">results pages $5,00 USD</option>
-                                    <option value="PDF invoices">PDF invoices $20,00 USD</option>
-                                    <option value="all together">all together $22,00 USD</option>
-                            </select> </td></tr>
-                            </table>
-                            <input type="hidden" name="currency_code" value="USD">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-                            </form>
+                            <?php echo $this->getPaypalForm(); ?>
                         </div>
                         
                         <div style="clear:both"> </div>
@@ -501,20 +495,7 @@
                         <div style="margin-left:50px; float:left">
                             <h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
                             <p><?php _e('Valid for all plugin updates.','haetshopstyling'); ?></p>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="LJJ5TL4GGZATY">
-                            <table>
-                            <tr><td><input type="hidden" name="on0" value="feature selection">feature selection:</td></tr><tr><td><select name="os0">
-                                    <option value="results pages">results pages $5,00 USD</option>
-                                    <option value="PDF invoices">PDF invoices $20,00 USD</option>
-                                    <option value="all together">all together $22,00 USD</option>
-                            </select> </td></tr>
-                            </table>
-                            <input type="hidden" name="currency_code" value="USD">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-                            </form>
+                            <?php echo $this->getPaypalForm(); ?>
                         </div>
                         <div style="clear:both"> </div>
                     </div>

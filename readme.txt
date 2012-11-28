@@ -3,7 +3,7 @@ Contributors: haet
 Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice
 Requires at least: 3.4.2
 Tested up to: 3.4.2
-Stable tag: 1.2.1
+Stable tag: 1.3
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -15,7 +15,7 @@ This plugin adds many missing features to WP Ecommerce:
 
 = HTML mail templates =
 All Wordpress an WP Ecommerce mails are converted to HTML mails and formatted with a custom template. You can add your company logo, contact details or even some additional informations to all your mails.
-
+NEW IN 1.3: The mail sender name and address can be defined separately for mails from your store and other wordpress mails.
 
 = Custom wpecommerce email messages =
 Change the content of all your shop mails with your wordpress editor like a page. Add values from checkout form or cart content with placeholders.
@@ -51,6 +51,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 == Changelog ==
 *   1.0: initial release
 *   1.2: added a new {#mailsubject#} placeholder and qtranslate functions 
+*   1.3: define senders for shop mails and other wordpress mails and fixed problem with track&trace mail
 
 == Frequently Asked Questions ==
 please ask your questions in the comments [here](http://haet.at/wp-e-commerce-currency-helper/)

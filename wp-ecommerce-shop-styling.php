@@ -3,7 +3,7 @@
 Plugin Name: WP E-Commerce shop styling
 Plugin URI: http://haet.at/wp-e-commerce-shop-styling/
 Description: Style and generate PDF invoices for your wp e-commerce store, format emails and transaction results
-Version: 1.2.1
+Version: 1.3
 Author: haet webdevelopment
 Author URI: http://haet.at
 License: GPLv2 or later

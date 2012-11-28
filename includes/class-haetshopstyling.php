@@ -23,6 +23,8 @@ class HaetShopStyling {
             @ fclose( $file_handle );
             @ chmod( $file_handle, 0665 );
         }
+        update_option('haet_mail_from_name',get_bloginfo('name'));
+        update_option('haet_mail_from',get_bloginfo('admin_email'));
     }
     
     function getOptions() {
@@ -230,6 +232,18 @@ class HaetShopStyling {
                                     $options['css'] = $_POST['haetshopstylingcss'];
                             }	
             }else if ($tab=='mailtemplate'){
+                            if (isset($_POST['haetshopstylingsendername'])) {
+                                    update_option('haet_mail_from_name', $_POST['haetshopstylingsendername']);
+                            }
+                            if (isset($_POST['haetshopstylingfromaddress'])) {
+                                    update_option('haet_mail_from', $_POST['haetshopstylingfromaddress']);
+                            }
+                            if (isset($_POST['haetshopstylingshopsendername'])) {
+                                    update_option('return_name', $_POST['haetshopstylingshopsendername']);
+                            }
+                            if (isset($_POST['haetshopstylingshopfromaddress'])) {
+                                    update_option('return_email', $_POST['haetshopstylingshopfromaddress']);
+                            }
                             if (isset($_POST['haetshopstylingmailtemplate'])) {
                                     $options['mailtemplate'] = $_POST['haetshopstylingmailtemplate'];
                             }
@@ -353,8 +367,9 @@ class HaetShopStyling {
     }
     
     function getBillingData($purchase_id,$options,$preview=false){
+        global $wpdb;
         if(wpsc_cart_item_count()>0 || $preview){
-            global $wpdb;
+            
 
             $form_sql = "SELECT IF (unique_name = '',CONCAT('field_',CAST(form_id AS CHAR(2))),unique_name) as unique_name,value
                             FROM `".$wpdb->prefix."wpsc_submited_form_data` 
@@ -377,14 +392,12 @@ class HaetShopStyling {
             $params[]= array('unique_name'=>'total_tax','value'=>wpsc_cart_tax());
             $params[]= array('unique_name'=>'coupon_amount','value'=>wpsc_coupon_amount());
             $params[]= array('unique_name'=>'cart_total','value'=>wpsc_cart_total());
-            $trackingid = $wpdb->get_var("SELECT `track_id` FROM ".WPSC_TABLE_PURCHASE_LOGS." WHERE `id`={$purchase_id} LIMIT 1");
-            $params[]= array('unique_name'=>'tracking_id','value'=>$trackingid);
             
-            $i=0;
+            /*$i=0;
             while( $i<count($params) ){
                 $params[$i]['value'] = $params[$i]['value'];
                 $i++;
-            }
+            }*/
 
 
             
@@ -395,6 +408,9 @@ class HaetShopStyling {
         }
 
         
+        $trackingid = $wpdb->get_var("SELECT `track_id` FROM ".WPSC_TABLE_PURCHASE_LOGS." WHERE `id`={$purchase_id} LIMIT 1");
+        $params[]= array('unique_name'=>'tracking_id','value'=>$trackingid);
+
 
         //GENERATE PRODUCTS TABLE outside the if statement
         // this cannot be cached in a transient because of the download links
@@ -546,8 +562,6 @@ class HaetShopStyling {
             global $haet_purchase_id; //custom global for transaction result mail
             $purchase_id = $haet_purchase_id;
         }
-         
-	
         
         if($purchase_id){
             $params = $this->getBillingData($purchase_id,$options);
@@ -559,25 +573,33 @@ class HaetShopStyling {
                 }
             }
         }
+        $is_shop_mail=false;
         /*
          * the idea of the following switch statement is taken from http://schwambell.com/wp-e-commerce-style-email-plugin/ by Jakob Schwartz
          */
         switch($subject) {
-		//case __( 'Purchase Report', 'wpsc' ): //not used -> Admin mail is unformatted
+		case __( 'Purchase Report', 'wpsc' ): //not used -> Admin mail is unformatted
+		            $is_shop_mail=true;
+		            break;
 		case __( 'Purchase Receipt', 'wpsc' ): //sent when changing state to "accepted payment"
                     $message =  stripslashes(str_replace('\\&quot;','',$options['body_payment_successful'])) ;
                     $subject = stripslashes(str_replace('\\&quot;','',$options['subject_payment_successful'])) ;
+                    $is_shop_mail=true;
                     break;
 		//case __( 'Order Pending', 'wpsc' ): // when is this message sent!?
 		case __( 'Order Pending: Payment Required', 'wpsc' ):
                     $message =  stripslashes(str_replace('\\&quot;','',$options['body_payment_incomplete'])) ;
                     $subject = stripslashes(str_replace('\\&quot;','',$options['subject_payment_incomplete']));
+                    $is_shop_mail=true;
                     break;
 		case get_option( 'wpsc_trackingid_subject' ): 
                     $message =  stripslashes(str_replace('\\&quot;','',$options['body_tracking'])) ;
                     $subject = stripslashes(str_replace('\\&quot;','',$options['subject_tracking']));
+                    $is_shop_mail=true;
                     break;
-		//case __( 'The administrator has unlocked your file', 'wpsc' ):		
+		case __( 'The administrator has unlocked your file', 'wpsc' ):
+                    $is_shop_mail=true;
+                    break;		
 	}
         
         if($purchase_id){
@@ -589,13 +611,21 @@ class HaetShopStyling {
         $message = str_replace('{#mailcontent#}',nl2br($message),$options['mailtemplate']);
         $message = str_replace('{#mailsubject#}',$subject,$message);
         $message = stripslashes(str_replace('\\&quot;','',$message));
-        
         add_filter( 'wp_mail_content_type', create_function('', 'return "text/html";'));
-        add_filter( 'wp_mail_from', 'wpsc_replace_reply_address', 0 );
-        add_filter( 'wp_mail_from_name', 'wpsc_replace_reply_name', 0 );
+        
+        if ($is_shop_mail){
+            add_filter( 'wp_mail_from', 'wpsc_replace_reply_address', 0 );
+            add_filter( 'wp_mail_from_name', 'wpsc_replace_reply_name', 0 );
+        }else{
+            add_filter( 'wp_mail_from', array($this,'setMailFromAddress'), 0 );
+            add_filter( 'wp_mail_from_name', array($this,'setMailSenderName'), 0 );
+        }
         return compact( 'to', 'subject', 'message', 'headers', 'attachments' );
     }
     
+    function setMailSenderName($name){ return get_option('haet_mail_from_name'); }
+    
+    function setMailFromAddress($email){ return get_option('haet_mail_from'); }
 
     /**
      * preview the invoice
@@ -604,7 +634,7 @@ class HaetShopStyling {
      */
     function previewInvoice($purchase_id=null){
         global $wpdb;
-        //$purchase_id=17;
+
         if($purchase_id)
             $sql = "SELECT id,sessionid
                         FROM `".$wpdb->prefix."wpsc_purchase_logs` 
@@ -653,6 +683,25 @@ class HaetShopStyling {
       
     function translateUrl($url, $original_url, $_context){
         return qtrans_convertURL($url);
+    }
+    
+    function getPaypalForm(){
+        return '
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="LJJ5TL4GGZATY">
+                <table>
+                <tr><td><input type="hidden" name="on0" value="feature selection">feature selection</td></tr><tr><td><select name="os0">
+                        <option value="results pages">results pages $5,00 USD</option>
+                        <option value="PDF invoices">PDF invoices $12,00 USD</option>
+                        <option value="all together">all together $15,00 USD</option>
+                </select> </td></tr>
+                </table>
+                <input type="hidden" name="currency_code" value="USD">
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+            </form>
+            ';
     }
 }
 
