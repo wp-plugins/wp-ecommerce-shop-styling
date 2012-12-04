@@ -2,8 +2,8 @@
 
 	
     
-    $body=  stripslashes(str_replace('\\&quot;','',$options['template'])) ;
-    $footer=  stripslashes(str_replace('\\&quot;','',$options['footer'])) ;
+    $body=  __(stripslashes(str_replace('\\&quot;','',$options['template']))) ;
+    $footer=  __(stripslashes(str_replace('\\&quot;','',$options['footer']))) ;
 
 
     $url = $_SERVER['HTTP_HOST'];
