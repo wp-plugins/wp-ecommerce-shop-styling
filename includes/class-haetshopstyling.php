@@ -518,7 +518,7 @@ class HaetShopStyling {
             $message_html = stripslashes(str_replace('\\&quot;','',$options['resultspage_successful'])) ;
         
         foreach ($params AS $param){
-            $message_html = str_replace('{'.$param["unique_name"].'}', $param['value'], $message_html);
+            $message_html = __(str_replace('{'.$param["unique_name"].'}', $param['value'], $message_html));
         }
 
         // TODO den StandardText aus Zeile 362 wpsc-transaction-result-functions.php entfernen
@@ -548,7 +548,7 @@ class HaetShopStyling {
         foreach ($params AS $param){
             $message_html = str_replace('{'.$param["unique_name"].'}', $param['value'], $message_html);
         }
-        return $message_html;
+        return __($message_html);
     }
     
     
@@ -628,6 +628,10 @@ class HaetShopStyling {
             add_filter( 'wp_mail_from', array($this,'setMailFromAddress'), 0 );
             add_filter( 'wp_mail_from_name', array($this,'setMailSenderName'), 0 );
         }
+        
+        //translate (in case of qtranslate)
+        $subject = __($subject);
+        $message = __($message);
         return compact( 'to', 'subject', 'message', 'headers', 'attachments' );
     }
     
