@@ -92,6 +92,7 @@
                      _e('The PHP setting "allow_url_fopen" is disabled so you can\'t include external images. You can use images from this webserver or contact your hosting provider to change the setting.','haetshopstyling');
                      echo "<br/><br/>";
                  }
+
                  wp_editor(stripslashes(str_replace('\\&quot;','',$options['template'])),'haetshopstylingtemplate',array(
                         'media_buttons'=>true,
                         'tinymce' => array(
@@ -99,6 +100,7 @@
                             )
                         )
                      );
+
                  ?>
                  <br/><h2><?php _e('Invoice Footer','haetshopstyling'); ?></h2>
                                 
@@ -159,7 +161,7 @@
             $products_table = '<table id="products-table" style="width:600px">';
             $products_table .= '<tr>';
 
-            for ($col=1;$col < count($options["columnfield"]); $col++){
+            for ($col=1;$col <= count($options["columnfield"]); $col++){
                 if($options["columnfield"][$col]!='')
                     $products_table .= "<th  class='".$options["columnfield"][$col]."'>".$options["columntitle"][$col]."</th>";
             }
@@ -380,20 +382,6 @@
         <table class="form-table">
             <tbody>
                 <tr valign="top">
-                    <th scope="row"><label for="haetshopstylingsendername"><?php _e('Email sender name','haetshopstyling'); ?></label></th>
-                    <td>
-                        <input type="text" class="regular-text" id="haetshopstylingsendername" name="haetshopstylingsendername" value="<?php echo get_option('haet_mail_from_name'); ?>">
-                        <span class="description"><?php _e('Sender name for mails outside your store','haetshopstyling'); ?></span>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><label for="haetshopstylingfromaddress"><?php _e('From adress','haetshopstyling'); ?></label></th>
-                    <td>
-                        <input type="text" class="regular-text" id="haetshopstylingfromaddress" name="haetshopstylingfromaddress" value="<?php echo get_option('haet_mail_from'); ?>">
-                        <span class="description"><?php _e('From address for mails outside your store','haetshopstyling'); ?></span>
-                    </td>
-                </tr>
-                <tr valign="top">
                     <th scope="row"><label for="haetshopstylingshopsendername"><?php _e('Shop email sender name','haetshopstyling'); ?></label></th>
                     <td>
                         <input type="text" class="regular-text" id="haetshopstylingshopsendername" name="haetshopstylingshopsendername" value="<?php echo esc_attr( get_option( 'return_name' ) ); ?>">
@@ -407,6 +395,30 @@
                         <span class="description"><?php _e('From address for mails from your store','haetshopstyling'); ?></span>
                     </td>
                 </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingcustomsender"><?php _e('Use custom sender for non wpsc mails','haetshopstyling'); ?></label></th>
+                    <td>
+                        <select  id="haetshopstylingcustomsender" name="haetshopstylingcustomsender">
+                          <option value="enable" <?php echo ($options['customsender']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
+                          <option value="disable" <?php echo ($options['customsender']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingsendername"><?php _e('Email sender name','haetshopstyling'); ?></label></th>
+                    <td>
+                        <input type="text" class="regular-text" id="haetshopstylingsendername" name="haetshopstylingsendername" value="<?php echo get_option('haet_mail_from_name'); ?>">
+                        <span class="description"><?php _e('Sender name for mails outside your store','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingfromaddress"><?php _e('From adress','haetshopstyling'); ?></label></th>
+                    <td>
+                        <input type="text" class="regular-text" id="haetshopstylingfromaddress" name="haetshopstylingfromaddress" value="<?php echo get_option('haet_mail_from'); ?>">
+                        <span class="description"><?php _e('From address for mails outside your store','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                
             </tbody>
         </table>
 
