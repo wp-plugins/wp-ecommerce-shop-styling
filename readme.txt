@@ -3,7 +3,7 @@ Contributors: haet
 Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice
 Requires at least: 3.4.2
 Tested up to: 3.4.2
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -52,6 +52,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 *   1.0: initial release
 *   1.2: added a new {#mailsubject#} placeholder and qtranslate functions 
 *   1.3: define senders for shop mails and other wordpress mails and fixed problem with track&trace mail
+*   1.4: added option to disable custom sender & added some functions for wp e-commerce qtranslate support
 
 == Frequently Asked Questions ==
 please ask your questions in the comments [here](http://haet.at/wp-e-commerce-currency-helper/)
