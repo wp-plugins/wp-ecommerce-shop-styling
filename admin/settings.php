@@ -29,6 +29,14 @@
                 border: 1px solid #E6DB55;
                 padding: 0 0.6em;
         }
+
+        .mce_invoicefieldsList .mceFirst a{
+                width: 126px !important;
+        }
+
+        .mce_checkoutformfieldsList .mceFirst a{
+                width: 150px !important;
+        }
     </style>
 <div class=wrap>
     <h2><img src="<?php echo HAET_SHOP_STYLING_URL;?>images/icon.png"><?php _e('Style your store','haetshopstyling'); ?></h2>
@@ -96,7 +104,7 @@
                  wp_editor(stripslashes(str_replace('\\&quot;','',$options['template'])),'haetshopstylingtemplate',array(
                         'media_buttons'=>true,
                         'tinymce' => array(
-                                'theme_advanced_buttons3' => 'invoicefields',
+                                'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
                             )
                         )
                      );
@@ -110,7 +118,7 @@
                         'media_buttons'=>true,
                         'textarea_rows'=>3,
                         'tinymce' => array(
-                                'theme_advanced_buttons3' => 'invoicefields',
+                                'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
                                 'remove_linebreaks' => false
                             )
                         )
@@ -136,9 +144,18 @@
                     </td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingsendpdftoadmin"><?php _e('Attach PDF to the transaction report','haetshopstyling'); ?></label></th>
+                    <td>
+                        <select  id="haetshopstylingsendpdftoadmin" name="haetshopstylingsendpdftoadmin">
+                          <option value="enable" <?php echo ($options['send_pdf_to_admin']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
+                          <option value="disable" <?php echo ($options['send_pdf_to_admin']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
                     <th scope="row"><label for="haetshopstylingdisablepdf"><?php _e('Disable PDF invoice','haetshopstyling'); ?></label></th>
                     <td>
-                        <select  id="haetshopstylingpaper" name="haetshopstylingdisablepdf">
+                        <select  id="haetshopstylingdisablepdf" name="haetshopstylingdisablepdf">
                           <option value="enable" <?php echo ($options['disablepdf']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
                           <option value="disable" <?php echo ($options['disablepdf']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
                         </select>
@@ -247,7 +264,7 @@
                 wp_editor(stripslashes(str_replace('\\&quot;','',$options['body_payment_successful'])),'haetshopstylingbody_payment_successful',array(
                     'media_buttons'=>false,
                     'tinymce' => array(
-                            'theme_advanced_buttons3' => 'invoicefields',
+                            'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
                             'remove_linebreaks' => false
                         )
                     )
@@ -272,7 +289,7 @@
                 wp_editor(stripslashes(str_replace('\\&quot;','',$options['body_payment_incomplete'])),'haetshopstylingbody_payment_incomplete',array(
                     'media_buttons'=>false,
                     'tinymce' => array(
-                            'theme_advanced_buttons3' => 'invoicefields',
+                            'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
                             'remove_linebreaks' => false
                         )
                     )
@@ -297,7 +314,7 @@
                  wp_editor(stripslashes(str_replace('\\&quot;','',$options['body_payment_failed'])),'haetshopstylingbody_payment_failed',array(
                         'media_buttons'=>false,
                         'tinymce' => array(
-                                'theme_advanced_buttons3' => 'invoicefields',
+                                'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
                                 'remove_linebreaks' => false
                             )
                         )
@@ -322,7 +339,7 @@
                  wp_editor(stripslashes(str_replace('\\&quot;','',$options['body_tracking'])),'haetshopstylingbody_tracking',array(
                         'media_buttons'=>false,
                         'tinymce' => array(
-                                'theme_advanced_buttons3' => 'invoicefields',
+                                'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
                                 'remove_linebreaks' => false
                             )
                         )
@@ -423,6 +440,7 @@
         </table>
 
     <h2><?php _e('Global HTML Mail Template','haetshopstyling'); ?></h2>
+    <p><?php _e('Enter your custom HTML code here. Use the placeholder {#mailcontent#} where you want your content to show up. You can also show the subject in the email body using the placeholder {#mailsubject#}'); ?></p>
     <textarea rows="30" cols="40" class="widefat" id="haetshopstylingmailtemplate" name="haetshopstylingmailtemplate" style="font-family:'Courier New'"><?php echo stripslashes(str_replace('\\&quot;','',$options['mailtemplate'])); ?></textarea>
     <br/><br/><a id="previewmail" class="button" href='#' ><?php _e('preview Email template','haetshopstyling'); ?></a><br/><br/>
     <iframe id="mailtemplatepreview" style="width:800px; height:480px; border:1px solid #ccc;" ></iframe>
@@ -466,7 +484,7 @@
                  wp_editor(stripslashes(str_replace('\\&quot;','',$options['resultspage_successful'])),'resultspage_successful',array(
                         'media_buttons'=>true,
                         'tinymce' => array(
-                                'theme_advanced_buttons3' => 'invoicefields',
+                                'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
                             )
                         )
                      );
@@ -478,7 +496,7 @@
                  wp_editor(stripslashes(str_replace('\\&quot;','',$options['resultspage_incomplete'])),'resultspage_incomplete',array(
                         'media_buttons'=>true,
                         'tinymce' => array(
-                                'theme_advanced_buttons3' => 'invoicefields',
+                                'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
                             )
                         )
                      );
@@ -490,7 +508,7 @@
                  wp_editor(stripslashes(str_replace('\\&quot;','',$options['resultspage_failed'])),'resultspage_failed',array(
                         'media_buttons'=>true,
                         'tinymce' => array(
-                                'theme_advanced_buttons3' => 'invoicefields',
+                                'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
                             )
                         )
                      );
