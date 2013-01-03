@@ -73,7 +73,8 @@ class HaetShopStyling {
              'resultspage_successful' => "<p>Thank you for your purchase</p><p>We received your payment. Your order {purchase_id} will be processed immediately by our team.</p><p><strong> Your Products</strong></p><p>{#productstable#}</p>",
              'resultspage_incomplete' => "<p>Thank you for your purchase.</p><p>Please transfer the <strong>amount of</strong> {cart_total} to the following account and please mention your <strong>order number {purchase_id} </strong>in the field as reason:</p><p>Account owner<br />Bank<br />IBAN: XX 000000000000000000000<br />BIC/SWIFT: XX00XX00</p><p>Your articles will be delivered immediately after your payment.</p><p>&nbsp;</p>",
              'resultspage_failed' => "<p><strong>Your payment could not be processed.</strong></p><p>Please transfer the <strong>amount of</strong> {cart_total} to the following account and please mention your <strong>order number {purchase_id} </strong>in the field as reason:</p><p>Account owner<br />Bank<br />IBAN: XX 000000000000000000000<br />BIC/SWIFT: XX00XX00</p><p>Your articles will be delivered immediately after your payment.</p><p>&nbsp;</p>",
-             'disablepdf' => "enable"
+             'disablepdf' => "enable",
+             'send_pdf_to_admin' => 'enable'
         );
          
         $haetshopstyling_options = get_option('haetshopstyling_options');
@@ -191,6 +192,9 @@ class HaetShopStyling {
                             }
                             if (isset($_POST['haetshopstylingdisablepdf'])) {
                                     $options['disablepdf'] = $_POST['haetshopstylingdisablepdf'];
+                            }
+                            if (isset($_POST['haetshopstylingsendpdftoadmin'])) {
+                                    $options['send_pdf_to_admin'] = $_POST['haetshopstylingsendpdftoadmin'];
                             }
 
             }else if ($tab=='products'){
@@ -341,7 +345,8 @@ class HaetShopStyling {
     }
     
     function customizeEditorPlugins($plugin_array) {
-        $plugin_array['invoicefields'] = HAET_SHOP_STYLING_URL . 'js/editor.js.php';
+        $plugin_array['invoicefields'] = HAET_SHOP_STYLING_URL . 'js/editor_invoice_fields.js.php';
+        $plugin_array['checkoutformfields'] = HAET_SHOP_STYLING_URL . 'js/editor_checkoutform_fields.js.php';
         return $plugin_array;
     }
 
@@ -430,9 +435,10 @@ class HaetShopStyling {
 
         foreach ($items AS $item){
             $item['item_number']=$row+1;
-            $item['price_without_tax']= $this->currencyDisplay( $item['product_price']*$item['product_quantity']-$item['product_tax_charged']/$item['product_quantity'] );
-            $item['price_sum']= $this->currencyDisplay( $item['product_price']*$item['product_quantity'] ) ;
+            $item['price_without_tax']= $this->currencyDisplay( ($item['product_price']*$item['product_quantity']-$item['product_tax_charged'])/$item['product_quantity'] );
+            $item['price_sum']= $item['product_price']*$item['product_quantity'];
             $item['price_sum_without_tax']= $this->currencyDisplay( $item['price_sum']-$item['product_tax_charged'] );
+            $item['price_sum']= $this->currencyDisplay($item['price_sum']);
             $item['product_price']= $this->currencyDisplay( $item['product_price'] ) ;
             $item['product_name']= apply_filters('the_title',$item['product_name']);
             $item['product_tax_charged']= wpsc_currency_display($item['product_tax_charged'], array('display_as_html' => false) );
@@ -586,7 +592,11 @@ class HaetShopStyling {
          * the idea of the following switch statement is taken from http://schwambell.com/wp-e-commerce-style-email-plugin/ by Jakob Schwartz
          */
         switch($subject) {
-		case __( 'Purchase Report', 'wpsc' ): //not used -> Admin mail is unformatted
+		case __( 'Transaction Report', 'wpsc' ): //not used -> Admin mail is unformatted
+                    $filename = $options['filename'].'-'.$purchase_id.'.pdf';
+                    if ( $this->isAllowed('invoice') && $options['send_pdf_to_admin']=="enable" && $options['disablepdf']=="enable" && file_exists(HAET_INVOICE_PATH.$filename ) ){
+                        $attachments=array(HAET_INVOICE_PATH.$filename);
+                    }
 		            $is_shop_mail=true;
 		            break;
 		case __( 'Purchase Receipt', 'wpsc' ): //sent when changing state to "accepted payment"
@@ -608,7 +618,7 @@ class HaetShopStyling {
 		case __( 'The administrator has unlocked your file', 'wpsc' ):
                     $is_shop_mail=true;
                     break;		
-	}
+        }
         
         if($purchase_id){
             foreach ($params AS $param){
@@ -616,6 +626,7 @@ class HaetShopStyling {
                 $subject = str_replace('{'.$param["unique_name"].'}', $param['value'], $subject);
             }
         }
+        $message = preg_replace('/\<http(.*)\>/', '<a href="http$1">http$1</a>', $message); //replace links like <http://... with <a href="http://..."
         $message = str_replace('{#mailcontent#}',nl2br($message),$options['mailtemplate']);
         $message = str_replace('{#mailsubject#}',$subject,$message);
         $message = stripslashes(str_replace('\\&quot;','',$message));
