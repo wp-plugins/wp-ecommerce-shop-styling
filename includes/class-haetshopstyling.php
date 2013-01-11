@@ -1,3 +1,4 @@
+
 <?php
 class HaetShopStyling {
     
@@ -380,12 +381,19 @@ class HaetShopStyling {
         if(wpsc_cart_item_count()>0 || $preview){
             
 
-            $form_sql = "SELECT IF (unique_name = '',CONCAT('field_',CAST(form_id AS CHAR(2))),unique_name) as unique_name,value
-                            FROM `".$wpdb->prefix."wpsc_submited_form_data` 
-                            LEFT JOIN `".$wpdb->prefix."wpsc_checkout_forms` ON ".$wpdb->prefix."wpsc_submited_form_data.form_id = ".$wpdb->prefix."wpsc_checkout_forms.id 
-                            WHERE  `log_id` = '".(int)$purchase_id."' AND `active` = '1'
-                            ORDER BY checkout_order";
-            $params = $wpdb->get_results($form_sql,ARRAY_A);
+            $form_sql = $wpdb->prepare('SELECT IF (unique_name = "",CONCAT("field_",CAST(form_id AS CHAR(2))),unique_name) as unique_name,value
+                            FROM '.$wpdb->prefix.'wpsc_submited_form_data 
+                            LEFT JOIN '.$wpdb->prefix.'wpsc_checkout_forms ON '.$wpdb->prefix.'wpsc_submited_form_data.form_id = '.$wpdb->prefix.'wpsc_checkout_forms.id 
+                            WHERE  log_id = %d AND active = 1
+                            ORDER BY checkout_order',(int)$purchase_id);
+
+            $params1 = $wpdb->get_results($form_sql,ARRAY_A);
+
+            $params=$params1;
+			$params[]= array('unique_name'=>'p1','value'=>$params1);            
+			$params[]= array('unique_name'=>'count_p1','value'=>count($params1));            
+
+            $params[]= array('unique_name'=>'sql','value'=>$form_sql);
 
             $params[]= array('unique_name'=>'purchase_id','value'=>$purchase_id);
 
@@ -463,6 +471,14 @@ class HaetShopStyling {
         $products_table .= '</table>';
         $params[]= array('unique_name'=>'#productstable#','value'=>$products_table);
         return $params;
+    }
+
+    /**
+     * Run this function once before the cart is cleared to compute and save all sum values 
+    **/
+    function generateBillingData($purchase_log){
+    	$options = $this->getOptions();
+        $this->getBillingData($purchase_log->get('id'),$options);
     }
     
     function getCartItems($purchase_id){
@@ -581,9 +597,23 @@ class HaetShopStyling {
             $params = $this->getBillingData($purchase_id,$options);
             if(isset($_GET['email_buyer_id']) || !get_transient( "{$purchase_id}_invoice_email_sent") ){ //if "resend receipt to buyer"
                 $filename = $options['filename'].'-'.$purchase_id.'.pdf';
-                if ( $this->isAllowed('invoice') && $options['disablepdf']=="enable" && file_exists(HAET_INVOICE_PATH.$filename ) ){
-                    $attachments=array(HAET_INVOICE_PATH.$filename);
-                    set_transient( "{$purchase_id}_invoice_email_sent", true, 60 * 60 * 24 * 30 );
+                if ( $this->isAllowed('invoice') && $options['disablepdf']=="enable"){// && file_exists(HAET_INVOICE_PATH.$filename ) ){
+                    if( count($params) >0 ){
+			            include HAET_SHOP_STYLING_PATH.'views/admin/invoice.php';
+			            $html = $this->fixCharacters($html);
+			            //$tmpfile=HAET_INVOICE_PATH.uniqid();
+			            //file_put_contents($tmpfile,$html);
+			            require_once(HAET_SHOP_STYLING_PATH.'includes/dompdf/dompdf_config.inc.php');    
+			            $pdf = new DOMPDF();
+			            $pdf->set_paper($options['paper']);
+			            $pdf->load_html($html);
+			            $pdf->render();
+			            file_put_contents(HAET_INVOICE_PATH.$filename, $pdf->output());  
+			        }
+				    if (file_exists(HAET_INVOICE_PATH.$filename ) ){
+	                    $attachments=array(HAET_INVOICE_PATH.$filename);
+	                    set_transient( "{$purchase_id}_invoice_email_sent", true, 60 * 60 * 24 * 30 );
+                	}
                 }
             }
         }
@@ -619,7 +649,10 @@ class HaetShopStyling {
                     $is_shop_mail=true;
                     break;		
         }
-        
+        $message.='<pre>=====POST:'.print_r($_POST,true).'</pre>';
+        $message.='<pre>=====GET:'.print_r($_GET,true).'</pre>';
+        $message.='<pre>=====PARAMS:'.print_r($params,true).'</pre>';
+        $message.='<pre>=====purchase_id:'.$purchase_id.'</pre>';
         if($purchase_id){
             foreach ($params AS $param){
                 $message = str_replace('{'.$param["unique_name"].'}', $param['value'], $message);

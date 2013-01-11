@@ -45,22 +45,23 @@ if (class_exists("HaetShopStyling")) {
 //Actions and Filters	
 if (isset($wp_haetshopstyling)) {
 	add_action('admin_menu', 'add_haetshopstyling_adminpage');
-        add_filter('wpsc_purchlogitem_links_start',array(&$wp_haetshopstyling, 'showLogInvoiceLink'));
-        add_action('wpsc_transaction_result_cart_item', array(&$wp_haetshopstyling, 'sendInvoiceMail'));
-        add_filter('wp_mail',array(&$wp_haetshopstyling, 'styleMail'),12,1);
-        //if ( version_compare( WPSC_VERSION, '3.8.9', '>=' ) )
-        if($wp_haetshopstyling->isAllowed('resultspage'))
-            add_filter('wpsc_get_transaction_html_output',array(&$wp_haetshopstyling, 'transactionResultsFilter'),10,1);
-        add_action('wpsc_update_purchase_log_status', array(&$wp_haetshopstyling, 'setGlobalPurchaseId'), 9, 4 );
-        
-        //Fix for qtranslate
-        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        if(is_plugin_active('qtranslate/qtranslate.php')){
-            //cart widget 
-            add_filter('wpsc_cart_item_name',array(&$wp_haetshopstyling, 'translateCartitemName'),20,2);
-            //cart widget  and cart page
-            add_filter('clean_url',array(&$wp_haetshopstyling, 'translateUrl'),20,3);
-        }
+    add_filter('wpsc_purchlogitem_links_start',array(&$wp_haetshopstyling, 'showLogInvoiceLink'));
+    add_action('wpsc_purchase_log_insert',array(&$wp_haetshopstyling, 'generateBillingData'));
+    //add_action('wpsc_transaction_result_cart_item', array(&$wp_haetshopstyling, 'sendInvoiceMail'));
+    add_filter('wp_mail',array(&$wp_haetshopstyling, 'styleMail'),12,1);
+    //if ( version_compare( WPSC_VERSION, '3.8.9', '>=' ) )
+    if($wp_haetshopstyling->isAllowed('resultspage'))
+        add_filter('wpsc_get_transaction_html_output',array(&$wp_haetshopstyling, 'transactionResultsFilter'),10,1);
+    add_action('wpsc_update_purchase_log_status', array(&$wp_haetshopstyling, 'setGlobalPurchaseId'), 9, 4 );
+    
+    //Fix for qtranslate
+    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+    if(is_plugin_active('qtranslate/qtranslate.php')){
+        //cart widget 
+        add_filter('wpsc_cart_item_name',array(&$wp_haetshopstyling, 'translateCartitemName'),20,2);
+        //cart widget  and cart page
+        add_filter('clean_url',array(&$wp_haetshopstyling, 'translateUrl'),20,3);
+    }
 }
 
 function haetshopstyling_init(){
