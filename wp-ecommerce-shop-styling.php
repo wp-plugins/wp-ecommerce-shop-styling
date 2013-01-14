@@ -47,7 +47,8 @@ if (isset($wp_haetshopstyling)) {
 	add_action('admin_menu', 'add_haetshopstyling_adminpage');
     add_filter('wpsc_purchlogitem_links_start',array(&$wp_haetshopstyling, 'showLogInvoiceLink'));
     add_filter( 'wpsc_purchase_log_save',array(&$wp_haetshopstyling, 'generateBillingData'));
-    //wpsc_submit_checkout too late
+    //wpsc_submit_checkout returns correct form values, but 0 for sum values
+    //wpsc_purchase_log_save returns correct sum values but no form data
     //add_action('wpsc_transaction_result_cart_item', array(&$wp_haetshopstyling, 'sendInvoiceMail'));
     add_filter('wp_mail',array(&$wp_haetshopstyling, 'styleMail'),12,1);
     //if ( version_compare( WPSC_VERSION, '3.8.9', '>=' ) )
