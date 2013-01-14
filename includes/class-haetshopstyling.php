@@ -378,7 +378,7 @@ class HaetShopStyling {
     
     function getBillingData($purchase_id,$options,$preview=false){
         global $wpdb;
-        if(wpsc_cart_item_count()>0 || $preview){
+        if(get_transient("haet_cart_params_{$purchase_id}")===false  || $preview){
             
 
             $form_sql = $wpdb->prepare('SELECT IF (unique_name = "",CONCAT("field_",CAST(form_id AS CHAR(2))),unique_name) as unique_name,value
@@ -387,13 +387,11 @@ class HaetShopStyling {
                             WHERE  log_id = %d AND active = 1
                             ORDER BY checkout_order',(int)$purchase_id);
 
-            $params1 = $wpdb->get_results($form_sql,ARRAY_A);
+            $checkout_fields = $wpdb->get_results($form_sql,ARRAY_A);
 
-            $params=$params1;
-			$params[]= array('unique_name'=>'p1','value'=>$params1);            
-			$params[]= array('unique_name'=>'count_p1','value'=>count($params1));            
-
-            $params[]= array('unique_name'=>'sql','value'=>$form_sql);
+            $params=$checkout_fields;
+            $params['debug'] .= '['.date(DATE_ATOM).'] cart_item_count:'.wpsc_cart_item_count().'<br>';
+			$params['debug'] .= '['.date(DATE_ATOM).']<pre>'.print_r($checkout_fields).'</pre><br>';                        
 
             $params[]= array('unique_name'=>'purchase_id','value'=>$purchase_id);
 
@@ -477,6 +475,7 @@ class HaetShopStyling {
      * Run this function once before the cart is cleared to compute and save all sum values 
     **/
     function generateBillingData($purchase_log){
+    	//$purchase_log = new WPSC_Purchase_Log( $_GET['sessionid'], 'sessionid' );
     	$options = $this->getOptions();
         $this->getBillingData($purchase_log->get('id'),$options);
     }
@@ -653,6 +652,7 @@ class HaetShopStyling {
         $message.='<pre>=====GET:'.print_r($_GET,true).'</pre>';
         $message.='<pre>=====PARAMS:'.print_r($params,true).'</pre>';
         $message.='<pre>=====purchase_id:'.$purchase_id.'</pre>';
+        $message.='DEBUG: '.$params['debug'];
         if($purchase_id){
             foreach ($params AS $param){
                 $message = str_replace('{'.$param["unique_name"].'}', $param['value'], $message);

@@ -46,7 +46,8 @@ if (class_exists("HaetShopStyling")) {
 if (isset($wp_haetshopstyling)) {
 	add_action('admin_menu', 'add_haetshopstyling_adminpage');
     add_filter('wpsc_purchlogitem_links_start',array(&$wp_haetshopstyling, 'showLogInvoiceLink'));
-    add_action('wpsc_purchase_log_insert',array(&$wp_haetshopstyling, 'generateBillingData'));
+    add_filter( 'wpsc_purchase_log_save',array(&$wp_haetshopstyling, 'generateBillingData'));
+    //wpsc_submit_checkout too late
     //add_action('wpsc_transaction_result_cart_item', array(&$wp_haetshopstyling, 'sendInvoiceMail'));
     add_filter('wp_mail',array(&$wp_haetshopstyling, 'styleMail'),12,1);
     //if ( version_compare( WPSC_VERSION, '3.8.9', '>=' ) )
