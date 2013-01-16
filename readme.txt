@@ -3,7 +3,7 @@ Contributors: haet
 Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice
 Requires at least: 3.4.2
 Tested up to: 3.5
-Stable tag: 1.6
+Stable tag: 1.6.0.1
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
