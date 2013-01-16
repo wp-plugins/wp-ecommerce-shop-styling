@@ -440,7 +440,7 @@
         </table>
 
     <h2><?php _e('Global HTML Mail Template','haetshopstyling'); ?></h2>
-    <p><?php _e('Enter your custom HTML code here. Use the placeholder {#mailcontent#} where you want your content to show up. You can also show the subject in the email body using the placeholder {#mailsubject#}'); ?></p>
+    <p><?php _e('Enter your custom HTML code here. Use the placeholder {#mailcontent#} where you want your content to show up. You can also show the subject in the email body using the placeholder {#mailsubject#}','haetshopstyling'); ?></p>
     <textarea rows="30" cols="40" class="widefat" id="haetshopstylingmailtemplate" name="haetshopstylingmailtemplate" style="font-family:'Courier New'"><?php echo stripslashes(str_replace('\\&quot;','',$options['mailtemplate'])); ?></textarea>
     <br/><br/><a id="previewmail" class="button" href='#' ><?php _e('preview Email template','haetshopstyling'); ?></a><br/><br/>
     <iframe id="mailtemplatepreview" style="width:800px; height:480px; border:1px solid #ccc;" ></iframe>
