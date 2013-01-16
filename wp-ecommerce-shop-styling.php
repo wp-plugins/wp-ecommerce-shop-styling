@@ -2,8 +2,8 @@
 /*
 Plugin Name: WP E-Commerce shop styling
 Plugin URI: http://haet.at/wp-e-commerce-shop-styling/
-Description: Style and generate PDF invoices for your wp e-commerce store, format emails and transaction results
-Version: 1.5.1
+Description: Send customized HTML mails, custom transaction results and PDF invoices with placeholders from your WP-Ecommerce store 
+Version: 1.6
 Author: haet webdevelopment
 Author URI: http://haet.at
 License: GPLv2 or later
