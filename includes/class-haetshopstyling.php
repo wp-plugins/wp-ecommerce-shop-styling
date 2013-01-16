@@ -1,3 +1,4 @@
+
 <?php
 class HaetShopStyling {
     
@@ -377,15 +378,10 @@ class HaetShopStyling {
     
     function getBillingData($purchase_id,$options,$preview=false){
         global $wpdb;
-        if(wpsc_cart_item_count()>0 || $preview){
-            
-
-            $form_sql = "SELECT IF (unique_name = '',CONCAT('field_',CAST(form_id AS CHAR(2))),unique_name) as unique_name,value
-                            FROM `".$wpdb->prefix."wpsc_submited_form_data` 
-                            LEFT JOIN `".$wpdb->prefix."wpsc_checkout_forms` ON ".$wpdb->prefix."wpsc_submited_form_data.form_id = ".$wpdb->prefix."wpsc_checkout_forms.id 
-                            WHERE  `log_id` = '".(int)$purchase_id."' AND `active` = '1'
-                            ORDER BY checkout_order";
-            $params = $wpdb->get_results($form_sql,ARRAY_A);
+        $params=get_transient("haet_cart_params_{$purchase_id}");
+        if($params===false  || $preview){
+            $params['debug'] .= '['.date(DATE_ATOM).'] cart_item_count:'.wpsc_cart_item_count().'<br>';
+			$params['debug'] .= '['.date(DATE_ATOM).']<pre>'.print_r($checkout_fields).'</pre><br>';                        
 
             $params[]= array('unique_name'=>'purchase_id','value'=>$purchase_id);
 
@@ -401,21 +397,25 @@ class HaetShopStyling {
             $params[]= array('unique_name'=>'total_tax','value'=>wpsc_cart_tax());
             $params[]= array('unique_name'=>'coupon_amount','value'=>wpsc_coupon_amount());
             $params[]= array('unique_name'=>'cart_total','value'=>wpsc_cart_total());
-            
-            /*$i=0;
-            while( $i<count($params) ){
-                $params[$i]['value'] = $params[$i]['value'];
-                $i++;
-            }*/
 
-
-            
             $params[]= array('unique_name'=>'payment_instructions','value'=>strip_tags( stripslashes( get_option( 'payment_instructions' ) ) ));
             set_transient( "haet_cart_params_{$purchase_id}", $params, 60 * 60 * 24 * 30 );
-        }else{ // no products in cart -> page not current
-            $params=get_transient("haet_cart_params_{$purchase_id}");
         }
 
+ 	    if(!$params['checkout_fields_loaded']){
+            $form_sql = $wpdb->prepare('SELECT IF (unique_name = "",CONCAT("field_",CAST(form_id AS CHAR(2))),unique_name) as unique_name,value
+                FROM '.$wpdb->prefix.'wpsc_submited_form_data 
+                LEFT JOIN '.$wpdb->prefix.'wpsc_checkout_forms ON '.$wpdb->prefix.'wpsc_submited_form_data.form_id = '.$wpdb->prefix.'wpsc_checkout_forms.id 
+                WHERE  log_id = %d AND active = 1
+                ORDER BY checkout_order',(int)$purchase_id);
+
+            $checkout_fields = $wpdb->get_results($form_sql,ARRAY_A);
+
+            $params=array_merge($checkout_fields,$params);
+            
+	        $params['checkout_fields_loaded']=(count($checkout_fields)!=0);
+	        set_transient( "haet_cart_params_{$purchase_id}", $params, 60 * 60 * 24 * 30 );
+        }
         
         $trackingid = $wpdb->get_var("SELECT `track_id` FROM ".WPSC_TABLE_PURCHASE_LOGS." WHERE `id`={$purchase_id} LIMIT 1");
         $params[]= array('unique_name'=>'tracking_id','value'=>$trackingid);
@@ -463,6 +463,15 @@ class HaetShopStyling {
         $products_table .= '</table>';
         $params[]= array('unique_name'=>'#productstable#','value'=>$products_table);
         return $params;
+    }
+
+    /**
+     * Run this function once before the cart is cleared to compute and save all sum values 
+    **/
+    function generateBillingData($purchase_log){
+    	//$purchase_log = new WPSC_Purchase_Log( $_GET['sessionid'], 'sessionid' );
+    	$options = $this->getOptions();
+        $this->getBillingData($purchase_log->get('id'),$options);
     }
     
     function getCartItems($purchase_id){
@@ -581,9 +590,23 @@ class HaetShopStyling {
             $params = $this->getBillingData($purchase_id,$options);
             if(isset($_GET['email_buyer_id']) || !get_transient( "{$purchase_id}_invoice_email_sent") ){ //if "resend receipt to buyer"
                 $filename = $options['filename'].'-'.$purchase_id.'.pdf';
-                if ( $this->isAllowed('invoice') && $options['disablepdf']=="enable" && file_exists(HAET_INVOICE_PATH.$filename ) ){
-                    $attachments=array(HAET_INVOICE_PATH.$filename);
-                    set_transient( "{$purchase_id}_invoice_email_sent", true, 60 * 60 * 24 * 30 );
+                if ( $this->isAllowed('invoice') && $options['disablepdf']=="enable"){// && file_exists(HAET_INVOICE_PATH.$filename ) ){
+                    if( count($params) >0 ){
+			            include HAET_SHOP_STYLING_PATH.'views/admin/invoice.php';
+			            $html = $this->fixCharacters($html);
+			            //$tmpfile=HAET_INVOICE_PATH.uniqid();
+			            //file_put_contents($tmpfile,$html);
+			            require_once(HAET_SHOP_STYLING_PATH.'includes/dompdf/dompdf_config.inc.php');    
+			            $pdf = new DOMPDF();
+			            $pdf->set_paper($options['paper']);
+			            $pdf->load_html($html);
+			            $pdf->render();
+			            file_put_contents(HAET_INVOICE_PATH.$filename, $pdf->output());  
+			        }
+				    if (file_exists(HAET_INVOICE_PATH.$filename ) ){
+	                    $attachments=array(HAET_INVOICE_PATH.$filename);
+	                    set_transient( "{$purchase_id}_invoice_email_sent", true, 60 * 60 * 24 * 30 );
+                	}
                 }
             }
         }
@@ -619,7 +642,13 @@ class HaetShopStyling {
                     $is_shop_mail=true;
                     break;		
         }
-        
+        /*
+        $message.='<pre>=====POST:'.print_r($_POST,true).'</pre>';
+        $message.='<pre>=====GET:'.print_r($_GET,true).'</pre>';
+        $message.='<pre>=====PARAMS:'.print_r($params,true).'</pre>';
+        $message.='<pre>=====purchase_id:'.$purchase_id.'</pre>';
+        $message.='DEBUG: '.$params['debug'];
+        */
         if($purchase_id){
             foreach ($params AS $param){
                 $message = str_replace('{'.$param["unique_name"].'}', $param['value'], $message);

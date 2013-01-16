@@ -2,8 +2,8 @@
 Contributors: haet 
 Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice
 Requires at least: 3.4.2
-Tested up to: 3.4.2
-Stable tag: 1.5.1
+Tested up to: 3.5
+Stable tag: 1.6
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -17,6 +17,7 @@ This plugin adds many missing features to WP Ecommerce:
 All Wordpress and WP Ecommerce mails are converted to HTML mails and formatted with a custom template. You can add your company logo, contact details or even some additional informations to all your mails.
 NEW IN 1.3: The mail sender name and address can be defined separately for mails from your store and other wordpress mails.
 NEW IN 1.5: Fixed the link in password reset mail.
+NEW IN 1.6: added an Italian and Hungarian translation
 
 = Custom wpecommerce email messages =
 Change the content of all your shop mails with your wordpress editor like a page. Add values from checkout form or cart content with placeholders.
@@ -41,9 +42,12 @@ Have you ever translated a wordpress plugin? It's simple and it could help other
 
 Read [this article](http://www.tripwiremagazine.com/2012/03/wp-tip-how-to-translate-wordpress-themes-and-plugins.html) to see how it works.
 
-If you speak any language except German and English, please think about sending me a translation file for the next release.
+If you speak any language except German, Italian, Hungarian and English, please think about sending me a translation file for the next release.
 
 You'll receive a free set of serials for all upgrade features and of course a backlink to your website. 
+
+Great Thanks to Luca for the Italian and Endre for the Hungarian translations!
+
 
 = > Want to get notified about new features and updates? =
 [Follow me on twitter](https://twitter.com/intent/user?screen_name=h_etzelstorfer)
@@ -67,6 +71,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 *   1.3: define senders for shop mails and other wordpress mails and fixed problem with track&trace mail
 *   1.4: added option to disable custom sender & added some functions for wp e-commerce qtranslate support
 *   1.5: new option to send a copy of the invoice to the administrator, improved mails
+*	1.6: Fixed a bug with payment gateways and added an Italian and Hungarian translation
 
 == Frequently Asked Questions ==
-please ask your questions in the comments [here](http://haet.at/wp-e-commerce-currency-helper/)
+please ask your questions in the comments [here](http://haet.at/wp-e-commerce-shop-styling/)
