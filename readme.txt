@@ -46,7 +46,14 @@ If you speak any language except German, Italian, Hungarian and English, please 
 
 You'll receive a free set of serials for all upgrade features and of course a backlink to your website. 
 
-Great Thanks to Luca for the Italian and Endre for the Hungarian translations!
+
+Great Thanks for the translations to 
+
+Luca for the Italian, 
+
+Endre for the Hungarian, 
+
+and [Benjamin Duriez](http://www.estudio-b.net) for the French
 
 
 = > Want to get notified about new features and updates? =
