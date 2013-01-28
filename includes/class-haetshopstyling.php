@@ -325,7 +325,8 @@ class HaetShopStyling {
 					array('price_sum',      __('price incl. tax','haetshopstyling')),
 					array('price_sum_without_tax',      __('price without tax','haetshopstyling')),
 					array('product_gst',      __('tax rate','haetshopstyling')),
-					array('product_tax_charged',      __('tax charged','haetshopstyling')),
+					array('tax_single',      __('tax per product','haetshopstyling')),
+					array('product_tax_charged',      __('tax sum','haetshopstyling')),
 					array('download',      __('download link','haetshopstyling'))
 			);
 		$select = '<select class="products-field-select" id="'.$id.'" name="'.$id.'">';
@@ -448,20 +449,22 @@ class HaetShopStyling {
 			
 			$item['product_name']= apply_filters('the_title',$item['product_name']);			
 			$item['product_pnp']= wpsc_currency_display($item['product_pnp'], array('display_as_html' => false) );
-
+ 
 			//item tax
-			if($item['product_tax_charged']==0.0){ //Attention tax is exclusive or 0
+			if($item['product_tax_charged']==0.0){ //Attention tax is exclusive OR 0
 				$tax = $this->getExcludedProductTax($item['prodid'],false);
-				$item['product_tax_charged']= wpsc_currency_display($tax, array('display_as_html' => false) );
+				$item['tax_single']= wpsc_currency_display($tax, array('display_as_html' => false) );
+				$item['product_tax_charged']= wpsc_currency_display($tax*$item['product_quantity'], array('display_as_html' => false) );
 				$item['product_gst']= number_format($this->getExcludedProductTax($item['prodid'],true), 2, $decimal_separator,'');
 				$item['price_sum']= ($item['product_price']+$tax)*$item['product_quantity'];
 				$item['price_sum_without_tax']= $this->currencyDisplay( $item['product_price']*$item['product_quantity'] );
 				$item['product_price']= $this->currencyDisplay( $item['product_price'] + $tax ) ;
 			}else{
+				$item['price_sum']= $item['product_price']*$item['product_quantity'];
 				$item['price_sum_without_tax']= $this->currencyDisplay( $item['price_sum']-$item['product_tax_charged'] );
+				$item['tax_single']= wpsc_currency_display($item['product_tax_charged']/$item['product_quantity'],array('display_as_html' => false) );
 				$item['product_tax_charged']= wpsc_currency_display($item['product_tax_charged'], array('display_as_html' => false) );
 				$item['product_gst']= number_format($item['product_gst'], 2, $decimal_separator ,'');
-				$item['price_sum']= $item['product_price']*$item['product_quantity'];
 				$item['product_price']= $this->currencyDisplay( $item['product_price'] ) ;
 			}
 

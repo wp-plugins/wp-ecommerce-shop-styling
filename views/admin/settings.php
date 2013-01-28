@@ -198,6 +198,7 @@
                 'price_sum_without_tax' => '$ 6.00',
                 'product_gst'       => '10 %',
                 'product_tax_charged'=>'$ 0.60',
+                'tax_single'        =>'$ 0.20',
                 'download'          => '<img src="'.HAET_SHOP_STYLING_URL.'images/download.png" style="margin-bottom: -5px;" alt="download">'
             ); 
             $items[1]=array(
@@ -211,6 +212,7 @@
                 'price_sum_without_tax' => '$ 2.00',
                 'product_gst'       => '10 %',
                 'product_tax_charged'=>'$ 0.20',
+                'tax_single'        =>'$ 0.10',
                 'download'          => '<img src="'.HAET_SHOP_STYLING_URL.'images/download.png" style="margin-bottom: -5px;" alt="download">'
             ); 
             foreach ($items AS $item){
