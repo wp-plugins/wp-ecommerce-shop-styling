@@ -740,8 +740,8 @@ class HaetShopStyling {
 
 	/**
 	 * preview the invoice
-	 * @global type $wpdb
-	 * @param type $purchase_id 
+	 * @global $wpdb
+	 * @param int $purchase_id 
 	 */
 	function previewInvoice($purchase_id=null){
 		global $wpdb;

@@ -3,7 +3,7 @@ Contributors: haet
 Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice
 Requires at least: 3.4.2
 Tested up to: 3.5
-Stable tag: 1.7.2
+Stable tag: 1.8
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -19,7 +19,6 @@ vailable in English, German, Hungarian and French.
 = HTML mail templates =
 All Wordpress and WP Ecommerce mails are converted to HTML mails and formatted with a custom template. You can add your company logo, contact details or even some additional informations to all your mails.
 
-NEW IN 1.7: added French translation and improved handling of tax exclusive products.
 
 
 = Custom wpecommerce email messages =
@@ -83,6 +82,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 *   1.5: new option to send a copy of the invoice to the administrator, improved mails
 *	1.6: Fixed a bug with payment gateways and added an Italian and Hungarian translation
 *   1.7: Added french translation, a new placeholder for numeric price and improved the handling of tax exclusive payments
+*	1.8: Security Update (thanks to Charlie Eriksen via Secunia SVCRP) and also fixed a dompdf error and improved french translation
 
 == Frequently Asked Questions ==
 please ask your questions in the comments [here](http://haet.at/wp-e-commerce-shop-styling/)
