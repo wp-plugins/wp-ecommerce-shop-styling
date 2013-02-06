@@ -14,6 +14,10 @@
 							'fieldname'  => __('products table','haetshopstyling')
 							);
 		$placeholders[] = array(
+							'fieldvalue' => 'payment_gateway',
+							'fieldname'  => __('Payment gateway','haetshopstyling')
+							);		
+		$placeholders[] = array(
 							'fieldvalue' => 'payment_instructions',
 							'fieldname'  => __('Payment instructions','haetshopstyling')
 							);
@@ -53,7 +57,12 @@
 							'fieldvalue' => 'tracking_id',
 							'fieldname'  => __('Tracking ID','haetshopstyling')
 							);
-	
+		$placeholders[] = array(
+							'fieldvalue' => 'total_numeric',
+							'fieldname'  => __('Total price numeric','haetshopstyling')
+							);
+
+
 ?>
  
 (function() {
@@ -95,7 +104,7 @@
 				author : 'haet',
 				authorurl : 'http://haet.at',
 				infourl : 'http://haet.at',
-				version : "1.1"
+				version : "1.2"
 			};
 		}
 	});
