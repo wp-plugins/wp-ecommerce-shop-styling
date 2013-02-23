@@ -1,9 +1,9 @@
 === wp ecommerce shop styling ===
 Contributors: haet 
-Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice
+Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice,tax
 Requires at least: 3.4.2
 Tested up to: 3.5
-Stable tag: 1.8
+Stable tag: 1.9
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -47,15 +47,10 @@ Read [this article](http://www.tripwiremagazine.com/2012/03/wp-tip-how-to-transl
 If you speak any language except German, Italian, Hungarian,French and English, please think about sending me a translation file for the next release.
 
 You'll receive a free set of serials for all upgrade features and of course a backlink to your website. 
-
-
-Great Thanks for the translations to 
-
-Luca for the Italian, 
-
-Endre for the Hungarian, 
-
-and [Benjamin Duriez](http://www.estudio-b.net) for the French
+*	Great Thanks for the translations to 
+*	Luca for the Italian, 
+*	Endre for the Hungarian, 
+*	and [Benjamin Duriez](http://www.estudio-b.net) for the French
 
 
 = > Want to get notified about new features and updates? =
@@ -85,4 +80,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 *	1.8: Security Update (thanks to Charlie Eriksen via Secunia SVCRP) and also fixed a dompdf error and improved french translation
 
 == Frequently Asked Questions ==
-please ask your questions in the comments [here](http://haet.at/wp-e-commerce-shop-styling/)
+please have a look at the comments [here](http://haet.at/wp-e-commerce-shop-styling/)
+
+or ask your question on [stackoverflow.com](http://stackoverflow.com/questions/tagged/wp-ecommerce-shopstyling) and tag it with wp-ecommerce-shopstyling
+
