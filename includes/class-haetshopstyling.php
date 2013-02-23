@@ -593,12 +593,17 @@ class HaetShopStyling {
 			$message_html = __(str_replace('{'.$param["unique_name"].'}', $param['value'], $message_html));
 		}
 
-		// TODO den StandardText aus Zeile 362 wpsc-transaction-result-functions.php entfernen
+		
 	}
 	
 	/* use this function for wpsc 3.8.9 */
 	function transactionResultsFilter($output){
-		$purchase_log = new WPSC_Purchase_Log( $_GET['sessionid'], 'sessionid' );
+		if ( array_key_exists('sessionid', $_GET))
+			$sessionid = $_GET['sessionid'];
+		else if (function_exists('decrypt_dps_response'))
+			$sessionid = decrypt_dps_response();
+
+		$purchase_log = new WPSC_Purchase_Log( $sessionid, 'sessionid' );
 		$options = $this->getOptions();
 		$params = $this->getBillingData($purchase_log->get('id'),$options);
 		
@@ -740,8 +745,8 @@ class HaetShopStyling {
 
 	/**
 	 * preview the invoice
-	 * @global type $wpdb
-	 * @param type $purchase_id 
+	 * @global $wpdb
+	 * @param int $purchase_id 
 	 */
 	function previewInvoice($purchase_id=null){
 		global $wpdb;
