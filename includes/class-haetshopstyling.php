@@ -9,6 +9,7 @@ class HaetShopStyling {
 	 *  activate options and create invoice folder 
 	 */
 	function init() {
+        //$this->createTables();
 		$this->getOptions();
 
 		wp_mkdir_p( HAET_INVOICE_PATH );
@@ -41,7 +42,9 @@ class HaetShopStyling {
 			'subject_payment_failed' => __('Your purchase at ','haetshopstyling').get_bloginfo('name'),
 			'body_payment_failed' =>  "<p><strong>Your payment could not be processed.</strong></p><p>Please transfer the <strong>amount of</strong> {cart_total} to the following account and please mention your <strong>order number {purchase_id} </strong>in the field as reason:</p><p>Account owner<br />Bank<br />IBAN: XX 000000000000000000000<br />BIC/SWIFT: XX00XX00</p><p>Your articles will be delivered immediately after your payment.</p><p><strong> Your Products</strong></p><p>{#productstable#}</p><p>&nbsp;</p>",
 			'subject_tracking' =>  __('Product Tracking Email','haetshopstyling'),
-			'body_tracking' => "<p>Track &amp; Trace means you may track the progress of your parcel with our online parcel tracker, just login to our website and enter the following Tracking ID to view the status of your order.<br /><br /><strong>Tracking ID: {tracking_id}</strong><br /><br /></p>",
+            'body_tracking' => "<p>Track &amp; Trace means you may track the progress of your parcel with our online parcel tracker, just login to our website and enter the following Tracking ID to view the status of your order.<br /><br /><strong>Tracking ID: {tracking_id}</strong><br /><br /></p>",
+            'subject_adminreport' => __('Transaction Report','haetshopstyling'),
+            'body_adminreport' => "<h2>Transaction Details</h2><p>Purchase ID: {purchase_id}</p><p>&nbsp;</p><p>Subtotal: {total_product_price}</p><p>Tax: {total_tax}</p><p>Shipping: {total_shipping}</p><p>Discount: {coupon_amount}</p><p>Total: {cart_total}</p><p>&nbsp;</p><h2>Items</h2><p>{#productstable#}</p><p>&nbsp;</p><p>Payment gateway: {payment_gateway}</p><p>&nbsp;</p><p><strong>Billing Details</strong></p><p>First Name : {billingfirstname}</p><p>Last Name : {billinglastname}</p><p>Address : {billingaddress}</p><p>City : {billingcity}</p><p>State : {billingstate}</p><p>Country : {billingcountry}</p><p>Postal Code : {billingpostcode}</p><p>Email : {billingemail}</p><p>Phone : {billingphone}</p><p>&nbsp;</p><p><strong>Shipping Details</strong></p><p>First Name : {shippingfirstname}</p><p>Last Name : {shippinglastname}</p><p>Address : {shippingaddress}</p><p>City : {shippingcity}</p><p>State : {shippingstate}</p><p>Country : AT</p><p>Postal Code : {shippingpostcode}</p><p>&nbsp;</p>",
 			'columntitle' => array(
 								'',
 								'#',
@@ -74,7 +77,11 @@ class HaetShopStyling {
 			 'resultspage_incomplete' => "<p>Thank you for your purchase.</p><p>Please transfer the <strong>amount of</strong> {cart_total} to the following account and please mention your <strong>order number {purchase_id} </strong>in the field as reason:</p><p>Account owner<br />Bank<br />IBAN: XX 000000000000000000000<br />BIC/SWIFT: XX00XX00</p><p>Your articles will be delivered immediately after your payment.</p><p>&nbsp;</p>",
 			 'resultspage_failed' => "<p><strong>Your payment could not be processed.</strong></p><p>Please transfer the <strong>amount of</strong> {cart_total} to the following account and please mention your <strong>order number {purchase_id} </strong>in the field as reason:</p><p>Account owner<br />Bank<br />IBAN: XX 000000000000000000000<br />BIC/SWIFT: XX00XX00</p><p>Your articles will be delivered immediately after your payment.</p><p>&nbsp;</p>",
 			 'disablepdf' => "enable",
-			 'send_pdf_to_admin' => 'enable'
+			 'send_pdf_to_admin' => 'enable',
+             'send_pdf_after_payment' => 'disable',
+             'invoice_number_system' => 'ordernumber',
+             'invoice_number' => '1'
+
 		);
 		 
 		$haetshopstyling_options = get_option('haetshopstyling_options');
@@ -151,6 +158,25 @@ class HaetShopStyling {
 		}
 	}
 	
+    /**
+     * add the Invoice Number column to the purchase logs
+     * 
+     */
+    function addPurchaseLogColumnHead( $columns ){
+        $columns['invoicenumber']=__('Invoice Number','haetshopstyling');
+        return $columns;
+    }
+
+    /**
+     * add the Invoice Number column content to the purchase logs
+     * 
+     */
+    function addPurchaseLogColumnContent( $default, $column_name, $item ){
+        if($column_name=='invoicenumber'){
+            echo 97;    
+        }
+    }
+
 	/**
 	 * You found the heart of the "licence management"! ;-)
 	 * Be fair and don't "hack" it, you'd feel guilty for the rest of your life!
@@ -170,7 +196,14 @@ class HaetShopStyling {
 		return false;
 	}
 	
+    function adminPageScriptsAndStyles(){
+
+        wp_enqueue_script('haet_admin_script',  HAET_SHOP_STYLING_URL.'/js/admin_script.js', array('jquery'));
+
+    }
+
 	function printAdminPage(){    
+
 		if ( isset ( $_GET['tab'] ) ) 
 			$tab=$_GET['tab']; 
 		else 
@@ -196,7 +229,15 @@ class HaetShopStyling {
 							if (isset($_POST['haetshopstylingsendpdftoadmin'])) {
 									$options['send_pdf_to_admin'] = $_POST['haetshopstylingsendpdftoadmin'];
 							}
-
+                            if (isset($_POST['haetshopstylingsendpdfafterpayment'])) {
+                                    $options['send_pdf_after_payment'] = $_POST['haetshopstylingsendpdfafterpayment'];
+                            }
+                            if (isset($_POST['haetshopstylinginvoicenumbersystem'])) {
+                                    $options['invoice_number_system'] = $_POST['haetshopstylinginvoicenumbersystem'];
+                            }
+                            if (isset($_POST['haetshopstylinginvoicenumber'])) {
+                                    $options['invoice_number'] = $_POST['haetshopstylinginvoicenumber'];
+                            }
 			}else if ($tab=='products'){
 							if (isset($_POST['columntitle'])) {
 									$options['columntitle'] = $_POST['columntitle'];
@@ -232,6 +273,12 @@ class HaetShopStyling {
 							if (isset($_POST['haetshopstylingbody_tracking'])) {
 									$options['body_tracking'] = $_POST['haetshopstylingbody_tracking'];
 							}
+                            if (isset($_POST['haetshopstylingsubject_adminreport'])) {
+                                    $options['subject_adminreport'] = $_POST['haetshopstylingsubject_adminreport'];
+                            }   
+                            if (isset($_POST['haetshopstylingbody_tracking'])) {
+                                    $options['body_adminreport'] = $_POST['haetshopstylingbody_adminreport'];
+                            }
 			}else if ($tab=='invoicecss'){
 							if (isset($_POST['haetshopstylingcss'])) {
 									$options['css'] = $_POST['haetshopstylingcss'];
@@ -399,7 +446,9 @@ class HaetShopStyling {
 			$params[]= array('unique_name'=>'cart_total','value'=>wpsc_cart_total());
 
 			$params[]= array('unique_name'=>'total_numeric','value'=>$params2[0]['totalprice']);
-			
+            $params[]= array('unique_name'=>'tax_numeric','value'=>wpsc_cart_tax(false));
+			$params[]= array('unique_name'=>'total_numeric_without_tax','value'=>$params2[0]['totalprice']-wpsc_cart_tax(false));
+
 			$gateway_names = get_option('payment_gateway_names');
 			if( isset( $gateway_names[$params2[0]['gateway']] ))
 				$params[]= array('unique_name'=>'payment_gateway','value'=>strip_tags( stripslashes($gateway_names[$params2[0]['gateway']])));
@@ -677,11 +726,13 @@ class HaetShopStyling {
 		 * the idea of the following switch statement is taken from http://schwambell.com/wp-e-commerce-style-email-plugin/ by Jakob Schwartz
 		 */
 		switch($subject) {
-		case __( 'Transaction Report', 'wpsc' ): //not used -> Admin mail is unformatted
+		case __( 'Transaction Report', 'wpsc' ): 
 					$filename = $options['filename'].'-'.$purchase_id.'.pdf';
 					if ( $this->isAllowed('invoice') && $options['send_pdf_to_admin']=="enable" && $options['disablepdf']=="enable" && file_exists(HAET_INVOICE_PATH.$filename ) ){
 						$attachments=array(HAET_INVOICE_PATH.$filename);
 					}
+                    $message =  stripslashes(str_replace('\\&quot;','',$options['body_adminreport'])) ;
+                    $subject = stripslashes(str_replace('\\&quot;','',$options['subject_adminreport'])) ;
 					$is_shop_mail=true;
 					break;
 		case __( 'Purchase Receipt', 'wpsc' ): //sent when changing state to "accepted payment"
@@ -820,6 +871,54 @@ class HaetShopStyling {
 			';
 	}
 	
+
+    /**
+     * creates or updates the currency-country table
+     * @global object $wpdb
+     */
+    private function createTables(){
+        global $wpdb;
+        $table_name = $wpdb->prefix.'wpsc_haet_purchase_details';
+        if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',$table_name ) )){
+            $wpdb->query('DROP TABLE `'.$table_name.'`');
+        }
+        if ( !$wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',$table_name ) )){
+            $wpdb->query(  '
+                CREATE TABLE IF NOT EXISTS `'.$table_name.'` (
+                  `purchase_log_id` int(10) unsigned NOT NULL,
+                  `invoice_number` varchar(20) NOT NULL DEFAULT "",
+                  `filename` varchar(255) NOT NULL DEFAULT "",
+                  `invoice_sent` datetime DEFAULT NULL,
+                  PRIMARY KEY (`purchase_log_id`)
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+                '
+            );
+            //write old invoicenumbers and invoice filenames
+            $options = $this->getOptions();
+            $purchase_ids = $wpdb->get_col('SELECT id FROM '.WPSC_TABLE_PURCHASE_LOGS.' ORDER BY id DESC');
+            foreach ($purchase_ids as $purchase_id) {
+
+                if ( file_exists(HAET_INVOICE_PATH.$options['filename'].'-'.$purchase_id.'.pdf') )
+                    $wpdb->query($wpdb->prepare(  "
+                        INSERT INTO $table_name (
+                          `purchase_log_id`,
+                          `invoice_number`,
+                          `filename`, 
+                          `invoice_sent`
+                        ) VALUES (
+                            %d,
+                            %s,
+                            %s,
+                            NULL
+                        )
+                        "
+                    ,$purchase_id,$purchase_id,$options['filename'].'-'.$purchase_id.'.pdf'));
+            }
+        
+
+            
+        }
+    }
 }
 
 ?>

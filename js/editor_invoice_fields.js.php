@@ -61,7 +61,14 @@
 							'fieldvalue' => 'total_numeric',
 							'fieldname'  => __('Total price numeric','haetshopstyling')
 							);
-
+		$placeholders[] = array(
+							'fieldvalue' => 'total_numeric_without_tax',
+							'fieldname'  => __('Total numeric without tax','haetshopstyling')
+							);
+		$placeholders[] = array(
+							'fieldvalue' => 'tax_numeric',
+							'fieldname'  => __('Total tax numeric','haetshopstyling')
+							);
 
 ?>
  
