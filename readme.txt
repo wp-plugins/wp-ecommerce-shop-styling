@@ -2,8 +2,8 @@
 Contributors: haet 
 Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice,tax
 Requires at least: 3.4.2
-Tested up to: 3.5
-Stable tag: 1.9
+Tested up to: 3.5.1
+Stable tag: 1.9.1
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -50,7 +50,7 @@ You'll receive a free set of serials for all upgrade features and of course a ba
 *	Great Thanks for the translations to 
 *	Luca for the Italian, 
 *	Endre for the Hungarian, 
-*	and [Benjamin Duriez](http://www.estudio-b.net) for the French
+*	and [Benjamin Duriez](http://www.estudio-b.net) for the French and Spanish version
 
 
 = > Want to get notified about new features and updates? =
@@ -78,6 +78,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 *	1.6: Fixed a bug with payment gateways and added an Italian and Hungarian translation
 *   1.7: Added french translation, a new placeholder for numeric price and improved the handling of tax exclusive payments
 *	1.8: Security Update (thanks to Charlie Eriksen via Secunia SVCRP) and also fixed a dompdf error and improved french translation
+*	1.9.1: transaction report can be customized now. added placeholder for numeric values of tax and price without tax
 
 == Frequently Asked Questions ==
 please have a look at the comments [here](http://haet.at/wp-e-commerce-shop-styling/)

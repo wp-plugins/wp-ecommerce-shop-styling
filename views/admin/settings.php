@@ -153,6 +153,44 @@
                     </td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingsendpdfafterpayment"><?php _e('Send the after accepted payment only','haetshopstyling'); ?></label></th>
+                    <td>
+                        <select  id="haetshopstylingsendpdfafterpayment" name="haetshopstylingsendpdfafterpayment">
+                          <option value="enable" <?php echo ($options['send_pdf_after_payment']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
+                          <option value="disable" <?php echo ($options['send_pdf_after_payment']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
+                        </select>
+                        <span class="description"><?php _e('invoice and invoicenumber are generated after successful payment only.','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylinginvoicenumbersystem"><?php _e('Invoice number system','haetshopstyling'); ?></label></th>
+                    <td>
+                        <select  id="haetshopstylinginvoicenumbersystem" name="haetshopstylinginvoicenumbersystem">
+                          <option value="ordernumber" <?php echo ($options['invoice_number_system']=="ordernumber"?"selected":""); ?>><?php _e('Order number','haetshopstyling'); ?></option>
+                          <option value="invoicenumber" <?php echo ($options['invoice_number_system']=="invoicenumber"?"selected":""); ?>><?php _e('Auto incrementing invoice number','haetshopstyling'); ?></option>
+                          <option value="manual" <?php echo ($options['invoice_number_system']=="manual"?"selected":""); ?>><?php _e('Manual number','haetshopstyling'); ?></option>
+                        </select>
+                        <span class="description"><?php _e('The option "manual number" will only work with manual payment, because you have to enter an invoice number, when you change the transaction state to "payment accepted".','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylingsendpdfafterpayment"><?php _e('Send the invoice after accepted payment only','haetshopstyling'); ?></label></th>
+                    <td>
+                        <select  id="haetshopstylingsendpdfafterpayment" name="haetshopstylingsendpdfafterpayment">
+                          <option value="enable" <?php echo ($options['send_pdf_after_payment']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
+                          <option value="disable" <?php echo ($options['send_pdf_after_payment']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
+                        </select>
+                        <span class="description"><?php _e('invoice and invoicenumber are generated after successful payment only.','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="haetshopstylinginvoicenumber"><?php _e('Current invoice number','haetshopstyling'); ?></label></th>
+                    <td>
+                        <input type="text" class="regular-text" id="haetshopstylinginvoicenumber" name="haetshopstylinginvoicenumber" value="<?php echo $options['invoice_number']; ?>">
+                        <span class="description"><?php _e('this number will be used in the next invoice and incremented afterwards','haetshopstyling'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
                     <th scope="row"><label for="haetshopstylingdisablepdf"><?php _e('Disable PDF invoice','haetshopstyling'); ?></label></th>
                     <td>
                         <select  id="haetshopstylingdisablepdf" name="haetshopstylingdisablepdf">
@@ -348,6 +386,31 @@
                      );
                  ?>  
                  
+
+                <hr/>
+                
+                <h2><?php _e('Email Content - Admin Transaction Report','haetshopstyling'); ?></h2>
+                <table class="form-table">
+                  <tbody>
+                      <tr valign="top">
+                          <th scope="row"><label for="haetshopstylingsubject_adminreport"><?php _e('Email subject','haetshopstyling'); ?></label></th>
+                          <td>
+                              <input type="text" class="regular-text" id="haetshopstylingsubject_adminreport" name="haetshopstylingsubject_adminreport" value="<?php echo $options['subject_adminreport']; ?>">
+                          </td>
+                      </tr>
+                  </tbody>
+                </table>               
+                 <?php 
+                 
+                 wp_editor(stripslashes(str_replace('\\&quot;','',$options['body_adminreport'])),'haetshopstylingbody_adminreport',array(
+                        'media_buttons'=>false,
+                        'tinymce' => array(
+                                'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
+                                'remove_linebreaks' => false
+                            )
+                        )
+                     );
+                 ?>  
 <?php 
             break;
             case 'invoicecss':
