@@ -9,7 +9,7 @@ class HaetShopStyling {
 	 *  activate options and create invoice folder 
 	 */
 	function init() {
-        //$this->createTables();
+        $this->createTables();
 		$this->getOptions();
 
 		wp_mkdir_p( HAET_INVOICE_PATH );
@@ -80,7 +80,10 @@ class HaetShopStyling {
 			 'send_pdf_to_admin' => 'enable',
              'send_pdf_after_payment' => 'disable',
              'invoice_number_system' => 'ordernumber',
-             'invoice_number' => '1'
+             'invoice_number' => '1',
+             'personalizationbelow' => 'disabled',
+             'personalizationfrom' => 2,
+             'personalizationto' => 8,
 
 		);
 		 
@@ -173,6 +176,16 @@ class HaetShopStyling {
      */
     function addPurchaseLogColumnContent( $default, $column_name, $item ){
         if($column_name=='invoicenumber'){
+            global $wpdb;
+            $sql = $wpdb->prepare('
+                SELECT invoice_number,filename,invoice_sent 
+                FROM '.HAET_TABLE_PURCHASE_DETAILS.'
+                WHERE purchase_log_id=%d
+                ',$item->id);
+
+            $invoice = $wpdb->get_results($sql);
+            
+            print_r($invoice);
             echo 97;    
         }
     }
@@ -247,7 +260,12 @@ class HaetShopStyling {
 										
 									}
 									$options['columnfield'] = $_POST['columnfield'];
-							}	
+							}
+                            $options['personalizationbelow'] = $_POST['haetshopstylingpersonalizationbelow'];
+                            $options['personalizationfrom'] = $_POST['haetshopstylingpersonalizationfrom'];
+                            $options['personalizationto'] = $_POST['haetshopstylingpersonalizationto'];	
+                            if($options['personalizationto']<$options['personalizationfrom'])  
+                                $options['personalizationto'] = $options['personalizationfrom'];
 			}else if ($tab=='mailcontent'){
 							if (isset($_POST['haetshopstylingsubject_payment_successful'])) {
 									$options['subject_payment_successful'] = $_POST['haetshopstylingsubject_payment_successful'];
@@ -374,6 +392,7 @@ class HaetShopStyling {
 					array('product_gst',      __('tax rate','haetshopstyling')),
 					array('tax_single',      __('tax per product','haetshopstyling')),
 					array('product_tax_charged',      __('tax sum','haetshopstyling')),
+                    array('custom_message',      __('personalization','haetshopstyling')),
 					array('download',      __('download link','haetshopstyling'))
 			);
 		$select = '<select class="products-field-select" id="'.$id.'" name="'.$id.'">';
@@ -490,6 +509,11 @@ class HaetShopStyling {
 		$products_table .= '</tr>';
 		$row=0;
 
+        $num_columns=0;
+        foreach ($options["columnfield"] AS $field)
+            if($field!='' AND !($field!='download' && $this->getProcessedState($purchase_id)==3 ))
+                $num_columns++;
+
 		foreach ($items AS $item){
 			$item['item_number']=$row+1;
 			$item['price_without_tax']= $this->currencyDisplay( ($item['product_price']*$item['product_quantity']-$item['product_tax_charged'])/$item['product_quantity'] );
@@ -520,8 +544,8 @@ class HaetShopStyling {
 			$item['price_sum']= $this->currencyDisplay($item['price_sum']);
 
 
-			$products_table .= '<tr>';
-			for ($col=1;$col <= count($options["columnfield"]); $col++){
+			$products_table .= '<tr class="product-line">';
+			for ($col=1;$col <= $num_columns; $col++){
 				if($options["columnfield"][$col]=='download' ){
 					if($this->getProcessedState($purchase_id)==3 && isset($item['download'])){
 						$products_table .= "<td class='".$options["columnfield"][$col]."'>";
@@ -532,7 +556,23 @@ class HaetShopStyling {
 				}else if($options["columnfield"][$col]!='')
 					$products_table .= "<td class='".$options["columnfield"][$col]."'>".$item[$options["columnfield"][$col]]."</td>";
 			}
-			$products_table .= '</tr>';     
+			$products_table .= '</tr>';   
+            if($options['personalizationbelow']=="enable"){
+                if($options['personalizationto']>$num_columns)
+                    $options['personalizationto']=$num_columns;
+                if($options['personalizationto']>=$options['personalizationfrom']){
+                    $products_table .= '<tr class="personalization-line">';
+                    for($i=1;$i<$options['personalizationfrom'];$i++)
+                        $products_table .= '<td class="blank"></td>';
+                            
+                    $products_table .= '<td colspan="'.($options['personalizationto']-$options['personalizationfrom']+1).'" class="personalization">'.str_replace(array("\r\n", "\r", "\n"), "<br />", $item['custom_message']).'</td>';   
+                    for($i=$options['personalizationto']+1;$i<=$num_columns;$i++)
+                        $products_table .= '<td class="blank"></td>';
+                    $products_table .= '</tr>';
+                }
+            }  
+
+
 			$row++;
 		}
 		$products_table .= '</table>';
@@ -591,7 +631,8 @@ class HaetShopStyling {
 							no_shipping,
 							tax_charged AS product_tax_charged,
 							gst AS product_gst,
-							quantity AS product_quantity
+							quantity AS product_quantity,
+                            custom_message
 						FROM `".$wpdb->prefix."wpsc_cart_contents` 
 						WHERE  `purchaseid` = ".(int)$purchase_id;
 		$cartitems = $wpdb->get_results($form_sql,ARRAY_A);
@@ -878,13 +919,12 @@ class HaetShopStyling {
      */
     private function createTables(){
         global $wpdb;
-        $table_name = $wpdb->prefix.'wpsc_haet_purchase_details';
-        if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',$table_name ) )){
-            $wpdb->query('DROP TABLE `'.$table_name.'`');
-        }
-        if ( !$wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',$table_name ) )){
+/*        if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',HAET_TABLE_PURCHASE_DETAILS ) )){
+            $wpdb->query('DROP TABLE `'.HAET_TABLE_PURCHASE_DETAILS.'`');
+        }*/
+        if ( !$wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',HAET_TABLE_PURCHASE_DETAILS ) )){
             $wpdb->query(  '
-                CREATE TABLE IF NOT EXISTS `'.$table_name.'` (
+                CREATE TABLE IF NOT EXISTS `'.HAET_TABLE_PURCHASE_DETAILS.'` (
                   `purchase_log_id` int(10) unsigned NOT NULL,
                   `invoice_number` varchar(20) NOT NULL DEFAULT "",
                   `filename` varchar(255) NOT NULL DEFAULT "",
@@ -900,7 +940,7 @@ class HaetShopStyling {
 
                 if ( file_exists(HAET_INVOICE_PATH.$options['filename'].'-'.$purchase_id.'.pdf') )
                     $wpdb->query($wpdb->prepare(  "
-                        INSERT INTO $table_name (
+                        INSERT INTO ".HAET_TABLE_PURCHASE_DETAILS." (
                           `purchase_log_id`,
                           `invoice_number`,
                           `filename`, 

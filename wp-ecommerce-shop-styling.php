@@ -31,6 +31,9 @@ if ( is_ssl() )
 define( 'HAET_INVOICE_PATH',$upload_path.'/wpsc-invoices/');
 define( 'HAET_INVOICE_URL',$upload_url.'/wpsc-invoices/');
 
+global $wpdb;
+define( 'HAET_TABLE_PURCHASE_DETAILS',$wpdb->prefix.'wpsc_haet_purchase_details');
+
 require HAET_SHOP_STYLING_PATH . 'includes/class-haetshopstyling.php';
 load_plugin_textdomain('haetshopstyling', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
 
@@ -65,8 +68,9 @@ if (isset($wp_haetshopstyling)) {
         add_filter('clean_url',array(&$wp_haetshopstyling, 'translateUrl'),20,3);
     }
 
-//    add_filter( 'manage_dashboard_page_wpsc-purchase-logs_columns', array(&$wp_haetshopstyling, 'addPurchaseLogColumnHead') );
-//    add_filter( 'wpsc_manage_purchase_logs_custom_column', array(&$wp_haetshopstyling, 'addPurchaseLogColumnContent'),10,3 );
+    //Add Column to purchase logs
+    add_filter( 'manage_dashboard_page_wpsc-purchase-logs_columns', array(&$wp_haetshopstyling, 'addPurchaseLogColumnHead') );
+    add_filter( 'wpsc_manage_purchase_logs_custom_column', array(&$wp_haetshopstyling, 'addPurchaseLogColumnContent'),10,3 );
 
     add_action( 'admin_init', array(&$wp_haetshopstyling, 'adminPageScriptsAndStyles'));
 

@@ -48,7 +48,7 @@ If you speak any language except German, Italian, Hungarian,French and English, 
 
 You'll receive a free set of serials for all upgrade features and of course a backlink to your website. 
 *	Great Thanks for the translations to 
-*	Luca for the Italian, 
+*	[Luca](http://www.bazarbonino.com) for the Italian, 
 *	Endre for the Hungarian, 
 *	and [Benjamin Duriez](http://www.estudio-b.net) for the French and Spanish version
 
