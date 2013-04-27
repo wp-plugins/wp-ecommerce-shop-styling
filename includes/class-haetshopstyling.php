@@ -32,7 +32,7 @@ class HaetShopStyling {
 	 $options = array(
 			'template' => stripslashes("<p>&nbsp;</p><p><img class=\"alignnone size-full wp-image-68\" title=\"logo\" src=\"".HAET_SHOP_STYLING_URL."images/logo.jpg\" alt=\"\" width=\"250\" height=\"49\" style=\"border: 0px none;\"/></p><p style=\"text-align: right;\">Companyname </p><p style=\"text-align: right;\">adressline 1</p><p style=\"text-align: right;\">12345 city</p><p style=\"text-align: right;\"> </p><p style=\"text-align: left;\">{billingfirstname} {billinglastname}</p><p style=\"text-align: left;\">{billingaddress}</p><p style=\"text-align: left;\">{billingpostcode} {billingcity}</p><p style=\"text-align: left;\"> </p><p style=\"text-align: right;\">Invoice: {purchase_id}</p><p style=\"text-align: right;\">Date: {date}</p><p style=\"text-align: right;\"> </p><h1 style=\"text-align: left;\">Invoice</h1><p style=\"text-align: left;\">{#productstable#}</p><p style=\"text-align: left;\"> </p><p style=\"text-align: right;\">Products total: {total_product_price}</p><p style=\"text-align: right;\">Shipping total: {total_shipping}</p><p style=\"text-align: right;\">Tax: {total_tax}</p><p style=\"text-align: right;\">Discount: {coupon_amount}</p><p style=\"text-align: right;\"><strong>Total: {cart_total}</strong></p><p style=\"text-align: right;\"> </p><p style=\"text-align: right;\"> </p><p style=\"text-align: center;\">Thank you for your purchase</p><p>&nbsp;</p>"),
 			'footer' => stripslashes("<p style=\"text-align: center;\">your company | adressline 1 | 12345 city | office@yourcompany.net</p><p style=\"text-align: center;\">Bank account no.: 0000000000000000000000</p>"),
-			'css' => "body {\nmargin: 30px;\n}\n/* included unicode fonts:\n*  serif: 'dejavu serif'\n*  sans: 'devavu sans'\n* add your own fonts: http://code.google.com/p/dompdf/wiki/CPDFUnicode#Load_a_font_supporting_your_characters_into_DOMPDF\n*/\nbody, td, th {\nfont-family: 'dejavu serif';\nfont-size: 10px;\n}\np{\nheight:1em;\n}\n\n#products-table{\nwidth:100%;\nborder-collapse:collapse;\npadding-bottom:1px;\nborder-bottom:0.1pt solid #606060;\n}\n#products-table th{\ntext-align:right;\nborder-bottom:0.2pt solid #606060;\n}\n#products-table td{\ntext-align:right;\nborder-bottom:0.1pt solid #606060;\n}\n\n#products-table .product_name{\ntext-align:left;\n}\n/* keeps the footer on its place because dompdf has problems with absolute and fixed positioning*/\n#content-table{\nwidth:100%;\nmargin-top:0;\n}\n#invoice-content{\nheight:230mm;\nvertical-align:top;\n}\n#invoice-footer{\ncolor:#444;\n}\n/* fix for displaying prices with EURO sign */\n.pricedisplay{\nmargin-right:5px;\n}",
+			'css' => "body {\nmargin: 30px;\n}\n/* included unicode fonts:\n*  serif: 'dejavu serif'\n*  sans: 'devavu sans'\n* add your own fonts: http://code.google.com/p/dompdf/wiki/CPDFUnicode#Load_a_font_supporting_your_characters_into_DOMPDF\n*/\nbody, td, th {\nfont-family: 'dejavu serif';\nfont-size: 10px;\n}\np{\nheight:1em;\n}\n\n#products-table{\nwidth:100%;\nborder-collapse:collapse;\npadding-bottom:1px;\nborder-bottom:0.1pt solid #606060;\n}\n#products-table th{\ntext-align:right;\nborder-bottom:0.2pt solid #606060;\n}\n#products-table .product-line td{\ntext-align:right;\nborder-top:0.1pt solid #606060;\n}\n#products-table .product-line .product_name,#products-table .personalization{\ntext-align:left;\n}\n/* keeps the footer on its place because dompdf has problems with absolute and fixed positioning*/\n#content-table{\nwidth:100%;\nmargin-top:0;\n}\n#invoice-content{\nheight:230mm;\nvertical-align:top;\n}\n#invoice-footer{\ncolor:#444;\n}\n/* fix for displaying prices with EURO sign */\n.pricedisplay{\nmargin-right:5px;\n}\n",
 			'paper' => 'a4',
 			'filename' => __('invoice','haetshopstyling'),
 			'subject_payment_successful' => __('Your purchase at ','haetshopstyling').get_bloginfo('name'),
@@ -71,8 +71,7 @@ class HaetShopStyling {
 								"",
 								""
 							),
-			 'mailtemplate' => "<!DOCTYPE HTML PUBLIC '-//W3C//DTD XHTML 1.0 Transitional //EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html><head><title></title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><style type='text/css'>\n/* Mobile-specific Styles */\n@media only screen and (max-device-width: 480px) {\ntable[class=w0], td[class=w0] { width: 0 !important; }\ntable[class=w10], td[class=w10], img[class=w10] { width:10px !important; }\ntable[class=w15], td[class=w15], img[class=w15] { width:5px !important; }\ntable[class=w30], td[class=w30], img[class=w30] { width:10px !important; }\ntable[class=w60], td[class=w60], img[class=w60] { width:10px !important; }\ntable[class=w125], td[class=w125], img[class=w125] { width:80px !important; }\ntable[class=w130], td[class=w130], img[class=w130] { width:55px !important; }\ntable[class=w140], td[class=w140], img[class=w140] { width:90px !important; }\ntable[class=w160], td[class=w160], img[class=w160] { width:180px !important; }\ntable[class=w170], td[class=w170], img[class=w170] { width:100px !important; }\ntable[class=w180], td[class=w180], img[class=w180] { width:80px !important; }\ntable[class=w195], td[class=w195], img[class=w195] { width:80px !important; }\ntable[class=w220], td[class=w220], img[class=w220] { width:80px !important; }\ntable[class=w240], td[class=w240], img[class=w240] { width:180px !important; }\ntable[class=w255], td[class=w255], img[class=w255] { width:185px !important; }\ntable[class=w275], td[class=w275], img[class=w275] { width:135px !important; }\ntable[class=w280], td[class=w280], img[class=w280] { width:135px !important; }\ntable[class=w300], td[class=w300], img[class=w300] { width:140px !important; }\ntable[class=w325], td[class=w325], img[class=w325] { width:95px !important; }\ntable[class=w360], td[class=w360], img[class=w360] { width:140px !important; }\ntable[class=w410], td[class=w410], img[class=w410] { width:180px !important; }\ntable[class=w470], td[class=w470], img[class=w470] { width:200px !important; }\ntable[class=w580], td[class=w580], img[class=w580] { width:280px !important; }\ntable[class=w640], td[class=w640], img[class=w640] { width:300px !important; }\ntable[class*=hide], td[class*=hide], img[class*=hide], p[class*=hide], span[class*=hide] { display:none !important; }\ntable[class=h0], td[class=h0] { height: 0 !important; }\np[class=footer-content-left] { text-align: center !important; }\n#headline p { font-size: 30px !important; }\n.article-content, #left-sidebar{ -webkit-text-size-adjust: 90% !important; -ms-text-size-adjust: 90% !important; }\n.header-content, .footer-content-left {-webkit-text-size-adjust: 80% !important; -ms-text-size-adjust: 80% !important;}\nimg { height: auto; line-height: 100%;}\n}\n/* Client-specific Styles */\n#outlook a { padding: 0; }	/* Force Outlook to provide a 'view in browser' button. */\nbody { width: 100% !important; }\n.ReadMsgBody { width: 100%; }\n.ExternalClass { width: 100%; display:block !important; } /* Force Hotmail to display emails at full width */\n/* Reset Styles */\n/* Add 100px so mobile switch bar doesn't cover street address. */\nbody { background-color: #dedede; margin: 0; padding: 0; }\nimg { outline: none; text-decoration: none; display: block;}\nbr, strong br, b br, em br, i br { line-height:100%; }\nh1, h2, h3, h4, h5, h6 { line-height: 100% !important; -webkit-font-smoothing: antialiased; }\nh1 a, h2 a, h3 a, h4 a, h5 a, h6 a { color: blue !important; }\nh1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {	color: red !important; }\n/* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */\nh1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited { color: purple !important; }\n/* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */\ntable td, table tr { border-collapse: collapse; }\n.yshortcuts, .yshortcuts a, .yshortcuts a:link,.yshortcuts a:visited, .yshortcuts a:hover, .yshortcuts a span {\ncolor: black; text-decoration: none !important; border-bottom: none !important; background: none !important;\n}	/* Body text color for the New Yahoo.  This example sets the font of Yahoo's Shortcuts to black. */\n/* This most probably won't work in all email clients. Don't include <code _tmplitem='269' > blocks in email. */\ncode {\nwhite-space: normal;\nword-break: break-all;\n}\n#background-table { background-color: #dedede; }\n/* Webkit Elements */\n#top-bar { border-radius:6px 6px 0px 0px; -moz-border-radius: 6px 6px 0px 0px; -webkit-border-radius:6px 6px 0px 0px; -webkit-font-smoothing: antialiased; background-color: #c7c7c7; color: #ededed; }\n#top-bar a { font-weight: bold; color: #ffffff; text-decoration: none;}\n#footer { border-radius:0px 0px 6px 6px; -moz-border-radius: 0px 0px 6px 6px; -webkit-border-radius:0px 0px 6px 6px; -webkit-font-smoothing: antialiased; }\n/* Fonts and Content */\nbody, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.header-content, .footer-content-left, .footer-content-right { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }\n/* Prevent Webkit and Windows Mobile platforms from changing default font sizes on header and footer. */\n.header-content { font-size: 12px; color: #ededed; }\n.header-content a { font-weight: bold; color: #ffffff; text-decoration: none; }\n#headline p { color: #444444; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; font-size: 36px; text-align: center; margin-top:0px; margin-bottom:30px; }\n#headline p a { color: #444444; text-decoration: none; }\n.article-title { font-size: 18px; line-height:24px; color: #b0b0b0; font-weight:bold; margin-top:0px; margin-bottom:18px; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.article-title a { color: #b0b0b0; text-decoration: none; }\n.article-title.with-meta {margin-bottom: 0;}\n.article-meta { font-size: 13px; line-height: 20px; color: #ccc; font-weight: bold; margin-top: 0;}\n.article-content { font-size: 13px; line-height: 18px; color: #444444; margin-top: 0px; margin-bottom: 18px; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.article-content a { color: #2f82de; font-weight:bold; text-decoration:none; }\n.article-content img { max-width: 100% }\n.article-content ol, .article-content ul { margin-top:0px; margin-bottom:18px; margin-left:19px; padding:0; }\n.article-content li { font-size: 13px; line-height: 18px; color: #444444; }\n.article-content li a { color: #2f82de; text-decoration:underline; }\n.article-content p {margin-bottom: 15px;}\n.footer-content-left { font-size: 12px; line-height: 15px; color: #ededed; margin-top: 0px; margin-bottom: 15px; }\n.footer-content-left a { color: #ffffff; font-weight: bold; text-decoration: none; }\n.footer-content-right { font-size: 11px; line-height: 16px; color: #ededed; margin-top: 0px; margin-bottom: 15px; }\n.footer-content-right a { color: #ffffff; font-weight: bold; text-decoration: none; }\n#footer { background-color: #c7c7c7; color: #ededed; }\n#footer a { color: #ffffff; text-decoration: none; font-weight: bold; }\n#permission-reminder { white-space: normal; }\n#street-address { color: #b0b0b0; white-space: normal; }\n#products-table{\n width:100%;\n border-collapse:collapse;\n padding-bottom:1px;\n border-bottom:0.1pt solid #606060;\n }\n #products-table th{\n text-align:right;\n border-bottom:0.2pt solid #606060;\n }\n #products-table td{\n text-align:right;\n border-bottom:0.1pt solid #606060;\n }\n #products-table .product_name{\n text-align:left;\n }</style>\n<!--[if gte mso 9]>\n<style _tmplitem='269' >\n.article-content ol, .article-content ul {\nmargin: 0 0 0 24px;\npadding: 0;\nlist-style-position: inside;\n}\n</style>\n<![endif]--></head><body><table id='background-table' border='0' cellpadding='0' cellspacing='0' width='100%'>\n<tbody><tr>\n<td align='center' bgcolor='#dedede'>\n<table class='w640' style='margin:0 10px;' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr><td class='w640' height='20' width='640'></td></tr>\n\n<tr>\n<td class='w640' width='640'>\n<table id='top-bar' class='w640' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr>\n<td class='w15' width='15'></td>\n<td class='w325' align='left' valign='middle' width='350'>\n<table class='w325' border='0' cellpadding='0' cellspacing='0' width='350'>\n<tbody><tr><td class='w325' height='8' width='350'></td></tr>\n</tbody></table>\n<div class='header-content'></div>\n<table class='w325' border='0' cellpadding='0' cellspacing='0' width='350'>\n<tbody><tr><td class='w325' height='8' width='350'></td></tr>\n</tbody></table>\n</td>\n<td class='w30' width='30'></td>\n<td class='w255' align='right' valign='middle' width='255'>\n<table class='w255' border='0' cellpadding='0' cellspacing='0' width='255'>\n<tbody><tr><td class='w255' height='8' width='255'></td></tr>\n</tbody></table>\n<table border='0' cellpadding='0' cellspacing='0'>\n<tbody><tr>\n\n\n\n</tr>\n</tbody></table>\n<table class='w255' border='0' cellpadding='0' cellspacing='0' width='255'>\n<tbody><tr><td class='w255' height='8' width='255'></td></tr>\n</tbody></table>\n</td>\n<td class='w15' width='15'></td>\n</tr>\n</tbody></table>\n\n</td>\n</tr>\n<tr>\n<td id='header' class='w640' align='center' bgcolor='#ffffff' width='640'>\n\n<table class='w640' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr><td class='w30' width='30'></td><td class='w580' height='30' width='580'></td><td class='w30' width='30'></td></tr>\n<tr>\n<td class='w30' width='30'></td>\n<td class='w580' width='580'>\n<div id='headline' align='center'>\n<!--- HERE COMES THE HEADER -->\n<p>\n<strong><a href='".home_url()."'><singleline label='Title'>".get_bloginfo('name')."</singleline></a></strong>\n</p>\n<!--- HERE WAS THE HEADER -->\n</div>\n</td>\n<td class='w30' width='30'></td>\n</tr>\n</tbody></table>\n\n\n</td>\n</tr>\n\n<tr><td class='w640' height='30' bgcolor='#ffffff' width='640'></td></tr>\n<tr id='simple-content-row'><td class='w640' bgcolor='#ffffff' width='640'>\n<table class='w640' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr>\n<td class='w30' width='30'></td>\n<td class='w580' width='580'>\n<!--- HERE COMES THE CONTENT -->\n{#mailcontent#}\n<!--- HERE WAS THE CONTENT -->\n</td>\n<td class='w30' width='30'></td>\n</tr>\n</tbody></table>\n</td></tr>\n<tr><td class='w640' height='15' bgcolor='#ffffff' width='640'></td></tr>\n\n<tr>\n<td class='w640' width='640'>\n<table id='footer' class='w640' bgcolor='#c7c7c7' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr><td class='w30' width='30'></td><td class='w580 h0' height='30' width='360'></td><td class='w0' width='60'></td><td class='w0' width='160'></td><td class='w30' width='30'></td></tr>\n<tr>\n<td class='w30' width='30'></td>\n<td class='w580' valign='top' width='360'>\n<span class='hide'><p id='permission-reminder' class='footer-content-left' align='left'></p></span>\n<p class='footer-content-left' align='left'>".get_bloginfo('name')."<br/>".get_bloginfo('admin_email')."</p>\n</td>\n<td class='hide w0' width='60'></td>\n<td class='hide w0' valign='top' width='160'>\n<p id='street-address' class='footer-content-right' align='right'></p>\n</td>\n<td class='w30' width='30'></td>\n</tr>\n<tr><td class='w30' width='30'></td><td class='w580 h0' height='15' width='360'></td><td class='w0' width='60'></td><td class='w0' width='160'></td><td class='w30' width='30'></td></tr>\n</tbody></table>\n</td>\n</tr>\n<tr><td class='w640' height='60' width='640'></td></tr>\n</tbody></table>\n</td>\n</tr>\n</tbody></table></body></html>",
-			 'customsender' => 'enable',
+			 'mailtemplate' => "<!DOCTYPE HTML PUBLIC '-//W3C//DTD XHTML 1.0 Transitional //EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html><head><title></title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><style type='text/css'>\n/* Mobile-specific Styles */\n@media only screen and (max-device-width: 480px) {\ntable[class=w0], td[class=w0] { width: 0 !important; }\ntable[class=w10], td[class=w10], img[class=w10] { width:10px !important; }\ntable[class=w15], td[class=w15], img[class=w15] { width:5px !important; }\ntable[class=w30], td[class=w30], img[class=w30] { width:10px !important; }\ntable[class=w60], td[class=w60], img[class=w60] { width:10px !important; }\ntable[class=w125], td[class=w125], img[class=w125] { width:80px !important; }\ntable[class=w130], td[class=w130], img[class=w130] { width:55px !important; }\ntable[class=w140], td[class=w140], img[class=w140] { width:90px !important; }\ntable[class=w160], td[class=w160], img[class=w160] { width:180px !important; }\ntable[class=w170], td[class=w170], img[class=w170] { width:100px !important; }\ntable[class=w180], td[class=w180], img[class=w180] { width:80px !important; }\ntable[class=w195], td[class=w195], img[class=w195] { width:80px !important; }\ntable[class=w220], td[class=w220], img[class=w220] { width:80px !important; }\ntable[class=w240], td[class=w240], img[class=w240] { width:180px !important; }\ntable[class=w255], td[class=w255], img[class=w255] { width:185px !important; }\ntable[class=w275], td[class=w275], img[class=w275] { width:135px !important; }\ntable[class=w280], td[class=w280], img[class=w280] { width:135px !important; }\ntable[class=w300], td[class=w300], img[class=w300] { width:140px !important; }\ntable[class=w325], td[class=w325], img[class=w325] { width:95px !important; }\ntable[class=w360], td[class=w360], img[class=w360] { width:140px !important; }\ntable[class=w410], td[class=w410], img[class=w410] { width:180px !important; }\ntable[class=w470], td[class=w470], img[class=w470] { width:200px !important; }\ntable[class=w580], td[class=w580], img[class=w580] { width:280px !important; }\ntable[class=w640], td[class=w640], img[class=w640] { width:300px !important; }\ntable[class*=hide], td[class*=hide], img[class*=hide], p[class*=hide], span[class*=hide] { display:none !important; }\ntable[class=h0], td[class=h0] { height: 0 !important; }\np[class=footer-content-left] { text-align: center !important; }\n#headline p { font-size: 30px !important; }\n.article-content, #left-sidebar{ -webkit-text-size-adjust: 90% !important; -ms-text-size-adjust: 90% !important; }\n.header-content, .footer-content-left {-webkit-text-size-adjust: 80% !important; -ms-text-size-adjust: 80% !important;}\nimg { height: auto; line-height: 100%;}\n}\n/* Client-specific Styles */\n#outlook a { padding: 0; }	/* Force Outlook to provide a 'view in browser' button. */\nbody { width: 100% !important; }\n.ReadMsgBody { width: 100%; }\n.ExternalClass { width: 100%; display:block !important; } /* Force Hotmail to display emails at full width */\n/* Reset Styles */\n/* Add 100px so mobile switch bar doesn't cover street address. */\nbody { background-color: #dedede; margin: 0; padding: 0; }\nimg { outline: none; text-decoration: none; display: block;}\nbr, strong br, b br, em br, i br { line-height:100%; }\nh1, h2, h3, h4, h5, h6 { line-height: 100% !important; -webkit-font-smoothing: antialiased; }\nh1 a, h2 a, h3 a, h4 a, h5 a, h6 a { color: blue !important; }\nh1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {	color: red !important; }\n/* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */\nh1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited { color: purple !important; }\n/* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */\ntable td, table tr { border-collapse: collapse; }\n.yshortcuts, .yshortcuts a, .yshortcuts a:link,.yshortcuts a:visited, .yshortcuts a:hover, .yshortcuts a span {\ncolor: black; text-decoration: none !important; border-bottom: none !important; background: none !important;\n}	/* Body text color for the New Yahoo.  This example sets the font of Yahoo's Shortcuts to black. */\n/* This most probably won't work in all email clients. Don't include <code _tmplitem='269' > blocks in email. */\ncode {\nwhite-space: normal;\nword-break: break-all;\n}\n#background-table { background-color: #dedede; }\n/* Webkit Elements */\n#top-bar { border-radius:6px 6px 0px 0px; -moz-border-radius: 6px 6px 0px 0px; -webkit-border-radius:6px 6px 0px 0px; -webkit-font-smoothing: antialiased; background-color: #c7c7c7; color: #ededed; }\n#top-bar a { font-weight: bold; color: #ffffff; text-decoration: none;}\n#footer { border-radius:0px 0px 6px 6px; -moz-border-radius: 0px 0px 6px 6px; -webkit-border-radius:0px 0px 6px 6px; -webkit-font-smoothing: antialiased; }\n/* Fonts and Content */\nbody, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.header-content, .footer-content-left, .footer-content-right { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }\n/* Prevent Webkit and Windows Mobile platforms from changing default font sizes on header and footer. */\n.header-content { font-size: 12px; color: #ededed; }\n.header-content a { font-weight: bold; color: #ffffff; text-decoration: none; }\n#headline p { color: #444444; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; font-size: 36px; text-align: center; margin-top:0px; margin-bottom:30px; }\n#headline p a { color: #444444; text-decoration: none; }\n.article-title { font-size: 18px; line-height:24px; color: #b0b0b0; font-weight:bold; margin-top:0px; margin-bottom:18px; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.article-title a { color: #b0b0b0; text-decoration: none; }\n.article-title.with-meta {margin-bottom: 0;}\n.article-meta { font-size: 13px; line-height: 20px; color: #ccc; font-weight: bold; margin-top: 0;}\n.article-content { font-size: 13px; line-height: 18px; color: #444444; margin-top: 0px; margin-bottom: 18px; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.article-content a { color: #2f82de; font-weight:bold; text-decoration:none; }\n.article-content img { max-width: 100% }\n.article-content ol, .article-content ul { margin-top:0px; margin-bottom:18px; margin-left:19px; padding:0; }\n.article-content li { font-size: 13px; line-height: 18px; color: #444444; }\n.article-content li a { color: #2f82de; text-decoration:underline; }\n.article-content p {margin-bottom: 15px;}\n.footer-content-left { font-size: 12px; line-height: 15px; color: #ededed; margin-top: 0px; margin-bottom: 15px; }\n.footer-content-left a { color: #ffffff; font-weight: bold; text-decoration: none; }\n.footer-content-right { font-size: 11px; line-height: 16px; color: #ededed; margin-top: 0px; margin-bottom: 15px; }\n.footer-content-right a { color: #ffffff; font-weight: bold; text-decoration: none; }\n#footer { background-color: #c7c7c7; color: #ededed; }\n#footer a { color: #ffffff; text-decoration: none; font-weight: bold; }\n#permission-reminder { white-space: normal; }\n#street-address { color: #b0b0b0; white-space: normal; }\n#products-table{\nwidth:100%;\n border-collapse:collapse;\n padding-bottom:1px;\n border-bottom:0.1pt solid #606060;\n }\n #products-table th{\n text-align:right;\n border-bottom:0.2pt solid #606060;\n }\n #products-table .product-line td{\n text-align:right;\n border-top:0.1pt solid #606060;\n }\n \n #products-table .product-line .product_name,#products-table .personalization{\n text-align:left;\n }</style>\n<!--[if gte mso 9]>\n<style _tmplitem='269' >\n.article-content ol, .article-content ul {\nmargin: 0 0 0 24px;\npadding: 0;\nlist-style-position: inside;\n}\n</style>\n<![endif]--></head><body><table id='background-table' border='0' cellpadding='0' cellspacing='0' width='100%'>\n<tbody><tr>\n<td align='center' bgcolor='#dedede'>\n<table class='w640' style='margin:0 10px;' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr><td class='w640' height='20' width='640'></td></tr>\n\n<tr>\n<td class='w640' width='640'>\n<table id='top-bar' class='w640' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr>\n<td class='w15' width='15'></td>\n<td class='w325' align='left' valign='middle' width='350'>\n<table class='w325' border='0' cellpadding='0' cellspacing='0' width='350'>\n<tbody><tr><td class='w325' height='8' width='350'></td></tr>\n</tbody></table>\n<div class='header-content'></div>\n<table class='w325' border='0' cellpadding='0' cellspacing='0' width='350'>\n<tbody><tr><td class='w325' height='8' width='350'></td></tr>\n</tbody></table>\n</td>\n<td class='w30' width='30'></td>\n<td class='w255' align='right' valign='middle' width='255'>\n<table class='w255' border='0' cellpadding='0' cellspacing='0' width='255'>\n<tbody><tr><td class='w255' height='8' width='255'></td></tr>\n</tbody></table>\n<table border='0' cellpadding='0' cellspacing='0'>\n<tbody><tr>\n\n\n\n</tr>\n</tbody></table>\n<table class='w255' border='0' cellpadding='0' cellspacing='0' width='255'>\n<tbody><tr><td class='w255' height='8' width='255'></td></tr>\n</tbody></table>\n</td>\n<td class='w15' width='15'></td>\n</tr>\n</tbody></table>\n\n</td>\n</tr>\n<tr>\n<td id='header' class='w640' align='center' bgcolor='#ffffff' width='640'>\n\n<table class='w640' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr><td class='w30' width='30'></td><td class='w580' height='30' width='580'></td><td class='w30' width='30'></td></tr>\n<tr>\n<td class='w30' width='30'></td>\n<td class='w580' width='580'>\n<div id='headline' align='center'>\n<!--- HERE COMES THE HEADER -->\n<p>\n<strong><a href='".home_url()."'><singleline label='Title'>".get_bloginfo('name')."</singleline></a></strong>\n</p>\n<!--- HERE WAS THE HEADER -->\n</div>\n</td>\n<td class='w30' width='30'></td>\n</tr>\n</tbody></table>\n\n\n</td>\n</tr>\n\n<tr><td class='w640' height='30' bgcolor='#ffffff' width='640'></td></tr>\n<tr id='simple-content-row'><td class='w640' bgcolor='#ffffff' width='640'>\n<table class='w640' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr>\n<td class='w30' width='30'></td>\n<td class='w580' width='580'>\n<!--- HERE COMES THE CONTENT -->\n{#mailcontent#}\n<!--- HERE WAS THE CONTENT -->\n</td>\n<td class='w30' width='30'></td>\n</tr>\n</tbody></table>\n</td></tr>\n<tr><td class='w640' height='15' bgcolor='#ffffff' width='640'></td></tr>\n\n<tr>\n<td class='w640' width='640'>\n<table id='footer' class='w640' bgcolor='#c7c7c7' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr><td class='w30' width='30'></td><td class='w580 h0' height='30' width='360'></td><td class='w0' width='60'></td><td class='w0' width='160'></td><td class='w30' width='30'></td></tr>\n<tr>\n<td class='w30' width='30'></td>\n<td class='w580' valign='top' width='360'>\n<span class='hide'><p id='permission-reminder' class='footer-content-left' align='left'></p></span>\n<p class='footer-content-left' align='left'>".get_bloginfo('name')."<br/>".get_bloginfo('admin_email')."</p>\n</td>\n<td class='hide w0' width='60'></td>\n<td class='hide w0' valign='top' width='160'>\n<p id='street-address' class='footer-content-right' align='right'></p>\n</td>\n<td class='w30' width='30'></td>\n</tr>\n<tr><td class='w30' width='30'></td><td class='w580 h0' height='15' width='360'></td><td class='w0' width='60'></td><td class='w0' width='160'></td><td class='w30' width='30'></td></tr>\n</tbody></table>\n</td>\n</tr>\n<tr><td class='w640' height='60' width='640'></td></tr>\n</tbody></table>\n</td>\n</tr>\n</tbody></table></body></html>",			 'customsender' => 'enable',
 			 'resultspage_successful' => "<p>Thank you for your purchase</p><p>We received your payment. Your order {purchase_id} will be processed immediately by our team.</p><p><strong> Your Products</strong></p><p>{#productstable#}</p>",
 			 'resultspage_incomplete' => "<p>Thank you for your purchase.</p><p>Please transfer the <strong>amount of</strong> {cart_total} to the following account and please mention your <strong>order number {purchase_id} </strong>in the field as reason:</p><p>Account owner<br />Bank<br />IBAN: XX 000000000000000000000<br />BIC/SWIFT: XX00XX00</p><p>Your articles will be delivered immediately after your payment.</p><p>&nbsp;</p>",
 			 'resultspage_failed' => "<p><strong>Your payment could not be processed.</strong></p><p>Please transfer the <strong>amount of</strong> {cart_total} to the following account and please mention your <strong>order number {purchase_id} </strong>in the field as reason:</p><p>Account owner<br />Bank<br />IBAN: XX 000000000000000000000<br />BIC/SWIFT: XX00XX00</p><p>Your articles will be delivered immediately after your payment.</p><p>&nbsp;</p>",
@@ -166,7 +165,7 @@ class HaetShopStyling {
      * 
      */
     function addPurchaseLogColumnHead( $columns ){
-        $columns['invoicenumber']=__('Invoice Number','haetshopstyling');
+        //columns['invoicenumber']=__('Invoice Number','haetshopstyling');
         return $columns;
     }
 
@@ -175,7 +174,7 @@ class HaetShopStyling {
      * 
      */
     function addPurchaseLogColumnContent( $default, $column_name, $item ){
-        if($column_name=='invoicenumber'){
+        /*if($column_name=='invoicenumber'){
             global $wpdb;
             $sql = $wpdb->prepare('
                 SELECT invoice_number,filename,invoice_sent 
@@ -185,9 +184,8 @@ class HaetShopStyling {
 
             $invoice = $wpdb->get_results($sql);
             
-            print_r($invoice);
-            echo 97;    
-        }
+            print_r($invoice);   
+        }*/
     }
 
 	/**
@@ -393,7 +391,8 @@ class HaetShopStyling {
 					array('tax_single',      __('tax per product','haetshopstyling')),
 					array('product_tax_charged',      __('tax sum','haetshopstyling')),
                     array('custom_message',      __('personalization','haetshopstyling')),
-					array('download',      __('download link','haetshopstyling'))
+					array('download',      __('download link','haetshopstyling')),
+                    array('baseprice_sum',      __('base price','haetshopstyling')) //customization for Ivan
 			);
 		$select = '<select class="products-field-select" id="'.$id.'" name="'.$id.'">';
 		$select .= '<option value="" >'.__('hide column','haetshopstyling').'</option>';
@@ -499,21 +498,23 @@ class HaetShopStyling {
 
 		//GENERATE PRODUCTS TABLE outside the if statement
 		// this cannot be cached in a transient because of the download links
-		$items = $this->getCartItems($purchase_id);
+		$items = $this->getCartItems($purchase_id);   
 		$products_table = '<table id="products-table">';
-		$products_table .= '<tr>';
+		$products_table .= "<tr>\n";
 		for ($col=1;$col <= count($options["columnfield"]); $col++){
 			if($options["columnfield"][$col]!='' && !($options["columnfield"][$col]=='download' && $this->getProcessedState($purchase_id)!=3))
-				$products_table .= "<th class='".$options["columnfield"][$col]."'>".$options["columntitle"][$col]."</th>";
+				$products_table .= "<th class='".$options["columnfield"][$col]."'>".__($options["columntitle"][$col])."</th>";
 		}
-		$products_table .= '</tr>';
+		$products_table .= "</tr>\n";
 		$row=0;
 
         $num_columns=0;
         foreach ($options["columnfield"] AS $field)
-            if($field!='' AND !($field!='download' && $this->getProcessedState($purchase_id)==3 ))
+            if($field!='' AND !($field=='download' && $this->getProcessedState($purchase_id)!=3 ))
                 $num_columns++;
 
+        $total_product_baseprice_numeric=0;
+        $total_product_price_numeric=0;
 		foreach ($items AS $item){
 			$item['item_number']=$row+1;
 			$item['price_without_tax']= $this->currencyDisplay( ($item['product_price']*$item['product_quantity']-$item['product_tax_charged'])/$item['product_quantity'] );
@@ -540,23 +541,25 @@ class HaetShopStyling {
 				$item['product_gst']= number_format($item['product_gst'], 2, $decimal_separator ,'');
 				$item['product_price']= $this->currencyDisplay( $item['product_price'] ) ;
 			}
+            $item['baseprice_sum']= $this->currencyDisplay( $item['baseprice']*$item['product_quantity'] ); 
+            $total_product_baseprice_numeric += $item['baseprice']*$item['product_quantity'];
+            $total_product_price_numeric += $item['price_sum'];
 
 			$item['price_sum']= $this->currencyDisplay($item['price_sum']);
 
-
-			$products_table .= '<tr class="product-line">';
+			$products_table .= "<tr class='product-line'>\n";
 			for ($col=1;$col <= $num_columns; $col++){
 				if($options["columnfield"][$col]=='download' ){
 					if($this->getProcessedState($purchase_id)==3 && isset($item['download'])){
 						$products_table .= "<td class='".$options["columnfield"][$col]."'>";
 						foreach($item['download'] AS $download)
 							$products_table .= '<a href="'.$download.'"><img src="'.HAET_SHOP_STYLING_URL.'images/download.png" style="margin-bottom: -5px;" alt="download"></a><br/>';
-						$products_table .= "</td>";
+						$products_table .= "</td>\n";
 					}
 				}else if($options["columnfield"][$col]!='')
-					$products_table .= "<td class='".$options["columnfield"][$col]."'>".$item[$options["columnfield"][$col]]."</td>";
+					$products_table .= "<td class='".$options["columnfield"][$col]."'>".$item[$options["columnfield"][$col]]."</td>\n";
 			}
-			$products_table .= '</tr>';   
+			$products_table .= "</tr>\n";   
             if($options['personalizationbelow']=="enable"){
                 if($options['personalizationto']>$num_columns)
                     $options['personalizationto']=$num_columns;
@@ -565,16 +568,18 @@ class HaetShopStyling {
                     for($i=1;$i<$options['personalizationfrom'];$i++)
                         $products_table .= '<td class="blank"></td>';
                             
-                    $products_table .= '<td colspan="'.($options['personalizationto']-$options['personalizationfrom']+1).'" class="personalization">'.str_replace(array("\r\n", "\r", "\n"), "<br />", $item['custom_message']).'</td>';   
+                    $products_table .= '<td colspan="'.($options['personalizationto']-$options['personalizationfrom']+1).'" class="personalization">'.str_replace(array("\r\n", "\r", "\n"), "<br />", $item['custom_message'])."</td>\n";   
                     for($i=$options['personalizationto']+1;$i<=$num_columns;$i++)
                         $products_table .= '<td class="blank"></td>';
                     $products_table .= '</tr>';
                 }
             }  
 
-
 			$row++;
 		}
+        $params[]= array('unique_name'=>'total_product_baseprice','value'=>$this->currencyDisplay($total_product_baseprice_numeric));
+        $params[]= array('unique_name'=>'total_product_saving','value'=>$this->currencyDisplay($total_product_baseprice_numeric - $total_product_price_numeric));
+
 		$products_table .= '</table>';
 		$params[]= array('unique_name'=>'#productstable#','value'=>$products_table);
 		return $params;
@@ -632,8 +637,12 @@ class HaetShopStyling {
 							tax_charged AS product_tax_charged,
 							gst AS product_gst,
 							quantity AS product_quantity,
-                            custom_message
+                            custom_message,
+                            price.meta_value AS baseprice,
+                            sku_meta.meta_value AS sku
 						FROM `".$wpdb->prefix."wpsc_cart_contents` 
+                        INNER JOIN ".$wpdb->prefix."postmeta price ON prodid=price.post_id AND price.meta_key='_wpsc_price'
+                        INNER JOIN ".$wpdb->prefix."postmeta sku_meta ON prodid=sku_meta.post_id AND sku_meta.meta_key='_wpsc_sku'
 						WHERE  `purchaseid` = ".(int)$purchase_id;
 		$cartitems = $wpdb->get_results($form_sql,ARRAY_A);
 		if($this->getProcessedState($purchase_id)==3){
@@ -812,7 +821,10 @@ class HaetShopStyling {
 			}
 		}
 		$message = preg_replace('/\<http(.*)\>/', '<a href="http$1">http$1</a>', $message); //replace links like <http://... with <a href="http://..."
-		$message = str_replace('{#mailcontent#}',nl2br($message),$options['mailtemplate']);
+        if($is_shop_mail)
+            $message = str_replace('{#mailcontent#}',$message,$options['mailtemplate']);
+        else
+            $message = str_replace('{#mailcontent#}',nl2br($message),$options['mailtemplate']);
 		$message = str_replace('{#mailsubject#}',$subject,$message);
 		$message = stripslashes(str_replace('\\&quot;','',$message));
 		add_filter( 'wp_mail_content_type', create_function('', 'return "text/html";'));
@@ -919,9 +931,9 @@ class HaetShopStyling {
      */
     private function createTables(){
         global $wpdb;
-/*        if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',HAET_TABLE_PURCHASE_DETAILS ) )){
+        if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',HAET_TABLE_PURCHASE_DETAILS ) )){
             $wpdb->query('DROP TABLE `'.HAET_TABLE_PURCHASE_DETAILS.'`');
-        }*/
+        }
         if ( !$wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',HAET_TABLE_PURCHASE_DETAILS ) )){
             $wpdb->query(  '
                 CREATE TABLE IF NOT EXISTS `'.HAET_TABLE_PURCHASE_DETAILS.'` (
@@ -933,7 +945,9 @@ class HaetShopStyling {
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
                 '
             );
+
             //write old invoicenumbers and invoice filenames
+            //TODO: only if not exists
             $options = $this->getOptions();
             $purchase_ids = $wpdb->get_col('SELECT id FROM '.WPSC_TABLE_PURCHASE_LOGS.' ORDER BY id DESC');
             foreach ($purchase_ids as $purchase_id) {
@@ -960,5 +974,4 @@ class HaetShopStyling {
         }
     }
 }
-
 ?>
