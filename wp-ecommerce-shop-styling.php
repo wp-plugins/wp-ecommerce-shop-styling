@@ -3,7 +3,7 @@
 Plugin Name: WP E-Commerce shop styling
 Plugin URI: http://haet.at/wp-e-commerce-shop-styling/
 Description: Send customized HTML mails, custom transaction results and PDF invoices with placeholders from your WP-Ecommerce store 
-Version: 1.9.1
+Version: 1.9.2
 Author: haet webdevelopment
 Author URI: http://haet.at
 License: GPLv2 or later
@@ -69,8 +69,8 @@ if (isset($wp_haetshopstyling)) {
     }
 
     //Add Column to purchase logs
-    add_filter( 'manage_dashboard_page_wpsc-purchase-logs_columns', array(&$wp_haetshopstyling, 'addPurchaseLogColumnHead') );
-    add_filter( 'wpsc_manage_purchase_logs_custom_column', array(&$wp_haetshopstyling, 'addPurchaseLogColumnContent'),10,3 );
+    //add_filter( 'manage_dashboard_page_wpsc-purchase-logs_columns', array(&$wp_haetshopstyling, 'addPurchaseLogColumnHead') );
+    //add_filter( 'wpsc_manage_purchase_logs_custom_column', array(&$wp_haetshopstyling, 'addPurchaseLogColumnContent'),10,3 );
 
     add_action( 'admin_init', array(&$wp_haetshopstyling, 'adminPageScriptsAndStyles'));
 

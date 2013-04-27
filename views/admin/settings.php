@@ -152,7 +152,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr valign="top">
+				<!--<tr valign="top">
 					<th scope="row"><label for="haetshopstylingsendpdfafterpayment"><?php _e('Send the after accepted payment only','haetshopstyling'); ?></label></th>
 					<td>
 						<select  id="haetshopstylingsendpdfafterpayment" name="haetshopstylingsendpdfafterpayment">
@@ -189,7 +189,7 @@
 						<input type="text" class="regular-text" id="haetshopstylinginvoicenumber" name="haetshopstylinginvoicenumber" value="<?php echo $options['invoice_number']; ?>">
 						<span class="description"><?php _e('this number will be used in the next invoice and incremented afterwards','haetshopstyling'); ?></span>
 					</td>
-				</tr>
+				</tr>-->
 				<tr valign="top">
 					<th scope="row"><label for="haetshopstylingdisablepdf"><?php _e('Disable PDF invoice','haetshopstyling'); ?></label></th>
 					<td>
