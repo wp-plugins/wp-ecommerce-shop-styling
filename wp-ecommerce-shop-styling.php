@@ -69,12 +69,13 @@ if (isset($wp_haetshopstyling)) {
     }
 
     //Add Column to purchase logs
-    //add_filter( 'manage_dashboard_page_wpsc-purchase-logs_columns', array(&$wp_haetshopstyling, 'addPurchaseLogColumnHead') );
-    //add_filter( 'wpsc_manage_purchase_logs_custom_column', array(&$wp_haetshopstyling, 'addPurchaseLogColumnContent'),10,3 );
+    add_filter( 'manage_dashboard_page_wpsc-purchase-logs_columns', array(&$wp_haetshopstyling, 'addPurchaseLogColumnHead') );
+    add_filter( 'wpsc_manage_purchase_logs_custom_column', array(&$wp_haetshopstyling, 'addPurchaseLogColumnContent'),10,3 );
 
     add_action( 'admin_init', array(&$wp_haetshopstyling, 'adminPageScriptsAndStyles'));
 
-
+    //create or update tables
+    add_action( 'plugins_loaded', array(&$wp_haetshopstyling, 'createTables') );
 }
 
 function haetshopstyling_init(){
@@ -83,6 +84,8 @@ function haetshopstyling_init(){
     $wp_haetshopstyling->init();
 }
 register_activation_hook( __FILE__, 'haetshopstyling_init');
+
+
 
 function add_haetshopstyling_adminpage() {
 		global $wp_haetshopstyling;

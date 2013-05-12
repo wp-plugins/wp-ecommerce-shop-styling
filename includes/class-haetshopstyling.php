@@ -165,7 +165,10 @@ class HaetShopStyling {
      * 
      */
     function addPurchaseLogColumnHead( $columns ){
-        //columns['invoicenumber']=__('Invoice Number','haetshopstyling');
+        if(is_plugin_active('qtranslate/qtranslate.php')){
+            $columns['locale']=__('Language','haetshopstyling');
+        }
+        //$columns['invoicenumber']=__('Invoice Number','haetshopstyling');
         return $columns;
     }
 
@@ -174,6 +177,16 @@ class HaetShopStyling {
      * 
      */
     function addPurchaseLogColumnContent( $default, $column_name, $item ){
+        global $wpdb;
+        if(is_plugin_active('qtranslate/qtranslate.php') && $column_name=='locale'){
+            $locale = $wpdb->get_var("SELECT `locale` FROM ".HAET_TABLE_PURCHASE_DETAILS." WHERE purchase_log_id=".$item->id);
+            if ($locale) {
+                $locale = substr($locale, 0,2);
+                $flags = get_option('qtranslate_flags');
+                echo '<img src="'.plugins_url().'/qtranslate/flags/'.$flags[$locale].'" title="'.strtoupper($locale).'">';
+            }
+            //http://singles-diamond.com/wp-content/plugins/qtranslate/flags/de.png
+        }
         /*if($column_name=='invoicenumber'){
             global $wpdb;
             $sql = $wpdb->prepare('
@@ -589,9 +602,23 @@ class HaetShopStyling {
 	 * Run this function once before the cart is cleared to compute and save all sum values 
 	**/
 	function generateBillingData($purchase_log){
+        global $wpdb;
 		//$purchase_log = new WPSC_Purchase_Log( $_GET['sessionid'], 'sessionid' );
 		$options = $this->getOptions();
-		$this->getBillingData($purchase_log->get('id'),$options);
+        $purchase_id = $purchase_log->get('id');
+		$this->getBillingData($purchase_id,$options);
+
+        $locale = get_locale();
+        $wpdb->query($wpdb->prepare(  "
+            INSERT INTO ".HAET_TABLE_PURCHASE_DETAILS." (
+              `purchase_log_id`,
+              `locale`
+            ) VALUES (
+                %d,
+                %s
+            )
+            "
+        ,$purchase_id,$locale));
 	}
 	
 
@@ -722,14 +749,20 @@ class HaetShopStyling {
 			$message_html = stripslashes(str_replace('\\&quot;','',$options['resultspage_successful'])) ;
 		
 		foreach ($params AS $param){
-			$message_html = str_replace('{'.$param["unique_name"].'}', $param['value'], $message_html);
+            if (gettype ( $param ) == 'array') {
+                if (array_key_exists('value', $param) && array_key_exists('unique_name', $param)) {
+                    $message_html = __(str_replace('{'.$param["unique_name"].'}', $param['value'], $message_html));
+                }
+            }
 		}
 		return __($message_html);
 	}
 	
-	
-	
+
+
 	function styleMail($vars){
+
+        
 		$options = $this->getOptions();
 		extract($vars);
 
@@ -747,7 +780,10 @@ class HaetShopStyling {
 			$purchase_id = $haet_purchase_id;
 		}
 		
+        
+
 		if($purchase_id){
+        
 			$params = $this->getBillingData($purchase_id,$options);
 			if(isset($_GET['email_buyer_id']) || !get_transient( "{$purchase_id}_invoice_email_sent") ){ //if "resend receipt to buyer"
 				$filename = $options['filename'].'-'.$purchase_id.'.pdf';
@@ -838,8 +874,18 @@ class HaetShopStyling {
 		}
 		
 		//translate (in case of qtranslate)
-		$subject = __($subject);
-		$message = __($message);
+        if(is_plugin_active('qtranslate/qtranslate.php')){
+            $current_locale = get_locale();
+            global $wpdb;
+            $customer_locale = $wpdb->get_var("SELECT `locale` FROM ".HAET_TABLE_PURCHASE_DETAILS." WHERE purchase_log_id=".$purchase_id);
+            if ( $current_locale != $customer_locale && strlen($customer_locale)>0 ){
+                $subject = qtrans_use(substr($customer_locale, 0,2),$subject);
+                $message = qtrans_use(substr($customer_locale, 0,2),$message);
+            }else{
+                $subject = __($subject);
+                $message = __($message);
+            }
+        }
 		return compact( 'to', 'subject', 'message', 'headers', 'attachments' );
 	}
 	
@@ -929,12 +975,14 @@ class HaetShopStyling {
      * creates or updates the currency-country table
      * @global object $wpdb
      */
-    private function createTables(){
+    function createTables(){
         global $wpdb;
         if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',HAET_TABLE_PURCHASE_DETAILS ) )){
-            $wpdb->query('DROP TABLE `'.HAET_TABLE_PURCHASE_DETAILS.'`');
-        }
-        if ( !$wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',HAET_TABLE_PURCHASE_DETAILS ) )){
+            //$wpdb->query('DROP TABLE `'.HAET_TABLE_PURCHASE_DETAILS.'`');
+            if ( !$wpdb->get_var('SHOW COLUMNS FROM `'.HAET_TABLE_PURCHASE_DETAILS.'` LIKE `locale`')){
+                $wpdb->query('ALTER TABLE  `'.HAET_TABLE_PURCHASE_DETAILS.'` ADD `locale` VARCHAR( 10 ) NULL ');
+            }
+        }else{
             $wpdb->query(  '
                 CREATE TABLE IF NOT EXISTS `'.HAET_TABLE_PURCHASE_DETAILS.'` (
                   `purchase_log_id` int(10) unsigned NOT NULL,

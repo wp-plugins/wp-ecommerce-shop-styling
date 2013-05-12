@@ -139,7 +139,7 @@
 				<tr valign="top">
 					<th scope="row"><label for="haetshopstylingfilename"><?php _e('Filename','haetshopstyling'); ?></label></th>
 					<td>
-						<input type="text" class="regular-text" id="haetshopstylingpaper" name="haetshopstylingfilename" value="<?php echo $options['filename']; ?>">
+						<input type="text" class="regular-text" id="haetshopstylingfilename" name="haetshopstylingfilename" value="<?php echo $options['filename']; ?>">
 						<span class="description"><?php _e('&lt;filename&gt;&lt;invoicenumber&gt;.pdf','haetshopstyling'); ?></span>
 					</td>
 				</tr>
@@ -298,7 +298,7 @@
 				<?php for($col=1;$col<=10;$col++): ?>
 				<tr valign="top">
 					 <th><?php echo __('Column','haetshopstyling')." ".$col; ?></th>
-					 <td><input type="text" class="" name="columntitle[<?php echo $col; ?>]" id="title_col1" value="<?php echo $options["columntitle"][$col];?>"></td>
+					 <td><input type="text" class="multilanguage-input" name="columntitle[<?php echo $col; ?>]" id="title_col<?php echo $col; ?>" value="<?php echo $options["columntitle"][$col];?>"></td>
 					 <td><?php echo $this->productsFieldSelect('columnfield['.$col.']',$options["columnfield"][$col]); ?></td>
 				</tr>
 				<?php endfor; ?>
@@ -347,7 +347,7 @@
 					  <tr valign="top">
 						  <th scope="row"><label for="haetshopstylingsubject_payment_successful"><?php _e('Email subject','haetshopstyling'); ?></label></th>
 						  <td>
-							  <input type="text" class="regular-text" id="haetshopstylingsubject_payment_successful" name="haetshopstylingsubject_payment_successful" value="<?php echo $options['subject_payment_successful']; ?>">
+							  <input type="text" class="multilanguage-input regular-text" id="haetshopstylingsubject_payment_successful" name="haetshopstylingsubject_payment_successful" value="<?php echo $options['subject_payment_successful']; ?>">
 						  </td>
 					  </tr>
 				  </tbody>
@@ -372,7 +372,7 @@
 					  <tr valign="top">
 						  <th scope="row"><label for="haetshopstylingsubject_payment_incomplete"><?php _e('Email subject','haetshopstyling'); ?></label></th>
 						  <td>
-							  <input type="text" class="regular-text" id="haetshopstylingsubject_payment_incomplete" name="haetshopstylingsubject_payment_incomplete" value="<?php echo $options['subject_payment_incomplete']; ?>">
+							  <input type="text" class="multilanguage-input regular-text" id="haetshopstylingsubject_payment_incomplete" name="haetshopstylingsubject_payment_incomplete" value="<?php echo $options['subject_payment_incomplete']; ?>">
 						  </td>
 					  </tr>
 				  </tbody>
@@ -397,7 +397,7 @@
 					  <tr valign="top">
 						  <th scope="row"><label for="haetshopstylingsubject_payment_failed"><?php _e('Email subject','haetshopstyling'); ?></label></th>
 						  <td>
-							  <input type="text" class="regular-text" id="haetshopstylingsubject_payment_failed" name="haetshopstylingsubject_payment_failed" value="<?php echo $options['subject_payment_failed']; ?>">
+							  <input type="text" class="multilanguage-input regular-text" id="haetshopstylingsubject_payment_failed" name="haetshopstylingsubject_payment_failed" value="<?php echo $options['subject_payment_failed']; ?>">
 						  </td>
 					  </tr>
 				  </tbody>
@@ -422,7 +422,7 @@
 					  <tr valign="top">
 						  <th scope="row"><label for="haetshopstylingsubject_tracking"><?php _e('Email subject','haetshopstyling'); ?></label></th>
 						  <td>
-							  <input type="text" class="regular-text" id="haetshopstylingsubject_tracking" name="haetshopstylingsubject_tracking" value="<?php echo $options['subject_tracking']; ?>">
+							  <input type="text" class="multilanguage-input regular-text" id="haetshopstylingsubject_tracking" name="haetshopstylingsubject_tracking" value="<?php echo $options['subject_tracking']; ?>">
 						  </td>
 					  </tr>
 				  </tbody>
@@ -448,7 +448,7 @@
 					  <tr valign="top">
 						  <th scope="row"><label for="haetshopstylingsubject_adminreport"><?php _e('Email subject','haetshopstyling'); ?></label></th>
 						  <td>
-							  <input type="text" class="regular-text" id="haetshopstylingsubject_adminreport" name="haetshopstylingsubject_adminreport" value="<?php echo $options['subject_adminreport']; ?>">
+							  <input type="text" class="multilanguage-input regular-text" id="haetshopstylingsubject_adminreport" name="haetshopstylingsubject_adminreport" value="<?php echo $options['subject_adminreport']; ?>">
 						  </td>
 					  </tr>
 				  </tbody>
@@ -597,40 +597,41 @@
 			<form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
 				<h2><?php _e('Results Page - payment successful','haetshopstyling'); ?></h2>
 								
-				 <?php 
+				<?php 
+						
+				wp_editor(stripslashes(str_replace('\\&quot;','',$options['resultspage_successful'])),'resultspage_successful',array(
+					'media_buttons'=>true,
+					'tinymce' => array(
+							'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
+						)
+					)
+				);
+				
+				?>
+				<h2><?php _e('Results Page - payment incomplete (or manual payment)','haetshopstyling'); ?></h2>
+				<?php 
 				 
-				 wp_editor(stripslashes(str_replace('\\&quot;','',$options['resultspage_successful'])),'resultspage_successful',array(
+				wp_editor(stripslashes(str_replace('\\&quot;','',$options['resultspage_incomplete'])),'resultspage_incomplete',array(
 						'media_buttons'=>true,
 						'tinymce' => array(
 								'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
 							)
 						)
-					 );
-				 ?>
-				 <h2><?php _e('Results Page - payment incomplete (or manual payment)','haetshopstyling'); ?></h2>
-								
-				 <?php 
-				 
-				 wp_editor(stripslashes(str_replace('\\&quot;','',$options['resultspage_incomplete'])),'resultspage_incomplete',array(
-						'media_buttons'=>true,
-						'tinymce' => array(
-								'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
-							)
-						)
-					 );
-				 ?>
+					);
+				?>
+
 				 <h2><?php _e('Results Page - payment failed','haetshopstyling'); ?></h2>
 								
-				 <?php 
+				<?php 
 				 
-				 wp_editor(stripslashes(str_replace('\\&quot;','',$options['resultspage_failed'])),'resultspage_failed',array(
+				wp_editor(stripslashes(str_replace('\\&quot;','',$options['resultspage_failed'])),'resultspage_failed',array(
 						'media_buttons'=>true,
 						'tinymce' => array(
 								'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
 							)
 						)
 					 );
-				 ?>
+				?>
 <?php 
 			break;        
 			case 'upgrade' :
@@ -688,6 +689,20 @@
 }//switch
 			
 ?>
+		
+		<?php if(is_plugin_active('qtranslate/qtranslate.php')): ?>
+			<p class="description">
+				<?php
+				_e('qtranslate was detected on your store. You can use qtranslate shortcodes in all of the shop styling editors. <br>e.g. &#91;:en&#93;english text&#91;:de&#93;german text&#91;:nl&#93;dutch text&#91;:es&#93;spanish text...','haetshopstyling');
+				if(is_plugin_active('qtranslate-extended/qtranslate-extended.php')){
+					echo '<br/>';
+					_e('Please also install the free plugin ','haetshopstyling');
+					echo '<a href="http://wordpress.org/extend/plugins/qtranslate-extended/" target="_blank">qtranslate-extended</a>';
+				}
+				?>
+			</p> 
+		<?php endif;?>
+		
 		<div class="submit">
 			<input type="submit" name="update_haetshopstylingSettings" class="button-primary" value="<?php _e('Update Settings', 'haetshopstyling') ?>" />
 		</div>
