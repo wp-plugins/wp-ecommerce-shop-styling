@@ -35,19 +35,19 @@ class HaetShopStyling {
 			'template' => stripslashes("<p>&nbsp;</p><p><img class=\"alignnone size-full wp-image-68\" title=\"logo\" src=\"".HAET_SHOP_STYLING_URL."images/logo.jpg\" alt=\"\" width=\"250\" height=\"49\" style=\"border: 0px none;\"/></p><p style=\"text-align: right;\">Companyname </p><p style=\"text-align: right;\">adressline 1</p><p style=\"text-align: right;\">12345 city</p><p style=\"text-align: right;\"> </p><p style=\"text-align: left;\">{billingfirstname} {billinglastname}</p><p style=\"text-align: left;\">{billingaddress}</p><p style=\"text-align: left;\">{billingpostcode} {billingcity}</p><p style=\"text-align: left;\"> </p><p style=\"text-align: right;\">Invoice: {purchase_id}</p><p style=\"text-align: right;\">Date: {date}</p><p style=\"text-align: right;\"> </p><h1 style=\"text-align: left;\">Invoice</h1><p style=\"text-align: left;\">{#productstable#}</p><p style=\"text-align: left;\"> </p><p style=\"text-align: right;\">Products total: {total_product_price}</p><p style=\"text-align: right;\">Shipping total: {total_shipping}</p><p style=\"text-align: right;\">Tax: {total_tax}</p><p style=\"text-align: right;\">Discount: {coupon_amount}</p><p style=\"text-align: right;\"><strong>Total: {cart_total}</strong></p><p style=\"text-align: right;\"> </p><p style=\"text-align: right;\"> </p><p style=\"text-align: center;\">Thank you for your purchase</p><p>&nbsp;</p>"),
 			'footercenter' => "your company | adressline 1 | 12345 city | office@yourcompany.net\nBank account no.: 0000000000000000000000",
             'footerright' => "Page {PAGE_NUM} of {PAGE_COUNT}",
-            'footerleftfont' => 'dejavusans',
+            'footerleftfont' => 'dejavu serif',
             'footerleftstyle' => 'normal',
             'footerleftcolor' => '#999999',
             'footerleftsize' => 6,
-            'footercenterfont' => 'dejavusans',
+            'footercenterfont' => 'dejavu serif',
             'footercenterstyle' => 'normal',
             'footercentercolor' => '#999999',
             'footercentersize' => 6,
-            'footerrightfont' => 'dejavusans',
+            'footerrightfont' => 'dejavu serif',
             'footerrightstyle' => 'normal',
             'footerrightcolor' => '#999999',
             'footerrightsize' => 6,
-			'css' => "body {\nmargin: 30px;\n}\n/* included unicode fonts:\n*  serif: 'dejavu serif'\n*  sans: 'devavu sans'\n* add your own fonts: http://code.google.com/p/dompdf/wiki/CPDFUnicode#Load_a_font_supporting_your_characters_into_DOMPDF\n*/\nbody, td, th {\nfont-family: 'dejavu serif';\nfont-size: 10px;\n}\np{\nheight:1em;\n}\n\n#products-table{\nwidth:100%;\nborder-collapse:collapse;\npadding-bottom:1px;\nborder-bottom:0.1pt solid #606060;\n}\n#products-table th{\ntext-align:right;\nborder-bottom:0.2pt solid #606060;\n}\n#products-table .product-line td{\ntext-align:right;\nborder-top:0.1pt solid #606060;\n}\n#products-table .product-line .product_name,#products-table .personalization{\ntext-align:left;\n}\n/* keeps the footer on its place because dompdf has problems with absolute and fixed positioning*/\n#content-table{\nwidth:100%;\nmargin-top:0;\n}\n#invoice-content{\nheight:230mm;\nvertical-align:top;\n}\n#invoice-footer{\ncolor:#444;\n}\n/* fix for displaying prices with EURO sign */\n.pricedisplay{\nmargin-right:5px;\n}\n",
+			'css' => "body {\nmargin: 30px;\n}\n/* included unicode fonts:\n*  serif: 'dejavu serif'\n*  sans: 'devavu sans'\n* add your own fonts: http://code.google.com/p/dompdf/wiki/CPDFUnicode#Load_a_font_supporting_your_characters_into_DOMPDF\n*/\nbody, td, th {\nfont-family: 'dejavu serif';\nfont-size: 10px;\n}\np{\nheight:1em;\n}\n\n#products-table{\nwidth:100%;\nborder-collapse:collapse;\npadding-bottom:1px;\nborder-bottom:0.1pt solid #606060;\n}\n#products-table th{\ntext-align:right;\nborder-bottom:0.2pt solid #606060;\n}\n#products-table .product-line td{\ntext-align:right;\nborder-top:0.1pt solid #606060;\n}\n#products-table .product-line .product_name,#products-table .personalization{\ntext-align:left;\n}\n/* fix for displaying prices with EURO sign */\n.pricedisplay{\nmargin-right:5px;\n}\n",
 			'paper' => 'a4',
 			'filename' => __('invoice','haetshopstyling'),
 			'subject_payment_successful' => __('Your purchase at ','haetshopstyling').get_bloginfo('name'),
@@ -861,7 +861,7 @@ class HaetShopStyling {
 		$message.='<pre>=====PARAMS:'.print_r($params,true).'</pre>';
 		$message.='<pre>=====purchase_id:'.$purchase_id.'</pre>';
 		$message.='DEBUG: '.$params['debug'];
-		*/
+		*/  
 		if($purchase_id){
 			foreach ($params AS $param){
 				if( is_array($param) && array_key_exists('unique_name', $param) && array_key_exists('value', $param)){
@@ -957,20 +957,20 @@ class HaetShopStyling {
 	
 	function getPaypalForm(){
 		return '
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-				<input type="hidden" name="cmd" value="_s-xclick">
-				<input type="hidden" name="hosted_button_id" value="LJJ5TL4GGZATY">
-				<table>
-				<tr><td><input type="hidden" name="on0" value="feature selection">feature selection</td></tr><tr><td><select name="os0">
-						<option value="results pages">results pages $5,00 USD</option>
-						<option value="PDF invoices">PDF invoices $12,00 USD</option>
-						<option value="all together">all together $15,00 USD</option>
-				</select> </td></tr>
-				</table>
-				<input type="hidden" name="currency_code" value="USD">
-				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-				<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-			</form>
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="LJJ5TL4GGZATY">
+            <table>
+            <tr><td><input type="hidden" name="on0" value="feature selection">feature selection</td></tr><tr><td><select name="os0">
+                <option value="results pages">results pages $9,00 USD</option>
+                <option value="PDF invoices">PDF invoices $19,00 USD</option>
+                <option value="all together">all together $25,00 USD</option>
+            </select> </td></tr>
+            </table>
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+            </form>
 			';
 	}
 	

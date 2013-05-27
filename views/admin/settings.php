@@ -139,10 +139,11 @@
 							)
 						)
 					 );
-
+ 
 				 ?>
-				 <br/><h2><?php _e('Invoice Footer','haetshopstyling'); ?></h2>
-				<p class="warning"><?php _e('WARNING: The footer has been changed in version 1.9.3. Your previous footer text will not appear on the invoice any more. <a href="http://haet.at/new-pdf-invoice-footer-wp-e-commerce/" target="blank">read more</a>','haetshopstyling'); ?></p>					
+				<br/><h2><?php _e('Invoice Footer','haetshopstyling'); ?></h2>
+				<p class="warning"><?php _e('WARNING: The footer has been changed in version 1.10. Your previous footer text will not appear on the invoice any more. <a href="http://haet.at/new-pdf-invoice-footer-wp-e-commerce/" target="blank">read more</a>','haetshopstyling'); ?></p>					
+				<p class="description"><?php _e('Copy any placeholder from above to your footer or use the special placeholders {PAGE_NUM} and {PAGE_COUNT} only available in footer','haetshopstyling'); ?></p>
 				<table class="form-table invoice-footer">
 					<tbody>
 						<tr valign="top">
@@ -169,10 +170,7 @@
 					</tbody>
 				</table>
 
-				<?php 
-				 
-				 
-				?>
+				<br/><br/>
 
 				 
 		 <table class="form-table">
