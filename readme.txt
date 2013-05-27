@@ -3,7 +3,7 @@ Contributors: haet
 Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice,tax
 Requires at least: 3.4.2
 Tested up to: 3.5.1
-Stable tag: 1.9.2
+Stable tag: 1.10
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -71,16 +71,22 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 
 == Changelog ==
-*   1.0: initial release
-*   1.2: added a new {#mailsubject#} placeholder and qtranslate functions 
-*   1.3: define senders for shop mails and other wordpress mails and fixed problem with track&trace mail
-*   1.4: added option to disable custom sender & added some functions for wp e-commerce qtranslate support
-*   1.5: new option to send a copy of the invoice to the administrator, improved mails
-*	1.6: Fixed a bug with payment gateways and added an Italian and Hungarian translation
-*   1.7: Added french translation, a new placeholder for numeric price and improved the handling of tax exclusive payments
-*	1.8: Security Update (thanks to Charlie Eriksen via Secunia SVCRP) and also fixed a dompdf error and improved french translation
-*	1.9.1: transaction report can be customized now. added placeholder for numeric values of tax and price without tax
+*	1.10: [new footer for pdf invoice](http://haet.at/new-pdf-invoice-footer-wp-e-commerce/) and [multilanguage integration with qtranslate](http://haet.at/wp-e-commerce-qtranslate-multilanguage/)
 *	1.9.2: added Swedish translation, added personalization to products table, modified products table to avoid the 990 char line limit (thanks to Mark Costlow)
+*	1.9.1: transaction report can be customized now. added placeholder for numeric values of tax and price without tax
+*	1.8: Security Update (thanks to Charlie Eriksen via Secunia SVCRP) and also fixed a dompdf error and improved french translation
+*   1.7: Added french translation, a new placeholder for numeric price and improved the handling of tax exclusive payments
+*	1.6: Fixed a bug with payment gateways and added an Italian and Hungarian translation
+*   1.5: new option to send a copy of the invoice to the administrator, improved mails
+*   1.4: added option to disable custom sender & added some functions for wp e-commerce qtranslate support
+*   1.3: define senders for shop mails and other wordpress mails and fixed problem with track&trace mail
+*   1.2: added a new {#mailsubject#} placeholder and qtranslate functions 
+*   1.0: initial release
+
+
+== Upgrade Notice ==
+= 1.10 =
+Version 1.10 has an improved footer for pdf invoice files and adds full compatibility for qtranslate.
 
 == Frequently Asked Questions ==
 please have a look at the comments [here](http://haet.at/wp-e-commerce-shop-styling/)
