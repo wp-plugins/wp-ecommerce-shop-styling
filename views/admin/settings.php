@@ -37,6 +37,37 @@
 		.mce_checkoutformfieldsList .mceFirst a{
 				width: 150px !important;
 		}
+
+		table.invoice-footer {
+			max-width:800px;
+		}
+
+		td.footerleft,td.footerright {
+			width:25%;
+		}
+
+		td.footercenter {
+			width:50%;
+		}
+
+		table.invoice-footer textarea {
+			height:60px;
+			min-height:60px;
+			max-height:60px;
+			width:100%;
+			max-width:100%;
+			min-width:100%;
+		}
+
+		#haetshopstylingfooterleft,.footerleft{
+			text-align:left;
+		}
+		#haetshopstylingfooterright,.footerright{
+			text-align:right;
+		}
+		#haetshopstylingfootercenter,.footercenter{
+			text-align:center;
+		}
 	</style>
 <div class=wrap>
 	<h2><img src="<?php echo HAET_SHOP_STYLING_URL;?>images/icon.png"><?php _e('Style your store','haetshopstyling'); ?></h2>
@@ -111,19 +142,38 @@
 
 				 ?>
 				 <br/><h2><?php _e('Invoice Footer','haetshopstyling'); ?></h2>
-								
-				 <?php 
+				<p class="warning"><?php _e('WARNING: The footer has been changed in version 1.9.3. Your previous footer text will not appear on the invoice any more. <a href="http://haet.at/new-pdf-invoice-footer-wp-e-commerce/" target="blank">read more</a>','haetshopstyling'); ?></p>					
+				<table class="form-table invoice-footer">
+					<tbody>
+						<tr valign="top">
+							<th class="footerleft" scope="column"><label for="haetshopstylingfooterleft"><?php _e('Left','haetshopstyling'); ?></label></th>
+							<th class="footercenter" scope="column"><label for="haetshopstylingfootercenter"><?php _e('Center','haetshopstyling'); ?></label></th>
+							<th class="footerright" scope="column"><label for="haetshopstylingfooterright"><?php _e('Right','haetshopstyling'); ?></label></th>
+						</tr>
+						<tr>
+							<td class="footerleft"><textarea id="haetshopstylingfooterleft" name="haetshopstylingfooterleft"><?php echo $options['footerleft']; ?></textarea></td>
+							<td class="footercenter"><textarea id="haetshopstylingfootercenter" name="haetshopstylingfootercenter"><?php echo $options['footercenter']; ?></textarea></td>
+							<td class="footerright"><textarea id="haetshopstylingfooterright" name="haetshopstylingfooterright"><?php echo $options['footerright']; ?></textarea></td>
+						</tr>
+						<tr>
+							<td class="footerleft">
+								<?php $this->printFooterStyles($options,'left'); ?>
+							</td>
+							<td class="footercenter">
+								<?php $this->printFooterStyles($options,'center'); ?>
+							</td>
+							<td class="footerright">
+								<?php $this->printFooterStyles($options,'right'); ?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<?php 
 				 
-				 wp_editor(stripslashes(str_replace('\\&quot;','',$options['footer'])),'haetshopstylingfooter',array(
-						'media_buttons'=>true,
-						'textarea_rows'=>3,
-						'tinymce' => array(
-								'theme_advanced_buttons3' => 'invoicefields,checkoutformfields',
-								'remove_linebreaks' => false
-							)
-						)
-					 );
-				 ?>
+				 
+				?>
+
 				 
 		 <table class="form-table">
 			<tbody>
@@ -271,7 +321,7 @@
 				if($options['personalizationbelow']=="enable"){
 					
 					if($options['personalizationto']>$num_columns)
-                    	$options['personalizationto']=$num_columns;
+						$options['personalizationto']=$num_columns;
 					if($options['personalizationto']>=$options['personalizationfrom']){
 						$products_table .= '<tr class="personalization-line">';
 						for($i=1;$i<$options['personalizationfrom'];$i++)

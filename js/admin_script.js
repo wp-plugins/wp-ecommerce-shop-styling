@@ -18,4 +18,7 @@ jQuery(document).ready(function($) {
 
 	orderNumberSystem();
 	$('#haetshopstylinginvoicenumbersystem').change(function(){ orderNumberSystem(); });
+
+	$('#haetshopstylingfooterleftcolor,#haetshopstylingfootercentercolor,#haetshopstylingfooterrightcolor').wpColorPicker();
+
 });

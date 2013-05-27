@@ -1,4 +1,6 @@
 <?php
+
+require HAET_SHOP_STYLING_PATH . 'includes/class-haetinvoice.php';
 class HaetShopStyling {
 	
 	
@@ -31,7 +33,20 @@ class HaetShopStyling {
 	function getOptions() {
 	 $options = array(
 			'template' => stripslashes("<p>&nbsp;</p><p><img class=\"alignnone size-full wp-image-68\" title=\"logo\" src=\"".HAET_SHOP_STYLING_URL."images/logo.jpg\" alt=\"\" width=\"250\" height=\"49\" style=\"border: 0px none;\"/></p><p style=\"text-align: right;\">Companyname </p><p style=\"text-align: right;\">adressline 1</p><p style=\"text-align: right;\">12345 city</p><p style=\"text-align: right;\"> </p><p style=\"text-align: left;\">{billingfirstname} {billinglastname}</p><p style=\"text-align: left;\">{billingaddress}</p><p style=\"text-align: left;\">{billingpostcode} {billingcity}</p><p style=\"text-align: left;\"> </p><p style=\"text-align: right;\">Invoice: {purchase_id}</p><p style=\"text-align: right;\">Date: {date}</p><p style=\"text-align: right;\"> </p><h1 style=\"text-align: left;\">Invoice</h1><p style=\"text-align: left;\">{#productstable#}</p><p style=\"text-align: left;\"> </p><p style=\"text-align: right;\">Products total: {total_product_price}</p><p style=\"text-align: right;\">Shipping total: {total_shipping}</p><p style=\"text-align: right;\">Tax: {total_tax}</p><p style=\"text-align: right;\">Discount: {coupon_amount}</p><p style=\"text-align: right;\"><strong>Total: {cart_total}</strong></p><p style=\"text-align: right;\"> </p><p style=\"text-align: right;\"> </p><p style=\"text-align: center;\">Thank you for your purchase</p><p>&nbsp;</p>"),
-			'footer' => stripslashes("<p style=\"text-align: center;\">your company | adressline 1 | 12345 city | office@yourcompany.net</p><p style=\"text-align: center;\">Bank account no.: 0000000000000000000000</p>"),
+			'footercenter' => "your company | adressline 1 | 12345 city | office@yourcompany.net\nBank account no.: 0000000000000000000000",
+            'footerright' => "Page {PAGE_NUM} of {PAGE_COUNT}",
+            'footerleftfont' => 'dejavusans',
+            'footerleftstyle' => 'normal',
+            'footerleftcolor' => '#999999',
+            'footerleftsize' => 6,
+            'footercenterfont' => 'dejavusans',
+            'footercenterstyle' => 'normal',
+            'footercentercolor' => '#999999',
+            'footercentersize' => 6,
+            'footerrightfont' => 'dejavusans',
+            'footerrightstyle' => 'normal',
+            'footerrightcolor' => '#999999',
+            'footerrightsize' => 6,
 			'css' => "body {\nmargin: 30px;\n}\n/* included unicode fonts:\n*  serif: 'dejavu serif'\n*  sans: 'devavu sans'\n* add your own fonts: http://code.google.com/p/dompdf/wiki/CPDFUnicode#Load_a_font_supporting_your_characters_into_DOMPDF\n*/\nbody, td, th {\nfont-family: 'dejavu serif';\nfont-size: 10px;\n}\np{\nheight:1em;\n}\n\n#products-table{\nwidth:100%;\nborder-collapse:collapse;\npadding-bottom:1px;\nborder-bottom:0.1pt solid #606060;\n}\n#products-table th{\ntext-align:right;\nborder-bottom:0.2pt solid #606060;\n}\n#products-table .product-line td{\ntext-align:right;\nborder-top:0.1pt solid #606060;\n}\n#products-table .product-line .product_name,#products-table .personalization{\ntext-align:left;\n}\n/* keeps the footer on its place because dompdf has problems with absolute and fixed positioning*/\n#content-table{\nwidth:100%;\nmargin-top:0;\n}\n#invoice-content{\nheight:230mm;\nvertical-align:top;\n}\n#invoice-footer{\ncolor:#444;\n}\n/* fix for displaying prices with EURO sign */\n.pricedisplay{\nmargin-right:5px;\n}\n",
 			'paper' => 'a4',
 			'filename' => __('invoice','haetshopstyling'),
@@ -111,16 +126,8 @@ class HaetShopStyling {
 		$filename = $options['filename'].'-'.$purchase_id.'.pdf';
 		$params = $this->getBillingData($purchase_id,$options);
 		if( count($params) >0 ){
-			include HAET_SHOP_STYLING_PATH.'views/admin/invoice.php';
-			$html = $this->fixCharacters($html);
-			//$tmpfile=HAET_INVOICE_PATH.uniqid();
-			//file_put_contents($tmpfile,$html);
-			require_once(HAET_SHOP_STYLING_PATH.'includes/dompdf/dompdf_config.inc.php');    
-			$pdf = new DOMPDF();
-			$pdf->set_paper($options['paper']);
-			$pdf->load_html($html);
-			$pdf->render();
-			file_put_contents(HAET_INVOICE_PATH.$filename, $pdf->output());  
+            $invoice = new HaetInvoice($options,$params);
+            $invoice->generate($filename);
 		}
 		error_reporting(E_ERROR); //avoid "is_a(): Deprecated" warning in PHP-Versions between 5.0 and 5.3
 		
@@ -221,8 +228,8 @@ class HaetShopStyling {
 	}
 	
     function adminPageScriptsAndStyles(){
-
-        wp_enqueue_script('haet_admin_script',  HAET_SHOP_STYLING_URL.'/js/admin_script.js', array('jquery'));
+        wp_enqueue_style( 'wp-color-picker' );
+        wp_enqueue_script('haet_admin_script',  HAET_SHOP_STYLING_URL.'/js/admin_script.js', array( 'wp-color-picker','jquery'));
 
     }
 
@@ -239,7 +246,26 @@ class HaetShopStyling {
 			if ($tab=='invoicetemplate'){
 							if (isset($_POST['haetshopstylingtemplate'])) {
 									$options['template'] = $_POST['haetshopstylingtemplate'];
-									$options['footer'] = $_POST['haetshopstylingfooter'];
+									$options['footerleft'] = $_POST['haetshopstylingfooterleft'];
+                                    $options['footercenter'] = $_POST['haetshopstylingfootercenter'];
+                                    $options['footerright'] = $_POST['haetshopstylingfooterright'];
+
+                                    $options['footerleftfont'] = $_POST['haetshopstylingfooterleftfont'];
+                                    $options['footercenterfont'] = $_POST['haetshopstylingfootercenterfont'];
+                                    $options['footerrightfont'] = $_POST['haetshopstylingfooterrightfont'];
+
+                                    $options['footerleftstyle'] = $_POST['haetshopstylingfooterleftstyle'];
+                                    $options['footercenterstyle'] = $_POST['haetshopstylingfootercenterstyle'];
+                                    $options['footerrightstyle'] = $_POST['haetshopstylingfooterrightstyle'];
+
+                                    $options['footerleftcolor'] = $_POST['haetshopstylingfooterleftcolor'];
+                                    $options['footercentercolor'] = $_POST['haetshopstylingfootercentercolor'];
+                                    $options['footerrightcolor'] = $_POST['haetshopstylingfooterrightcolor'];
+
+                                    $options['footerleftsize'] = $_POST['haetshopstylingfooterleftsize'];
+                                    $options['footercentersize'] = $_POST['haetshopstylingfootercentersize'];
+                                    $options['footerrightsize'] = $_POST['haetshopstylingfooterrightsize'];
+
 							}	
 							if (isset($_POST['haetshopstylingpaper'])) {
 									$options['paper'] = $_POST['haetshopstylingpaper'];
@@ -250,7 +276,7 @@ class HaetShopStyling {
 							if (isset($_POST['haetshopstylingdisablepdf'])) {
 									$options['disablepdf'] = $_POST['haetshopstylingdisablepdf'];
 							}
-							if (isset($_POST['haetshopstylingsendpdftoadmin'])) {
+						 	if (isset($_POST['haetshopstylingsendpdftoadmin'])) {
 									$options['send_pdf_to_admin'] = $_POST['haetshopstylingsendpdftoadmin'];
 							}
                             if (isset($_POST['haetshopstylingsendpdfafterpayment'])) {
@@ -446,10 +472,6 @@ class HaetShopStyling {
 		return wpsc_currency_display( $number );
 	}
 	
-	function fixCharacters($str){
-		return $str;
-	}
-	
 	function translate($text){
 		
 	}
@@ -472,7 +494,7 @@ class HaetShopStyling {
 			$params[]= array('unique_name'=>'base_shipping','value'=>$params2[0]['base_shipping']);
 			$params[]= array('unique_name'=>'total_shipping','value'=>wpsc_cart_shipping());
 			$params[]= array('unique_name'=>'total_product_price','value'=>wpsc_cart_total_widget(false,false,false));
-			$params[]= array('unique_name'=>'total_tax','value'=>wpsc_cart_tax());
+			$params[]= array('unique_name'=>'total_tax','value'=>str_replace( '(','',str_replace(')','',wpsc_cart_tax())) );
 			$params[]= array('unique_name'=>'coupon_amount','value'=>wpsc_coupon_amount());
 			$params[]= array('unique_name'=>'cart_total','value'=>wpsc_cart_total());
 
@@ -567,7 +589,7 @@ class HaetShopStyling {
 						$products_table .= "<td class='".$options["columnfield"][$col]."'>";
 						foreach($item['download'] AS $download)
 							$products_table .= '<a href="'.$download.'"><img src="'.HAET_SHOP_STYLING_URL.'images/download.png" style="margin-bottom: -5px;" alt="download"></a><br/>';
-						$products_table .= "</td>\n";
+						$products_table .= "</td>\n"; 
 					}
 				}else if($options["columnfield"][$col]!='')
 					$products_table .= "<td class='".$options["columnfield"][$col]."'>".$item[$options["columnfield"][$col]]."</td>\n";
@@ -652,10 +674,10 @@ class HaetShopStyling {
 		return 0;
 	}
 
-	function getCartItems($purchase_id){
+	function getCartItems($purchase_id){ 
 		global $wpdb;
 
-		$form_sql = "SELECT id,
+		$form_sql = "SELECT DISTINCT id,
 							prodid,
 							name AS product_name,
 							price AS product_price,
@@ -789,16 +811,8 @@ class HaetShopStyling {
 				$filename = $options['filename'].'-'.$purchase_id.'.pdf';
 				if ( $this->isAllowed('invoice') && $options['disablepdf']=="enable"){// && file_exists(HAET_INVOICE_PATH.$filename ) ){
 					if( count($params) >0 ){
-						include HAET_SHOP_STYLING_PATH.'views/admin/invoice.php';
-						$html = $this->fixCharacters($html);
-						//$tmpfile=HAET_INVOICE_PATH.uniqid();
-						//file_put_contents($tmpfile,$html);
-						require_once(HAET_SHOP_STYLING_PATH.'includes/dompdf/dompdf_config.inc.php');    
-						$pdf = new DOMPDF();
-						$pdf->set_paper($options['paper']);
-						$pdf->load_html($html);
-						$pdf->render();
-						file_put_contents(HAET_INVOICE_PATH.$filename, $pdf->output());  
+                        $invoice = new HaetInvoice($options,$params);
+                        $invoice->generate($filename); 
 					}
 					if (file_exists(HAET_INVOICE_PATH.$filename ) ){
 						$attachments=array(HAET_INVOICE_PATH.$filename);
@@ -899,35 +913,25 @@ class HaetShopStyling {
 	 * @param int $purchase_id 
 	 */
 	function previewInvoice($purchase_id=null){
-		global $wpdb;
+        global $wpdb;
 
-		if($purchase_id)
-			$sql = "SELECT id,sessionid
-						FROM `".$wpdb->prefix."wpsc_purchase_logs` 
-						WHERE  `id` = ".(int)$purchase_id;
-		else
-			$sql = "SELECT id,sessionid
-					FROM `".$wpdb->prefix."wpsc_purchase_logs` 
-					ORDER BY id DESC
-					LIMIT 1";                    
-		$result = $wpdb->get_row($sql);
-		
-		$purchase_id = $result->id; 
-		$sessionid = $result->sessionid; 
-		$options = $this->getOptions();
-		
-		$filename = 'preview.pdf';
-		$params = $this->getBillingData($purchase_id,$options,true);
-		include HAET_SHOP_STYLING_PATH.'views/admin/invoice.php';
-		$html = $this->fixCharacters($html);
-		$tmpfile=HAET_INVOICE_PATH."preview.html";
-		file_put_contents($tmpfile,$html);
-		require_once(HAET_SHOP_STYLING_PATH.'includes/dompdf/dompdf_config.inc.php');    
-		$pdf = new DOMPDF();
-		$pdf->set_paper($options['paper']);
-		$pdf->load_html($html);
-		$pdf->render();
-		file_put_contents(HAET_INVOICE_PATH.$filename, $pdf->output());  
+        if($purchase_id)
+            $sql = "SELECT id,sessionid
+                        FROM `".$wpdb->prefix."wpsc_purchase_logs` 
+                        WHERE  `id` = ".(int)$purchase_id;
+        else
+            $sql = "SELECT id,sessionid
+                    FROM `".$wpdb->prefix."wpsc_purchase_logs` 
+                    ORDER BY id DESC
+                    LIMIT 1";                    
+        $result = $wpdb->get_row($sql);
+        
+        $purchase_id = $result->id; 
+        $options = $this->getOptions();
+        $params = $this->getBillingData($purchase_id,$options,true);
+
+		$invoice = new HaetInvoice($options,$params);
+        $invoice->generate('preview.pdf');
 	}
 	
 	/**
@@ -1021,5 +1025,37 @@ class HaetShopStyling {
             
         }
     }
+
+    function printFooterStyles($options,$footer){
+        ?>
+        <select  id="haetshopstylingfooter<?php echo $footer; ?>font" name="haetshopstylingfooter<?php echo $footer; ?>font">
+            <option value="dejavu sans" <?php echo ($options['footer'. $footer .'font']=="dejavu sans"?"selected":""); ?>>DejaVu Sans</option>   
+            <option value="dejavu sans condensed" <?php echo ($options['footer'. $footer .'font']=="dejavu sans condensed"?"selected":""); ?>>DejaVu Sans Condensed</option>
+            <option value="dejavu serif" <?php echo ($options['footer'. $footer .'font']=="dejavuserif"?"selected":""); ?>>DejaVu Serif</option> 
+            <option value="dejavu serif condensed" <?php echo ($options['footer'. $footer .'font']=="dejavu serif condensed"?"selected":""); ?>>DejaVu Serif Condensed</option>
+            <option value="dejavu sans mono" <?php echo ($options['footer'. $footer .'font']=="dejavu sans mono"?"selected":""); ?>>DejaVu Sans Monospace</option>
+            <option value="courier" <?php echo ($options['footer'. $footer .'font']=="courier"?"selected":""); ?>>Courier</option>
+            <option value="helvetica" <?php echo ($options['footer'. $footer .'font']=="helvetica"?"selected":""); ?>>Helvetica</option>
+            <option value="times" <?php echo ($options['footer'. $footer .'font']=="times"?"selected":""); ?>>Times</option>
+        </select><br/>
+        <select  id="haetshopstylingfooter<?php echo $footer; ?>size" name="haetshopstylingfooter<?php echo $footer; ?>size">
+            <option value="4" <?php echo ($options['footer'. $footer .'size']==4?"selected":""); ?>>4pt</option>   
+            <option value="5" <?php echo ($options['footer'. $footer .'size']==5?"selected":""); ?>>5pt</option>
+            <option value="6" <?php echo ($options['footer'. $footer .'size']==6?"selected":""); ?>>6pt</option>
+            <option value="7" <?php echo ($options['footer'. $footer .'size']==7?"selected":""); ?>>7pt</option>
+            <option value="8" <?php echo ($options['footer'. $footer .'size']==8?"selected":""); ?>>8pt</option>
+            <option value="9" <?php echo ($options['footer'. $footer .'size']==9?"selected":""); ?>>9pt</option>
+            <option value="10" <?php echo ($options['footer'. $footer .'size']==10?"selected":""); ?>>10pt</option>
+        </select>
+        <select  id="haetshopstylingfooter<?php echo $footer; ?>style" name="haetshopstylingfooter<?php echo $footer; ?>style">
+            <option value="normal" <?php echo ($options['footer'. $footer .'style']=="normal"?"selected":""); ?>>-</option>  
+            <option value="bold" <?php echo ($options['footer'. $footer .'style']=="bold"?"selected":""); ?>><?php _e('bold','haetshopstyling'); ?></option>
+            <option value="italic" <?php echo ($options['footer'. $footer .'style']=="italic"?"selected":""); ?>><?php _e('italic','haetshopstyling'); ?></option>   
+            <option value="bolditalic" <?php echo ($options['footer'. $footer .'style']=="bolditalic"?"selected":""); ?>><?php _e('bold+italic','haetshopstyling'); ?></option>
+        </select><br/>
+        <input type="text" value="<?php echo $options['footer'. $footer .'color']; ?>" name="haetshopstylingfooter<?php echo $footer; ?>color" id="haetshopstylingfooter<?php echo $footer; ?>color" data-default-color="#999999" />
+
+        <?php
+    }   
 }
 ?>

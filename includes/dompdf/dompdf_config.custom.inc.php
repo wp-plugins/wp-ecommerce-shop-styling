@@ -9,6 +9,8 @@ define("DOMPDF_DEFAULT_FONT", "dejavu sans");
 define("DOMPDF_ENABLE_REMOTE", true);
 define("DOMPDF_ENABLE_CSS_FLOAT", true);
 
+define("DOMPDF_ENABLE_PHP", true);
+
 //define("DEBUGCSS", true);
 //define("DEBUG_LAYOUT", true);
 //define("DEBUG_LAYOUT_LINES", false);
