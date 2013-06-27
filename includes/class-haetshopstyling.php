@@ -136,7 +136,9 @@ class HaetShopStyling {
 			if ( !empty($email) && !get_transient( "{$purchase_id}_invoice_email_sent") ) {
 				add_filter( 'wp_mail_from', 'wpsc_replace_reply_address', 0 );
 				add_filter( 'wp_mail_from_name', 'wpsc_replace_reply_name', 0 );
-				add_filter( 'wp_mail_content_type', create_function('', 'return "text/html";'));
+				if(stripos('x'.$headers, 'Content-Type: text/html;')==false) {
+                    $headers .= "\r\nContent-Type: text/html; charset=".get_bloginfo( 'charset' ).";\r\n";
+                }
 				$attachments=array(HAET_INVOICE_PATH.$filename);
 
 				if($invoice_params['purchase_log']['processed']==2){ // payment incomplete or manual payment
@@ -862,6 +864,8 @@ class HaetShopStyling {
 		$message.='<pre>=====purchase_id:'.$purchase_id.'</pre>';
 		$message.='DEBUG: '.$params['debug'];
 		*/  
+
+
 		if($purchase_id){
 			foreach ($params AS $param){
 				if( is_array($param) && array_key_exists('unique_name', $param) && array_key_exists('value', $param)){
@@ -870,14 +874,21 @@ class HaetShopStyling {
 				}
 			}
 		}
+
 		$message = preg_replace('/\<http(.*)\>/', '<a href="http$1">http$1</a>', $message); //replace links like <http://... with <a href="http://..."
         if($is_shop_mail)
             $message = str_replace('{#mailcontent#}',$message,$options['mailtemplate']);
         else
             $message = str_replace('{#mailcontent#}',nl2br($message),$options['mailtemplate']);
+
 		$message = str_replace('{#mailsubject#}',$subject,$message);
 		$message = stripslashes(str_replace('\\&quot;','',$message));
-		add_filter( 'wp_mail_content_type', create_function('', 'return "text/html";'));
+
+        if(stripos('x'.$headers, 'Content-Type: text/html;')==false) {
+            $headers .= "\r\nContent-Type: text/html; charset=".get_bloginfo( 'charset' ).";\r\n";
+        }
+
+		//add_filter( 'wp_mail_content_type', create_function('', 'return "text/html";'));
 		
 		if ($is_shop_mail){
 			add_filter( 'wp_mail_from', 'wpsc_replace_reply_address', 0 );
@@ -900,6 +911,10 @@ class HaetShopStyling {
                 $message = __($message);
             }
         }
+        //$message=array('text/html'=>$message,'text/plain'=>'--dummy content--');
+        //wp_mail_extended($to,$subject,$message,$headers);
+        //
+        //$message ="<h1>Hello World!</h1><p>this is an example text</p>";
 		return compact( 'to', 'subject', 'message', 'headers', 'attachments' );
 	}
 	

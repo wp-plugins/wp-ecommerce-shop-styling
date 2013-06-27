@@ -1,4 +1,4 @@
-=== wp ecommerce shop styling ===
+=== WP e-Commerce Shop Styling ===
 Contributors: haet 
 Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice,tax
 Requires at least: 3.4.2
