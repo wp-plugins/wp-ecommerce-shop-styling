@@ -1,15 +1,15 @@
 <?php
 /*
 Plugin Name: WP E-Commerce shop styling
-Plugin URI: http://haet.at/wp-e-commerce-shop-styling/
+Plugin URI: http://wpshopstyling.com/
 Description: Send customized HTML mails, custom transaction results and PDF invoices with placeholders from your WP-Ecommerce store 
-Version: 1.10
+Version: 2.0
 Author: haet webdevelopment
 Author URI: http://haet.at
 License: GPLv2 or later
 */
 
-/*  Copyright 2012 haet (email : contact@haet.at) */
+/*  Copyright 2013 haet (email : contact@haet.at) */
 
 
 define( 'HAET_SHOP_STYLING_PATH', plugin_dir_path(__FILE__) );

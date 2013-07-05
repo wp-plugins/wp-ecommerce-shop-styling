@@ -86,7 +86,7 @@ class HaetShopStyling {
 								"",
 								""
 							),
-			 'mailtemplate' => "<!DOCTYPE HTML PUBLIC '-//W3C//DTD XHTML 1.0 Transitional //EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html><head><title></title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><style type='text/css'>\n/* Mobile-specific Styles */\n@media only screen and (max-device-width: 480px) {\ntable[class=w0], td[class=w0] { width: 0 !important; }\ntable[class=w10], td[class=w10], img[class=w10] { width:10px !important; }\ntable[class=w15], td[class=w15], img[class=w15] { width:5px !important; }\ntable[class=w30], td[class=w30], img[class=w30] { width:10px !important; }\ntable[class=w60], td[class=w60], img[class=w60] { width:10px !important; }\ntable[class=w125], td[class=w125], img[class=w125] { width:80px !important; }\ntable[class=w130], td[class=w130], img[class=w130] { width:55px !important; }\ntable[class=w140], td[class=w140], img[class=w140] { width:90px !important; }\ntable[class=w160], td[class=w160], img[class=w160] { width:180px !important; }\ntable[class=w170], td[class=w170], img[class=w170] { width:100px !important; }\ntable[class=w180], td[class=w180], img[class=w180] { width:80px !important; }\ntable[class=w195], td[class=w195], img[class=w195] { width:80px !important; }\ntable[class=w220], td[class=w220], img[class=w220] { width:80px !important; }\ntable[class=w240], td[class=w240], img[class=w240] { width:180px !important; }\ntable[class=w255], td[class=w255], img[class=w255] { width:185px !important; }\ntable[class=w275], td[class=w275], img[class=w275] { width:135px !important; }\ntable[class=w280], td[class=w280], img[class=w280] { width:135px !important; }\ntable[class=w300], td[class=w300], img[class=w300] { width:140px !important; }\ntable[class=w325], td[class=w325], img[class=w325] { width:95px !important; }\ntable[class=w360], td[class=w360], img[class=w360] { width:140px !important; }\ntable[class=w410], td[class=w410], img[class=w410] { width:180px !important; }\ntable[class=w470], td[class=w470], img[class=w470] { width:200px !important; }\ntable[class=w580], td[class=w580], img[class=w580] { width:280px !important; }\ntable[class=w640], td[class=w640], img[class=w640] { width:300px !important; }\ntable[class*=hide], td[class*=hide], img[class*=hide], p[class*=hide], span[class*=hide] { display:none !important; }\ntable[class=h0], td[class=h0] { height: 0 !important; }\np[class=footer-content-left] { text-align: center !important; }\n#headline p { font-size: 30px !important; }\n.article-content, #left-sidebar{ -webkit-text-size-adjust: 90% !important; -ms-text-size-adjust: 90% !important; }\n.header-content, .footer-content-left {-webkit-text-size-adjust: 80% !important; -ms-text-size-adjust: 80% !important;}\nimg { height: auto; line-height: 100%;}\n}\n/* Client-specific Styles */\n#outlook a { padding: 0; }	/* Force Outlook to provide a 'view in browser' button. */\nbody { width: 100% !important; }\n.ReadMsgBody { width: 100%; }\n.ExternalClass { width: 100%; display:block !important; } /* Force Hotmail to display emails at full width */\n/* Reset Styles */\n/* Add 100px so mobile switch bar doesn't cover street address. */\nbody { background-color: #dedede; margin: 0; padding: 0; }\nimg { outline: none; text-decoration: none; display: block;}\nbr, strong br, b br, em br, i br { line-height:100%; }\nh1, h2, h3, h4, h5, h6 { line-height: 100% !important; -webkit-font-smoothing: antialiased; }\nh1 a, h2 a, h3 a, h4 a, h5 a, h6 a { color: blue !important; }\nh1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {	color: red !important; }\n/* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */\nh1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited { color: purple !important; }\n/* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */\ntable td, table tr { border-collapse: collapse; }\n.yshortcuts, .yshortcuts a, .yshortcuts a:link,.yshortcuts a:visited, .yshortcuts a:hover, .yshortcuts a span {\ncolor: black; text-decoration: none !important; border-bottom: none !important; background: none !important;\n}	/* Body text color for the New Yahoo.  This example sets the font of Yahoo's Shortcuts to black. */\n/* This most probably won't work in all email clients. Don't include <code _tmplitem='269' > blocks in email. */\ncode {\nwhite-space: normal;\nword-break: break-all;\n}\n#background-table { background-color: #dedede; }\n/* Webkit Elements */\n#top-bar { border-radius:6px 6px 0px 0px; -moz-border-radius: 6px 6px 0px 0px; -webkit-border-radius:6px 6px 0px 0px; -webkit-font-smoothing: antialiased; background-color: #c7c7c7; color: #ededed; }\n#top-bar a { font-weight: bold; color: #ffffff; text-decoration: none;}\n#footer { border-radius:0px 0px 6px 6px; -moz-border-radius: 0px 0px 6px 6px; -webkit-border-radius:0px 0px 6px 6px; -webkit-font-smoothing: antialiased; }\n/* Fonts and Content */\nbody, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.header-content, .footer-content-left, .footer-content-right { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }\n/* Prevent Webkit and Windows Mobile platforms from changing default font sizes on header and footer. */\n.header-content { font-size: 12px; color: #ededed; }\n.header-content a { font-weight: bold; color: #ffffff; text-decoration: none; }\n#headline p { color: #444444; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; font-size: 36px; text-align: center; margin-top:0px; margin-bottom:30px; }\n#headline p a { color: #444444; text-decoration: none; }\n.article-title { font-size: 18px; line-height:24px; color: #b0b0b0; font-weight:bold; margin-top:0px; margin-bottom:18px; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.article-title a { color: #b0b0b0; text-decoration: none; }\n.article-title.with-meta {margin-bottom: 0;}\n.article-meta { font-size: 13px; line-height: 20px; color: #ccc; font-weight: bold; margin-top: 0;}\n.article-content { font-size: 13px; line-height: 18px; color: #444444; margin-top: 0px; margin-bottom: 18px; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.article-content a { color: #2f82de; font-weight:bold; text-decoration:none; }\n.article-content img { max-width: 100% }\n.article-content ol, .article-content ul { margin-top:0px; margin-bottom:18px; margin-left:19px; padding:0; }\n.article-content li { font-size: 13px; line-height: 18px; color: #444444; }\n.article-content li a { color: #2f82de; text-decoration:underline; }\n.article-content p {margin-bottom: 15px;}\n.footer-content-left { font-size: 12px; line-height: 15px; color: #ededed; margin-top: 0px; margin-bottom: 15px; }\n.footer-content-left a { color: #ffffff; font-weight: bold; text-decoration: none; }\n.footer-content-right { font-size: 11px; line-height: 16px; color: #ededed; margin-top: 0px; margin-bottom: 15px; }\n.footer-content-right a { color: #ffffff; font-weight: bold; text-decoration: none; }\n#footer { background-color: #c7c7c7; color: #ededed; }\n#footer a { color: #ffffff; text-decoration: none; font-weight: bold; }\n#permission-reminder { white-space: normal; }\n#street-address { color: #b0b0b0; white-space: normal; }\n#products-table{\nwidth:100%;\n border-collapse:collapse;\n padding-bottom:1px;\n border-bottom:0.1pt solid #606060;\n }\n #products-table th{\n text-align:right;\n border-bottom:0.2pt solid #606060;\n }\n #products-table .product-line td{\n text-align:right;\n border-top:0.1pt solid #606060;\n }\n \n #products-table .product-line .product_name,#products-table .personalization{\n text-align:left;\n }</style>\n<!--[if gte mso 9]>\n<style _tmplitem='269' >\n.article-content ol, .article-content ul {\nmargin: 0 0 0 24px;\npadding: 0;\nlist-style-position: inside;\n}\n</style>\n<![endif]--></head><body><table id='background-table' border='0' cellpadding='0' cellspacing='0' width='100%'>\n<tbody><tr>\n<td align='center' bgcolor='#dedede'>\n<table class='w640' style='margin:0 10px;' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr><td class='w640' height='20' width='640'></td></tr>\n\n<tr>\n<td class='w640' width='640'>\n<table id='top-bar' class='w640' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr>\n<td class='w15' width='15'></td>\n<td class='w325' align='left' valign='middle' width='350'>\n<table class='w325' border='0' cellpadding='0' cellspacing='0' width='350'>\n<tbody><tr><td class='w325' height='8' width='350'></td></tr>\n</tbody></table>\n<div class='header-content'></div>\n<table class='w325' border='0' cellpadding='0' cellspacing='0' width='350'>\n<tbody><tr><td class='w325' height='8' width='350'></td></tr>\n</tbody></table>\n</td>\n<td class='w30' width='30'></td>\n<td class='w255' align='right' valign='middle' width='255'>\n<table class='w255' border='0' cellpadding='0' cellspacing='0' width='255'>\n<tbody><tr><td class='w255' height='8' width='255'></td></tr>\n</tbody></table>\n<table border='0' cellpadding='0' cellspacing='0'>\n<tbody><tr>\n\n\n\n</tr>\n</tbody></table>\n<table class='w255' border='0' cellpadding='0' cellspacing='0' width='255'>\n<tbody><tr><td class='w255' height='8' width='255'></td></tr>\n</tbody></table>\n</td>\n<td class='w15' width='15'></td>\n</tr>\n</tbody></table>\n\n</td>\n</tr>\n<tr>\n<td id='header' class='w640' align='center' bgcolor='#ffffff' width='640'>\n\n<table class='w640' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr><td class='w30' width='30'></td><td class='w580' height='30' width='580'></td><td class='w30' width='30'></td></tr>\n<tr>\n<td class='w30' width='30'></td>\n<td class='w580' width='580'>\n<div id='headline' align='center'>\n<!--- HERE COMES THE HEADER -->\n<p>\n<strong><a href='".home_url()."'><singleline label='Title'>".get_bloginfo('name')."</singleline></a></strong>\n</p>\n<!--- HERE WAS THE HEADER -->\n</div>\n</td>\n<td class='w30' width='30'></td>\n</tr>\n</tbody></table>\n\n\n</td>\n</tr>\n\n<tr><td class='w640' height='30' bgcolor='#ffffff' width='640'></td></tr>\n<tr id='simple-content-row'><td class='w640' bgcolor='#ffffff' width='640'>\n<table class='w640' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr>\n<td class='w30' width='30'></td>\n<td class='w580' width='580'>\n<!--- HERE COMES THE CONTENT -->\n{#mailcontent#}\n<!--- HERE WAS THE CONTENT -->\n</td>\n<td class='w30' width='30'></td>\n</tr>\n</tbody></table>\n</td></tr>\n<tr><td class='w640' height='15' bgcolor='#ffffff' width='640'></td></tr>\n\n<tr>\n<td class='w640' width='640'>\n<table id='footer' class='w640' bgcolor='#c7c7c7' border='0' cellpadding='0' cellspacing='0' width='640'>\n<tbody><tr><td class='w30' width='30'></td><td class='w580 h0' height='30' width='360'></td><td class='w0' width='60'></td><td class='w0' width='160'></td><td class='w30' width='30'></td></tr>\n<tr>\n<td class='w30' width='30'></td>\n<td class='w580' valign='top' width='360'>\n<span class='hide'><p id='permission-reminder' class='footer-content-left' align='left'></p></span>\n<p class='footer-content-left' align='left'>".get_bloginfo('name')."<br/>".get_bloginfo('admin_email')."</p>\n</td>\n<td class='hide w0' width='60'></td>\n<td class='hide w0' valign='top' width='160'>\n<p id='street-address' class='footer-content-right' align='right'></p>\n</td>\n<td class='w30' width='30'></td>\n</tr>\n<tr><td class='w30' width='30'></td><td class='w580 h0' height='15' width='360'></td><td class='w0' width='60'></td><td class='w0' width='160'></td><td class='w30' width='30'></td></tr>\n</tbody></table>\n</td>\n</tr>\n<tr><td class='w640' height='60' width='640'></td></tr>\n</tbody></table>\n</td>\n</tr>\n</tbody></table></body></html>",			 'customsender' => 'enable',
+			 'mailtemplate' => "<html><head>\n<style type='text/css'>\n/* Mobile-specific Styles */\n@media only screen and (max-device-width: 480px) {\ntable[class=w15], td[class=w15], img[class=w15] { width:5px !important; }\ntable[class=w30], td[class=w30], img[class=w30] { width:10px !important; }\ntable[class=w640], td[class=w640], img[class=w640] { width:300px !important; }\np[class=footer-content-left] { text-align: center !important; }\n#headline p { font-size: 30px !important; }\n.article-content, #left-sidebar{ -webkit-text-size-adjust: 90% !important; -ms-text-size-adjust: 90% !important; }\n.header-content, .footer-content-left {-webkit-text-size-adjust: 80% !important; -ms-text-size-adjust: 80% !important;}\nimg { height: auto; line-height: 100%;}\n}\n/* Add 100px so mobile switch bar doesn't cover street address. */\nbody { background-color: #dedede; margin: 0; padding: 0; }\nimg { outline: none; text-decoration: none; display: block;}\nbr, strong br, b br, em br, i br { line-height:100%; }\nh1, h2, h3, h4, h5, h6 { line-height: 100% !important; -webkit-font-smoothing: antialiased; }\nh1 a, h2 a, h3 a, h4 a, h5 a, h6 a { color: blue !important; }\nh1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {  color: red !important; }\ntable td, table tr { border-collapse: collapse; }\n.yshortcuts, .yshortcuts a, .yshortcuts a:link,.yshortcuts a:visited, .yshortcuts a:hover, .yshortcuts a span {\ncolor: black; text-decoration: none !important; border-bottom: none !important; background: none !important;\n}   /* Body text color for the New Yahoo.  This example sets the font of Yahoo's Shortcuts to black. */\n\n#background-table { background-color: #dedede; }\n/* Webkit Elements */\n#top-bar { border-radius:6px 6px 0px 0px; -moz-border-radius: 6px 6px 0px 0px; -webkit-border-radius:6px 6px 0px 0px; -webkit-font-smoothing: antialiased; background-color: #c7c7c7; color: #ededed; }\n#top-bar a { font-weight: bold; color: #ffffff; text-decoration: none;}\n#footer { border-radius:0px 0px 6px 6px; -moz-border-radius: 0px 0px 6px 6px; -webkit-border-radius:0px 0px 6px 6px; -webkit-font-smoothing: antialiased; }\n/* Fonts and Content */\nbody, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n.header-content, .footer-content-left, .footer-content-right { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }\n/* Prevent Webkit and Windows Mobile platforms from changing default font sizes on header and footer. */\n.header-content { font-size: 12px; color: #ededed; }\n.header-content a { font-weight: bold; color: #ffffff; text-decoration: none; }\n#headline p { color: #444444; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; font-size: 36px; text-align: center; margin-top:0px; margin-bottom:30px; }\n#headline p a { color: #444444; text-decoration: none; }\n.article-title { font-size: 18px; line-height:24px; color: #b0b0b0; font-weight:bold; margin-top:0px; margin-bottom:18px; font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }\n\n.footer-content-left { font-size: 12px; line-height: 15px; color: #ededed; margin-top: 0px; margin-bottom: 15px; }\n.footer-content-left a { color: #ffffff; font-weight: bold; text-decoration: none; }\n.footer-content-right { font-size: 11px; line-height: 16px; color: #ededed; margin-top: 0px; margin-bottom: 15px; }\n.footer-content-right a { color: #ffffff; font-weight: bold; text-decoration: none; }\n#footer { background-color: #c7c7c7; color: #ededed; }\n#footer a { color: #ffffff; text-decoration: none; font-weight: bold; }\n#permission-reminder { white-space: normal; }\n#street-address { color: #b0b0b0; white-space: normal; }\n#products-table{\n width:100%;\n border-collapse:collapse;\n padding-bottom:1px;\n border-bottom:1px solid #606060;\n }\n #products-table th{\n text-align:right;\n border-bottom:2px solid #606060!important;\n }\n #products-table td{\n text-align:right;\n border-bottom:1px solid #606060;\n padding:0 3px;\n }\n #products-table .product_name{\n text-align:left;\n }\n</style>\n</head><body><table id='background-table' border='0' cellpadding='0' cellspacing='0' width='100%'>\n    <tbody><tr>\n        <td align='center' bgcolor='#dedede'>\n            <table class='w640' style='margin:0 10px;' border='0' cellpadding='0' cellspacing='0' width='640'>\n                <tbody><tr><td class='w640' height='20' width='640'></td></tr>\n \n                <tr>\n                    <td class='w640' width='640'>\n                        <table id='top-bar' class='w640' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0' width='640'>\n    <tbody><tr>\n        <td class='w15' width='15'></td>\n        <td class='w325' align='left' valign='middle' width='350'>\n            <table class='w325' border='0' cellpadding='0' cellspacing='0' width='350'>\n                <tbody><tr><td class='w325' height='8' width='350'></td></tr>\n            </tbody></table>\n            <div class='header-content'></div>\n            <table class='w325' border='0' cellpadding='0' cellspacing='0' width='350'>\n                <tbody><tr><td class='w325' height='8' width='350'></td></tr>\n            </tbody></table>\n        </td>\n        <td class='w30' width='30'></td>\n        <td class='w255' align='right' valign='middle' width='255'>\n            <table class='w255' border='0' cellpadding='0' cellspacing='0' width='255'>\n                <tbody><tr><td class='w255' height='8' width='255'></td></tr>\n            </tbody></table>\n            <table border='0' cellpadding='0' cellspacing='0'>\n    <tbody><tr>\n \n    </tr>\n</tbody></table>\n            <table class='w255' border='0' cellpadding='0' cellspacing='0' width='255'>\n                <tbody><tr><td class='w255' height='8' width='255'></td></tr>\n            </tbody></table>\n        </td>\n        <td class='w15' width='15'></td>\n    </tr>\n</tbody></table>\n \n                    </td>\n                </tr>\n                <tr>\n                <td id='header' class='w640' align='center' bgcolor='#ffffff' width='640'>\n \n    <table class='w640' border='0' cellpadding='0' cellspacing='0' width='640'>\n        <tbody><tr><td class='w30' width='30'></td><td class='w580' height='30' width='580'></td><td class='w30' width='30'></td></tr>\n        <tr>\n            <td class='w30' width='30'></td>\n            <td class='w580' width='580'>\n                <div id='headline' align='center'>\n<!--- HERE COMES THE HEADER -->\n                    <p>\n                        <strong><a href='".home_url()."'><singleline label='Title'>".get_bloginfo('name')."</singleline></a></strong>\n                    </p>\n<!--- HERE WAS THE HEADER -->\n                </div>\n            </td>\n            <td class='w30' width='30'></td>\n        </tr>\n    </tbody></table>\n \n</td>\n                </tr>\n \n                <tr><td class='w640' height='30' bgcolor='#ffffff' width='640'></td></tr>\n                <tr id='simple-content-row'><td class='w640' bgcolor='#ffffff' width='640'>\n    <table class='w640' border='0' cellpadding='0' cellspacing='0' width='640'>\n        <tbody><tr>\n            <td class='w30' width='30'></td>\n            <td class='w580' width='580'>\n<!--- HERE COMES THE CONTENT -->\n                {#mailcontent#}\n<!--- HERE WAS THE CONTENT -->\n            </td>\n            <td class='w30' width='30'></td>\n        </tr>\n    </tbody></table>\n</td></tr>\n                <tr><td class='w640' height='15' bgcolor='#ffffff' width='640'></td></tr>\n \n                <tr>\n                <td class='w640' width='640'>\n    <table id='footer' class='w640' bgcolor='#c7c7c7' border='0' cellpadding='0' cellspacing='0' width='640'>\n        <tbody><tr><td class='w30' width='30'></td><td class='w580 h0' height='30' width='360'></td><td class='w0' width='60'></td><td class='w0' width='160'></td><td class='w30' width='30'></td></tr>\n        <tr>\n            <td class='w30' width='30'></td>\n            <td class='w580' valign='top' width='360'>\n            <span class='hide'><p id='permission-reminder' class='footer-content-left' align='left'></p></span>\n            <p class='footer-content-left' align='left'>".get_bloginfo('name')."<br/>".get_bloginfo('admin_email')."</p>\n            </td>\n            <td class='hide w0' width='60'></td>\n            <td class='hide w0' valign='top' width='160'>\n            <p id='street-address' class='footer-content-right' align='right'></p>\n            </td>\n            <td class='w30' width='30'></td>\n        </tr>\n        <tr><td class='w30' width='30'></td><td class='w580 h0' height='15' width='360'></td><td class='w0' width='60'></td><td class='w0' width='160'></td><td class='w30' width='30'></td></tr>\n    </tbody></table>\n</td>\n                </tr>\n                <tr><td class='w640' height='60' width='640'></td></tr>\n            </tbody></table>\n        </td>\n    </tr>\n</tbody></table></body></html>",			 'customsender' => 'enable',
 			 'resultspage_successful' => "<p>Thank you for your purchase</p><p>We received your payment. Your order {purchase_id} will be processed immediately by our team.</p><p><strong> Your Products</strong></p><p>{#productstable#}</p>",
 			 'resultspage_incomplete' => "<p>Thank you for your purchase.</p><p>Please transfer the <strong>amount of</strong> {cart_total} to the following account and please mention your <strong>order number {purchase_id} </strong>in the field as reason:</p><p>Account owner<br />Bank<br />IBAN: XX 000000000000000000000<br />BIC/SWIFT: XX00XX00</p><p>Your articles will be delivered immediately after your payment.</p><p>&nbsp;</p>",
 			 'resultspage_failed' => "<p><strong>Your payment could not be processed.</strong></p><p>Please transfer the <strong>amount of</strong> {cart_total} to the following account and please mention your <strong>order number {purchase_id} </strong>in the field as reason:</p><p>Account owner<br />Bank<br />IBAN: XX 000000000000000000000<br />BIC/SWIFT: XX00XX00</p><p>Your articles will be delivered immediately after your payment.</p><p>&nbsp;</p>",
@@ -369,28 +369,6 @@ class HaetShopStyling {
 							if (isset($_POST['resultspage_failed'])) {
 									$options['resultspage_failed'] = $_POST['resultspage_failed'];
 							}
-			}else if ($tab=='upgrade'){
-							$keys = get_option('haetshopstyling_keys');
-							if (!$this->isAllowed('resultspage') && isset($_POST['haetresultspageserial'])) {
-									$keys['resultspage'] = $_POST['haetresultspageserial'];
-									update_option('haetshopstyling_keys',$keys);
-									if ($this->isAllowed('resultspage')){
-										echo '<div class="updated"><p><strong>';
-												_e("Your serial was accepted!", "haetshopstyling");
-										echo '</strong></p></div>';	
-									}
-							}	
-							if (isset($_POST['haetinvoiceserial'])) {
-									$keys['invoice'] = $_POST['haetinvoiceserial'];
-									update_option('haetshopstyling_keys',$keys);
-									if ($this->isAllowed('invoice')){
-										echo '<div class="updated"><p><strong>';
-												_e("Your serial was accepted!", "haetshopstyling");
-										echo '</strong></p></div>';	
-									}
-							}
-							
-							
 			}
 			update_option('haetshopstyling_options', $options);
 			
@@ -432,7 +410,8 @@ class HaetShopStyling {
 					array('tax_single',      __('tax per product','haetshopstyling')),
 					array('product_tax_charged',      __('tax sum','haetshopstyling')),
                     array('custom_message',      __('personalization','haetshopstyling')),
-					array('download',      __('download link','haetshopstyling')),
+                    array('sku',      __('SKU','haetshopstyling').' *'),
+					array('download',      __('download link','haetshopstyling').' **'),
                     array('baseprice_sum',      __('base price','haetshopstyling')) //customization for Ivan
 			);
 		$select = '<select class="products-field-select" id="'.$id.'" name="'.$id.'">';
@@ -521,7 +500,7 @@ class HaetShopStyling {
 				WHERE  log_id = %d AND active = 1
 				ORDER BY checkout_order',(int)$purchase_id);
 
-			$checkout_fields = $wpdb->get_results($form_sql,ARRAY_A);
+			$checkout_fields = $wpdb->get_results($form_sql,ARRAY_A);            
 
 			$params=array_merge($checkout_fields,$params);
 			
@@ -529,6 +508,13 @@ class HaetShopStyling {
 			set_transient( "haet_cart_params_{$purchase_id}", $params, 60 * 60 * 24 * 30 );
 		}
 		
+        for ($i=0; $i < count($params); $i++) {
+            if($params[$i]['unique_name']=='shippingstate' && is_numeric($params[$i]['value']))
+                $params[$i]['value'] = $wpdb->get_var($wpdb->prepare("SELECT `name` FROM ".WPSC_TABLE_REGION_TAX." WHERE id=%d",(int)$params[$i]['value']));
+            else if($params[$i]['unique_name']=='billingstate' && is_numeric($params[$i]['value']))
+                $params[$i]['value'] = $wpdb->get_var($wpdb->prepare("SELECT `name` FROM ".WPSC_TABLE_REGION_TAX." WHERE id=%d",(int)$params[$i]['value']));
+            
+        }
 		$trackingid = $wpdb->get_var("SELECT `track_id` FROM ".WPSC_TABLE_PURCHASE_LOGS." WHERE `id`={$purchase_id} LIMIT 1");
 		$params[]= array('unique_name'=>'tracking_id','value'=>$trackingid);
 
@@ -741,9 +727,7 @@ class HaetShopStyling {
 		
 		foreach ($params AS $param){
 			$message_html = __(str_replace('{'.$param["unique_name"].'}', $param['value'], $message_html));
-		}
-
-		
+		}		
 	}
 	
 	/* use this function for wpsc 3.8.9 */
@@ -778,7 +762,10 @@ class HaetShopStyling {
                     $message_html = __(str_replace('{'.$param["unique_name"].'}', $param['value'], $message_html));
                 }
             }
+                
 		}
+        //remove "SKU" column for customers
+        $message_html = preg_replace('#\<t[d|h] class=\'sku\'>.*</t[d|h]>#Uis', '', $message_html);
 		return __($message_html);
 	}
 	
@@ -823,7 +810,9 @@ class HaetShopStyling {
 				}
 			}
 		}
+
 		$is_shop_mail=false;
+        $email_type='';
 		/*
 		 * the idea of the following switch statement is taken from http://schwambell.com/wp-e-commerce-style-email-plugin/ by Jakob Schwartz
 		 */
@@ -836,25 +825,30 @@ class HaetShopStyling {
                     $message =  stripslashes(str_replace('\\&quot;','',$options['body_adminreport'])) ;
                     $subject = stripslashes(str_replace('\\&quot;','',$options['subject_adminreport'])) ;
 					$is_shop_mail=true;
+                    $email_type='wpsc_report';
 					break;
 		case __( 'Purchase Receipt', 'wpsc' ): //sent when changing state to "accepted payment"
 					$message =  stripslashes(str_replace('\\&quot;','',$options['body_payment_successful'])) ;
 					$subject = stripslashes(str_replace('\\&quot;','',$options['subject_payment_successful'])) ;
 					$is_shop_mail=true;
+                    $email_type='wpsc_accepted';
 					break;
 		//case __( 'Order Pending', 'wpsc' ): // when is this message sent!?
 		case __( 'Order Pending: Payment Required', 'wpsc' ):
 					$message =  stripslashes(str_replace('\\&quot;','',$options['body_payment_incomplete'])) ;
 					$subject = stripslashes(str_replace('\\&quot;','',$options['subject_payment_incomplete']));
 					$is_shop_mail=true;
+                    $email_type='wpsc_incomplete';
 					break;
 		case get_option( 'wpsc_trackingid_subject' ): 
 					$message =  stripslashes(str_replace('\\&quot;','',$options['body_tracking'])) ;
 					$subject = stripslashes(str_replace('\\&quot;','',$options['subject_tracking']));
 					$is_shop_mail=true;
+                    $email_type='wpsc_tracking';
 					break;
 		case __( 'The administrator has unlocked your file', 'wpsc' ):
 					$is_shop_mail=true;
+                    $email_type='wpsc_unlock';
 					break;		
 		}
 		/*
@@ -873,6 +867,9 @@ class HaetShopStyling {
 					$subject = str_replace('{'.$param["unique_name"].'}', $param['value'], $subject);
 				}
 			}
+            //remove SKU from products table except for the transaction report
+            if( $email_type!='wpsc_report' )
+                $message = preg_replace('#\<t[d|h] class=\'sku\'>.*</t[d|h]>#Uis', '', $message);
 		}
 
 		$message = preg_replace('/\<http(.*)\>/', '<a href="http$1">http$1</a>', $message); //replace links like <http://... with <a href="http://..."
@@ -970,25 +967,6 @@ class HaetShopStyling {
 		return qtrans_convertURL($url);
 	}
 	
-	function getPaypalForm(){
-		return '
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="hosted_button_id" value="LJJ5TL4GGZATY">
-            <table>
-            <tr><td><input type="hidden" name="on0" value="feature selection">feature selection</td></tr><tr><td><select name="os0">
-                <option value="results pages">results pages $9,00 USD</option>
-                <option value="PDF invoices">PDF invoices $19,00 USD</option>
-                <option value="all together">all together $25,00 USD</option>
-            </select> </td></tr>
-            </table>
-            <input type="hidden" name="currency_code" value="USD">
-            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-            <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-            </form>
-			';
-	}
-	
 
     /**
      * creates or updates the currency-country table
@@ -998,8 +976,8 @@ class HaetShopStyling {
         global $wpdb;
         if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',HAET_TABLE_PURCHASE_DETAILS ) )){
             //$wpdb->query('DROP TABLE `'.HAET_TABLE_PURCHASE_DETAILS.'`');
-            if ( !$wpdb->get_var('SHOW COLUMNS FROM `'.HAET_TABLE_PURCHASE_DETAILS.'` LIKE `locale`')){
-                $wpdb->query('ALTER TABLE  `'.HAET_TABLE_PURCHASE_DETAILS.'` ADD `locale` VARCHAR( 10 ) NULL ');
+            if ( !$wpdb->get_var('SHOW COLUMNS FROM `'.HAET_TABLE_PURCHASE_DETAILS.'` LIKE "locale"')){
+                $wpdb->query('ALTER TABLE  `'.HAET_TABLE_PURCHASE_DETAILS.'` ADD "locale" VARCHAR( 10 ) NULL ');
             }
         }else{
             $wpdb->query(  '

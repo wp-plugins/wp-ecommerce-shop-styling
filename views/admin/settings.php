@@ -68,10 +68,25 @@
 		#haetshopstylingfootercenter,.footercenter{
 			text-align:center;
 		}
+		.haetshopstylingdocumentation{
+			text-align:right;
+			float:right;
+		}
 	</style>
 <div class=wrap>
-	<h2><img src="<?php echo HAET_SHOP_STYLING_URL;?>images/icon.png"><?php _e('Style your store','haetshopstyling'); ?></h2>
 	
+	<div>
+		<div class="haetshopstylingdocumentation">
+			<?php _e('Need some help?','haetshopstyling'); ?>
+			<a href="http://wpshopstyling.com/documentation/" target="_blank"><?php _e('Documentation','haetshopstyling'); ?></a>
+			 | 
+			<a href="http://wpshopstyling.com/forum/wp-shop-styling/" target="_blank"><?php _e('Forum','haetshopstyling'); ?></a>
+			 | 
+			<a href="http://wpshopstyling.com/support/" target="_blank"><?php _e('Support','haetshopstyling'); ?></a>
+		</div>
+		<img src="<?php echo HAET_SHOP_STYLING_URL;?>images/icon.png">
+		<div class="clear"></div>
+	</div>
 	<h2 class="nav-tab-wrapper">
 	<?php
 		foreach( $tabs as $el => $name ){
@@ -92,12 +107,11 @@
 						<div style="float:left">
 							<h4><?php _e('You have not unlocked this feature yet','haetshopstyling'); ?></h4>
 							<p><?php _e('You can edit and even preview the invoice but it will not be published to your customers.','haetshopstyling'); ?></p>
-							<p><a href="?page=wp-ecommerce-shop-styling.php&tab=upgrade"><?php _e('Enter your serial number','haetshopstyling'); ?></a></p>
+							<p><a href="http://wpshopstyling.com/" target="_blank"><?php _e('read more &raquo;','haetshopstyling'); ?></a></p>
 						</div>
 						<div style="margin-left:50px; float:left">
-							<h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
-							<p><?php _e('Valid for all plugin updates.','haetshopstyling'); ?></p>
-							<?php echo $this->getPaypalForm(); ?>
+							<h4><?php _e('Get this feature!','haetshopstyling'); ?></h4>
+							<a href="http://wpshopstyling.com/download/" target="_blank" class="button"><?php _e('Upgrade Now &raquo;','haetshopstyling'); ?></a>
 						</div>
 						
 						<div style="clear:both"> </div>
@@ -352,6 +366,10 @@
 				<?php endfor; ?>
 			</tbody>
 		</table>
+		<p class="description">
+			<strong>*</strong> SKU is only visible in the transaction report and wont be sent to the customer.<br/> 
+			<strong>**</strong> The download link will be visible after the payment has been accepted, but it is not visible in the PDF invoice.<br/>
+		</p>
 		<h3><?php _e('Personalization','haetshopstyling'); ?></h3>
 		<table class="form-table">
 			<tbody>
@@ -521,12 +539,11 @@
 						<div style="float:left">
 							<h4><?php _e('You have not unlocked this feature yet','haetshopstyling'); ?></h4>
 							<p><?php _e('You can edit and even preview the invoice but it will not be published to your customers.','haetshopstyling'); ?></p>
-							<p><a href="?page=wp-ecommerce-shop-styling.php&tab=upgrade"><?php _e('Enter your serial number','haetshopstyling'); ?></a></p>
+							<p><a href="http://wpshopstyling.com/" target="_blank"><?php _e('read more &raquo;','haetshopstyling'); ?></a></p>
 						</div>
 						<div style="margin-left:50px; float:left">
-							<h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
-							<p><?php _e('Valid for all plugin updates.','haetshopstyling'); ?></p>
-							<?php echo $this->getPaypalForm(); ?>
+							<h4><?php _e('Get this feature!','haetshopstyling'); ?></h4>
+							<a href="http://wpshopstyling.com/download/" target="_blank" class="button"><?php _e('Upgrade Now &raquo;','haetshopstyling'); ?></a>
 						</div>
 						
 						<div style="clear:both"> </div>
@@ -612,7 +629,7 @@
 	<iframe id="mailtemplatepreview" style="width:800px; height:480px; border:1px solid #ccc;" ></iframe>
 	<p>
 		<?php _e('you can find a few more templates here:','haetshopstyling'); ?>
-		<a href="http://haet.at/wp-e-commerce-shop-styling/wp-shop-styling-mail-templates/" target="_blank">http://haet.at/wp-e-commerce-shop-styling/wp-shop-styling-mail-templates/</a>
+		<a href="http://wpshopstyling.com/wp-e-commerce-html-mail-templates/wpsc-html-mail-templates/" target="_blank">http://wpshopstyling.com/wp-e-commerce-html-mail-templates/wpsc-html-mail-templates/</a>
 	</p>
 	<script>
 		jQuery("#previewmail").click(function(){
@@ -628,13 +645,12 @@
 					<div class="upgrademessage">
 						<div style="float:left">
 							<h4><?php _e('You have not unlocked this feature yet','haetshopstyling'); ?></h4>
-							<p><?php _e('You can edit the settings but it will not be published to your customers.','haetshopstyling'); ?></p>
-							<p><a href="?page=wp-ecommerce-shop-styling.php&tab=upgrade"><?php _e('Enter your serial number','haetshopstyling'); ?></a></p>
+							<p><?php _e('You can edit and even preview the invoice but it will not be published to your customers.','haetshopstyling'); ?></p>
+							<p><a href="http://wpshopstyling.com/" target="_blank"><?php _e('read more &raquo;','haetshopstyling'); ?></a></p>
 						</div>
 						<div style="margin-left:50px; float:left">
-							<h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
-							<p><?php _e('Valid for all plugin updates.','haetshopstyling'); ?></p>
-							<?php echo $this->getPaypalForm(); ?>
+							<h4><?php _e('Get this feature!','haetshopstyling'); ?></h4>
+							<a href="http://wpshopstyling.com/download/" target="_blank" class="button"><?php _e('Upgrade Now &raquo;','haetshopstyling'); ?></a>
 						</div>
 						
 						<div style="clear:both"> </div>
@@ -682,58 +698,7 @@
 				?>
 <?php 
 			break;        
-			case 'upgrade' :
-				if(!$this->isAllowed('invoice') || !$this->isAllowed('resultspage')){
-					?>
-					<div class="upgrademessage">
-						<div style="float:left">
-							<h4><?php _e('You have not unlocked all features','haetshopstyling'); ?></h4>
-						</div>
-						<div style="margin-left:50px; float:left">
-							<h4><?php _e('Get your licence key!','haetshopstyling'); ?></h4>
-							<p><?php _e('Valid for all plugin updates.','haetshopstyling'); ?></p>
-							<?php echo $this->getPaypalForm(); ?>
-						</div>
-						<div style="clear:both"> </div>
-					</div>
-					<?php
-				}
-				?>
-				<form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
-			   
-				 
-				<h2><?php _e('Upgrade','haetshopstyling'); ?></h2>
-								
-				<?php
-					$keys = get_option('haetshopstyling_keys');
-				?>
-				<table class="form-table">
-					<tbody>
-						<tr valign="top">
-							<th scope="row"><label for="haetresultspageserial"><?php _e('Serial for transaction results','haetshopstyling'); ?></label></th>
-							<td>
-								<?php if($this->isAllowed('resultspage')): ?>
-									<input type="text" disabled="disabled" class="regular-text" id="haetresultspageserial" name="haetresultspageserial" value="<?php echo 'XXXX-XXXX-XXXX-XXXX'.substr($keys['resultspage'],-5); ?>">
-								<?php else: ?>
-									<input type="text" class="regular-text" id="haetresultspageserial" name="haetresultspageserial" value="">
-								<?php endif ?>    
-							</td>
-						</tr>
-						<tr valign="top">
-							<th scope="row"><label for="haetinvoiceserial"><?php _e('Serial for PDF invoices','haetshopstyling'); ?></label></th>
-							<td>
-								<?php if($this->isAllowed('invoice')): ?>
-									<input type="text" disabled="disabled" class="regular-text" id="haetinvoiceserial" name="haetinvoiceserial" value="<?php echo 'XXXX-XXXX-XXXX-XXXX'.substr($keys['invoice'],-5); ?>">
-								<?php else: ?>
-									<input type="text" class="regular-text" id="haetinvoiceserial" name="haetinvoiceserial" value="">
-								<?php endif ?>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				 
-<?php 
-			break;
+			
 }//switch
 			
 ?>
