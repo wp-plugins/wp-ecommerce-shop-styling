@@ -31,6 +31,8 @@ class HaetInvoice {
 		
 		//remove "downloads" column in PDF
 		$body = preg_replace('#\<t[d|h] class=\'download\'>.*</t[d|h]>#Uis', '', $body);
+		//remove "sku" column in PDF
+		$body = preg_replace('#\<t[d|h] class=\'sku\'>.*</t[d|h]>#Uis', '', $body);
 		
 		$html='<html><head>
 				<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
