@@ -194,7 +194,6 @@ class HaetShopStyling {
                 $flags = get_option('qtranslate_flags');
                 echo '<img src="'.plugins_url().'/qtranslate/flags/'.$flags[$locale].'" title="'.strtoupper($locale).'">';
             }
-            //http://singles-diamond.com/wp-content/plugins/qtranslate/flags/de.png
         }
         /*if($column_name=='invoicenumber'){
             global $wpdb;
@@ -466,7 +465,7 @@ class HaetShopStyling {
 
 			$params[]= array('unique_name'=>'purchase_id','value'=>$purchase_id);
 
-			$sql = "SELECT date,base_shipping,gateway,totalprice
+			$sql = "SELECT date,base_shipping,gateway,totalprice,billing_region,shipping_region
 							FROM `".$wpdb->prefix."wpsc_purchase_logs` 
 							WHERE  `id` = ".(int)$purchase_id;
 			$params2 = $wpdb->get_results($sql,ARRAY_A);
@@ -490,6 +489,15 @@ class HaetShopStyling {
 				$params[]= array('unique_name'=>'payment_gateway','value'=>'-');
 
 			$params[]= array('unique_name'=>'payment_instructions','value'=>strip_tags( stripslashes( get_option( 'payment_instructions' ) ) ));
+
+            if(is_numeric($params2[0]['billing_region'])){
+                $billingstate= $wpdb->get_var($wpdb->prepare("SELECT `name` FROM ".WPSC_TABLE_REGION_TAX." WHERE id=%d",(int)$params2[0]['billing_region']));
+                $params[]= array('unique_name'=>'billingstate','value'=>$billingstate);
+            }
+            if(is_numeric($params2[0]['shipping_region'])){
+                $shippingstate= $wpdb->get_var($wpdb->prepare("SELECT `name` FROM ".WPSC_TABLE_REGION_TAX." WHERE id=%d",(int)$params2[0]['shipping_region']));
+                $params[]= array('unique_name'=>'shippingstate','value'=>$shippingstate);
+            }
 			set_transient( "haet_cart_params_{$purchase_id}", $params, 60 * 60 * 24 * 30 );
 		}
 
@@ -502,19 +510,12 @@ class HaetShopStyling {
 
 			$checkout_fields = $wpdb->get_results($form_sql,ARRAY_A);            
 
-			$params=array_merge($checkout_fields,$params);
+			$params=array_merge($params,$checkout_fields);
 			
 			$params['checkout_fields_loaded']=(count($checkout_fields)!=0);
 			set_transient( "haet_cart_params_{$purchase_id}", $params, 60 * 60 * 24 * 30 );
 		}
 		
-        for ($i=0; $i < count($params); $i++) {
-            if($params[$i]['unique_name']=='shippingstate' && is_numeric($params[$i]['value']))
-                $params[$i]['value'] = $wpdb->get_var($wpdb->prepare("SELECT `name` FROM ".WPSC_TABLE_REGION_TAX." WHERE id=%d",(int)$params[$i]['value']));
-            else if($params[$i]['unique_name']=='billingstate' && is_numeric($params[$i]['value']))
-                $params[$i]['value'] = $wpdb->get_var($wpdb->prepare("SELECT `name` FROM ".WPSC_TABLE_REGION_TAX." WHERE id=%d",(int)$params[$i]['value']));
-            
-        }
 		$trackingid = $wpdb->get_var("SELECT `track_id` FROM ".WPSC_TABLE_PURCHASE_LOGS." WHERE `id`={$purchase_id} LIMIT 1");
 		$params[]= array('unique_name'=>'tracking_id','value'=>$trackingid);
 
@@ -730,7 +731,7 @@ class HaetShopStyling {
 		}		
 	}
 	
-	/* use this function for wpsc 3.8.9 */
+	/* use this function for wpsc 3.8.9 and later */
 	function transactionResultsFilter($output){
 		if ( array_key_exists('sessionid', $_GET))
 			$sessionid = $_GET['sessionid'];
@@ -960,7 +961,7 @@ class HaetShopStyling {
 	}
 	
 	function translateCartitemName($name,$id){
-		return htmlentities(stripslashes(__($name)), ENT_QUOTES, "UTF-8");
+		return stripslashes(__($name));
 	}
 	  
 	function translateUrl($url, $original_url, $_context){
@@ -976,17 +977,17 @@ class HaetShopStyling {
         global $wpdb;
         if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s',HAET_TABLE_PURCHASE_DETAILS ) )){
             //$wpdb->query('DROP TABLE `'.HAET_TABLE_PURCHASE_DETAILS.'`');
-            if ( !$wpdb->get_var('SHOW COLUMNS FROM `'.HAET_TABLE_PURCHASE_DETAILS.'` LIKE "locale"')){
-                $wpdb->query('ALTER TABLE  `'.HAET_TABLE_PURCHASE_DETAILS.'` ADD "locale" VARCHAR( 10 ) NULL ');
+            if ( !$wpdb->get_var('SHOW COLUMNS FROM '.HAET_TABLE_PURCHASE_DETAILS.' LIKE "locale"')){
+                $wpdb->query('ALTER TABLE '.HAET_TABLE_PURCHASE_DETAILS.' ADD locale VARCHAR( 10 ) NULL ');
             }
         }else{
             $wpdb->query(  '
-                CREATE TABLE IF NOT EXISTS `'.HAET_TABLE_PURCHASE_DETAILS.'` (
-                  `purchase_log_id` int(10) unsigned NOT NULL,
-                  `invoice_number` varchar(20) NOT NULL DEFAULT "",
-                  `filename` varchar(255) NOT NULL DEFAULT "",
-                  `invoice_sent` datetime DEFAULT NULL,
-                  PRIMARY KEY (`purchase_log_id`)
+                CREATE TABLE IF NOT EXISTS '.HAET_TABLE_PURCHASE_DETAILS.' (
+                  purchase_log_id int(10) unsigned NOT NULL,
+                  invoice_number varchar(20) NOT NULL DEFAULT "",
+                  filename varchar(255) NOT NULL DEFAULT "",
+                  invoice_sent datetime DEFAULT NULL,
+                  PRIMARY KEY (purchase_log_id)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
                 '
             );
