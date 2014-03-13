@@ -1,9 +1,9 @@
 === WP e-Commerce Shop Styling ===
 Contributors: haet 
-Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice,tax
+Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice,tax,wp-ecommerce,e-commerce
 Requires at least: 3.4.2
-Tested up to: 3.6.1
-Stable tag: 2.1
+Tested up to: 3.8.1
+Stable tag: 2.2
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -13,7 +13,7 @@ Customize your WP ecommerce store with HTML mail templates, message content, tra
 
 WPSC Shop Styling is the perfect improvement for your WP E-Commerce store. Make your WPEC shop more professional with branded HTML mails, custom email text, PDF invoices and individual transaction results pages.
 Apply your corporate identity to all outgoing mails and invoice documents! Includes ready to use templates for every custom content. 
-vailable in English, German, Hungarian and French. 
+vailable in English, German, Spanish, Italian, Dutch, Swedish, Hungarian and French. 
 
 
 = HTML mail templates =
@@ -72,6 +72,14 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 
 == Changelog ==
+*	2.2: added option to disable HTML for non wpsc mails, 
+
+added Shipping option placeholder - thanks to [Matej Rokos](http://matejrokos.desineo.com/) 
+
+fixed "duplicate entry..." SQL error [->Forum](http://wpshopstyling.com/topic/wordpress-database-error-duplicate-entry-xx-for-key-primary/)
+
+added filter for custom placeholders [read more](http://wpshopstyling.com/custom-placeholder/)
+
 *	2.1: fixed a SQL error and added Dutch translation 
 *	2.0: fixed a bug in mail template with hotmail
 

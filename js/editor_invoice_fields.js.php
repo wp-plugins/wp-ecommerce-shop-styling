@@ -22,6 +22,10 @@
 							'fieldname'  => __('Payment instructions','haetshopstyling')
 							);
 		$placeholders[] = array(
+							'fieldvalue' => 'order_status',
+							'fieldname'  => __('Order Status','haetshopstyling')
+							);
+		$placeholders[] = array(
 							'fieldvalue' => 'date',
 							'fieldname'  => __('date','haetshopstyling')
 							);
@@ -37,6 +41,10 @@
 							'fieldvalue' => 'total_shipping',
 							'fieldname'  => __('Total shipping','haetshopstyling')
 							);
+        $placeholders[] = array(
+                            'fieldvalue' => 'shipping_option',
+                            'fieldname'  => __('Shipping option','haetshopstyling')
+                            );  		
 		$placeholders[] = array(
 							'fieldvalue' => 'total_product_price',
 							'fieldname'  => __('Total product price','haetshopstyling')

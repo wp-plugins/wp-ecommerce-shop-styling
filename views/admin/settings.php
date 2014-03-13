@@ -256,7 +256,9 @@
 					<th scope="row"><label for="haetshopstylingdisablepdf"><?php _e('Disable PDF invoice','haetshopstyling'); ?></label></th>
 					<td>
 						<select  id="haetshopstylingdisablepdf" name="haetshopstylingdisablepdf">
-						  <option value="enable" <?php echo ($options['disablepdf']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
+						  <option value="enable" <?php echo ($options['disablepdf']=="enable"?"selected":""); ?>><?php _e('send with order confirmation','haetshopstyling'); ?></option>
+						  <option value="success" <?php echo ($options['disablepdf']=="success"?"selected":""); ?>><?php _e('only on successful payment','haetshopstyling'); ?></option>
+						  <option value="admin" <?php echo ($options['disablepdf']=="admin"?"selected":""); ?>><?php _e('only to the store admin','haetshopstyling'); ?></option>
 						  <option value="disable" <?php echo ($options['disablepdf']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
 						</select>
 					</td>
@@ -618,7 +620,15 @@
 						<span class="description"><?php _e('From address for mails outside your store','haetshopstyling'); ?></span>
 					</td>
 				</tr>
-				
+				<tr valign="top">
+					<th scope="row"><label for="haetshopstylingstylenonwpscmails"><?php _e('Apply HTML template to non wpsc mails','haetshopstyling'); ?></label></th>
+					<td>
+						<select  id="haetshopstylingstylenonwpscmails" name="haetshopstylingstylenonwpscmails">
+						  <option value="enable" <?php echo ($options['stylenonwpscmails']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
+						  <option value="disable" <?php echo ($options['stylenonwpscmails']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
+						</select>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 

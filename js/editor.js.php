@@ -41,6 +41,10 @@
                             'fieldname'  => '&gt; '.__('Total shipping','haetshopstyling')
                             );
         $placeholders[] = array(
+                            'fieldvalue' => 'shipping_option',
+                            'fieldname'  => '&gt; '.__('Shipping option','haetshopstyling')
+                            );        
+        $placeholders[] = array(
                             'fieldvalue' => 'total_product_price',
                             'fieldname'  => '&gt; '.__('Total product price','haetshopstyling')
                             );  
