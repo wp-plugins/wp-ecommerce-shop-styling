@@ -547,7 +547,7 @@ class HaetShopStyling {
 		$items = $this->getCartItems($purchase_id);   
 		$products_table = '<table id="products-table">';
 		$products_table .= "<tr>\n";
-		for ($col=1;$col <= count($options["columnfield"]); $col++){
+		for ($col=1;$col < count($options["columnfield"]); $col++){
 			if($options["columnfield"][$col]!='' && !($options["columnfield"][$col]=='download' && $this->getProcessedState($purchase_id)!=3))
 				$products_table .= "<th class='".$options["columnfield"][$col]."'>".__($options["columntitle"][$col])."</th>";
 		}
@@ -671,7 +671,7 @@ class HaetShopStyling {
 				//check if this product has tax disabled
 				$meta = get_post_meta($product_id,'_wpsc_product_metadata',true);
 
-				if ($meta['wpec_taxes_taxable']=='on'){
+				if (!isset($meta['wpec_taxes_taxable']) || $meta['wpec_taxes_taxable']=='on'){
 					return 0;
 				}
 				$wpec_selected_country = $wpec_taxes_controller->wpec_taxes_retrieve_selected_country();
@@ -759,6 +759,22 @@ class HaetShopStyling {
 		}		
 	}
 	
+	/* needed for qtranslate */
+	function curPageURL() {
+        $pageURL = 'http';
+         if ($_SERVER["HTTPS"] == "on") {
+            $pageURL .= "s";
+        }
+         $pageURL .= "://";
+         if ($_SERVER["SERVER_PORT"] != "80") {
+              $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+         } 
+        else {
+              $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+         }
+        return $pageURL;
+    }
+
 	/* use this function for wpsc 3.8.9 and later */
 	function transactionResultsFilter($output){
 		if ( array_key_exists('sessionid', $_GET))
@@ -801,7 +817,7 @@ class HaetShopStyling {
             global $wpdb;
             $customer_locale = $wpdb->get_var("SELECT `locale` FROM ".HAET_TABLE_PURCHASE_DETAILS." WHERE purchase_log_id=".$purchase_log->get('id'));
             if ( $current_locale != $customer_locale && strlen($customer_locale)>0 ){
-                $message_html = __($message_html).'<script>window.location.href="'.qtrans_convertURL(curPageURL(), substr($customer_locale, 0,2)).'";</script>';
+                $message_html = __($message_html).'<script>window.location.href="'.qtrans_convertURL($this->curPageURL(), substr($customer_locale, 0,2)).'";</script>';
             }else{
                 $message_html = __($message_html);
             }
