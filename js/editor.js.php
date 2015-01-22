@@ -1,128 +1,139 @@
 <?php
-	require_once('../../../../wp-load.php');
-	require_once('../../../../wp-admin/includes/admin.php');
-	do_action('admin_init');
+    require_once('../../../../wp-load.php');
+    require_once('../../../../wp-admin/includes/admin.php');
+    do_action('admin_init');
  
-	if ( ! is_user_logged_in() )
-		die('You must be logged in to access this script.');
+    if ( ! is_user_logged_in() )
+        die('You must be logged in to access this script.');
  
 
-        global $wpdb;
 
-        $form_sql = $wpdb->prepare( "
-                SELECT *
-                FROM " . WPSC_TABLE_CHECKOUT_FORMS . "
-                ORDER BY checkout_set,checkout_order
-        " );
-        $form_fields = $wpdb->get_results( $form_sql );
-        $placeholders=array();
-        $placeholders[] = array(
+        $invoice_placeholders=array();
+        $invoice_placeholders[] = array(
                             'fieldvalue' => '#productstable#',
-                            'fieldname'  => '&gt; '.__('products table','haetshopstyling')
+                            'fieldname'  => __('products table','haetshopstyling')
                             );
-        $placeholders[] = array(
-                            'fieldvalue' => 'payment_instructions',
-                            'fieldname'  => '&gt; '.__('Payment instructions','haetshopstyling')
-                            );
-        $placeholders[] = array(
-                            'fieldvalue' => 'date',
-                            'fieldname'  => '&gt; '.__('date','haetshopstyling')
-                            );
-        $placeholders[] = array(
-                            'fieldvalue' => 'base_shipping',
-                            'fieldname'  => '&gt; '.__('Shipping base','haetshopstyling')
-                            );
-        $placeholders[] = array(
-                            'fieldvalue' => 'purchase_id',
-                            'fieldname'  => '&gt; '.__('invoice number','haetshopstyling')
-                            );
-        $placeholders[] = array(
-                            'fieldvalue' => 'total_shipping',
-                            'fieldname'  => '&gt; '.__('Total shipping','haetshopstyling')
-                            );
-        $placeholders[] = array(
-                            'fieldvalue' => 'shipping_option',
-                            'fieldname'  => '&gt; '.__('Shipping option','haetshopstyling')
-                            );        
-        $placeholders[] = array(
-                            'fieldvalue' => 'total_product_price',
-                            'fieldname'  => '&gt; '.__('Total product price','haetshopstyling')
-                            );  
-        $placeholders[] = array(
-                            'fieldvalue' => 'total_tax',
-                            'fieldname'  => '&gt; '.__('Total tax','haetshopstyling')
-                            );  
-        $placeholders[] = array(
-                            'fieldvalue' => 'coupon_amount',
-                            'fieldname'  => '&gt; '.__('Discount','haetshopstyling')
-                            );                                                                                                 
-        $placeholders[] = array(
-                            'fieldvalue' => 'cart_total',
-                            'fieldname'  => '&gt; '.__('Total price','haetshopstyling')
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'payment_gateway',
+                            'fieldname'  => __('Payment gateway','haetshopstyling')
                             );      
-        $placeholders[] = array(
-                            'fieldvalue' => 'tracking_id',
-                            'fieldname'  => '&gt; '.__('Tracking ID','haetshopstyling')
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'payment_instructions',
+                            'fieldname'  => __('Payment instructions','haetshopstyling')
                             );
-                            
-                                                        
-	foreach ( $form_fields as $form_field ){
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'order_status',
+                            'fieldname'  => __('Order Status','haetshopstyling')
+                            );
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'date',
+                            'fieldname'  => __('date','haetshopstyling')
+                            );
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'base_shipping',
+                            'fieldname'  => __('Shipping base','haetshopstyling')
+                            );
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'purchase_id',
+                            'fieldname'  => __('invoice number','haetshopstyling')
+                            );
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'total_shipping',
+                            'fieldname'  => __('Total shipping','haetshopstyling')
+                            );
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'shipping_option',
+                            'fieldname'  => __('Shipping option','haetshopstyling')
+                            );          
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'total_product_price',
+                            'fieldname'  => __('Total product price','haetshopstyling')
+                            );  
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'total_tax',
+                            'fieldname'  => __('Total tax','haetshopstyling')
+                            );  
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'coupon_amount',
+                            'fieldname'  => __('Discount','haetshopstyling')
+                            );                                                                                                 
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'cart_total',
+                            'fieldname'  => __('Total price','haetshopstyling')
+                            );      
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'tracking_id',
+                            'fieldname'  => __('Tracking ID','haetshopstyling')
+                            );
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'total_numeric',
+                            'fieldname'  => __('Total price numeric','haetshopstyling')
+                            );
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'total_numeric_without_tax',
+                            'fieldname'  => __('Total numeric without tax','haetshopstyling')
+                            );
+        $invoice_placeholders[] = array(
+                            'fieldvalue' => 'tax_numeric',
+                            'fieldname'  => __('Total tax numeric','haetshopstyling')
+                            );
+
+        $form_sql = "
+                SELECT *
+                FROM ".WPSC_TABLE_CHECKOUT_FORMS."
+                ORDER BY checkout_set,checkout_order;
+        ";
+
+        $form_fields = $wpdb->get_results( $form_sql );
+        $checkout_placeholders=array();
+                                                                                
+        foreach ( $form_fields as $form_field ){
             if ( $form_field->type != 'heading' ){
                 if(empty( $form_field->unique_name ))
                     $form_field->unique_name = 'field_'.$form_field->id;
                 $placeholder=array();
                 $placeholder['fieldvalue'] = esc_html( $form_field->unique_name );
                 $placeholder['fieldname']  = $form_field->name .' ('.$form_field->unique_name.')';
-                $placeholders[] = $placeholder;
+                $checkout_placeholders[] = $placeholder;
             }
         }
-	
-?>
- 
-(function() {
-	tinymce.create('tinymce.plugins.invoicefields', {
-		init : function(ed, url) {
- 
-		},
-		createControl : function(n, cm) {
-			if(n=='invoicefields'){
-                        var mlb = cm.createListBox('invoicefieldsList', {
-                            title : '<?php _e('Placeholders','haetshopstyling'); ?>',
-                            onselect : function(v) {
-                                        tinyMCE.activeEditor.selection.setContent('{' + v + '}');
-                                        return false;
-                            }
-                        });
- 
-                // Add some values to the list box
-                <?php foreach($placeholders as $placeholder):?>
-                	mlb.add('<?php echo $placeholder["fieldname"];?>', '<?php echo $placeholder["fieldvalue"];?>');
-		<?php endforeach;?>
- 
-                // Return the new listbox instance
-                return mlb;
-             }
- 
-             return null;
-		},
- 
-		/**
-		 * Returns information about the plugin as a name/value array.
-		 * The current keys are longname, author, authorurl, infourl and version.
-		 *
-		 * @return {Object} Name/value array containing information about the plugin.
-		 */
-		getInfo : function() {
-			return {
-				longname : 'PDF Invoice Placeholder Selector',
-				author : 'haet',
-				authorurl : 'http://haet.at',
-				infourl : 'http://haet.at',
-				version : "1.0"
-			};
-		}
-	});
 
-	// Register plugin
-	tinymce.PluginManager.add('invoicefields', tinymce.plugins.invoicefields);
+?>
+
+(function() {
+    tinymce.PluginManager.add('haet_shopstyling_placeholder', function( editor, url ) {
+        editor.addButton( 'haet_shopstyling_placeholder', {
+            text: 'Placeholders',
+            icon: false,
+            type: 'menubutton',
+            menu: [
+                {
+                    text: 'Invoice',
+                    menu: [
+                        <?php foreach($invoice_placeholders as $placeholder):?>
+                            {
+                                text: '<?php echo $placeholder["fieldname"];?>',
+                                onclick: function() {
+                                    editor.insertContent('{<?php echo $placeholder["fieldvalue"];?>}');
+                                }
+                            },
+                        <?php endforeach;?>
+                    ]
+                },
+                {
+                    text: 'Checkout',
+                    menu: [
+                        <?php foreach($checkout_placeholders as $placeholder):?>
+                            {
+                                text: '<?php echo $placeholder["fieldname"];?>',
+                                onclick: function() {
+                                    editor.insertContent('{<?php echo $placeholder["fieldvalue"];?>}');
+                                }
+                            },
+                        <?php endforeach;?>
+                    ]
+                }
+            ]
+        });
+    });
 })();

@@ -579,75 +579,78 @@
 <?php 
 			break;            
 			case 'mailtemplate':
-?>
-	<form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
-		<table class="form-table">
-			<tbody>
-				<tr valign="top">
-					<th scope="row"><label for="haetshopstylingshopsendername"><?php _e('Shop email sender name','haetshopstyling'); ?></label></th>
-					<td>
-						<input type="text" class="regular-text" id="haetshopstylingshopsendername" name="haetshopstylingshopsendername" value="<?php echo esc_attr( get_option( 'return_name' ) ); ?>">
-						<span class="description"><?php _e('Sender name for mails from your store','haetshopstyling'); ?></span>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="haetshopstylingshopfromaddress"><?php _e('From adress','haetshopstyling'); ?></label></th>
-					<td>
-						<input type="text" class="regular-text" id="haetshopstylingshopfromaddress" name="haetshopstylingshopfromaddress" value="<?php echo esc_attr( get_option( 'return_email' ) ); ?>">
-						<span class="description"><?php _e('From address for mails from your store','haetshopstyling'); ?></span>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="haetshopstylingcustomsender"><?php _e('Use custom sender for non wpsc mails','haetshopstyling'); ?></label></th>
-					<td>
-						<select  id="haetshopstylingcustomsender" name="haetshopstylingcustomsender">
-						  <option value="enable" <?php echo ($options['customsender']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
-						  <option value="disable" <?php echo ($options['customsender']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
-						</select>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="haetshopstylingsendername"><?php _e('Email sender name','haetshopstyling'); ?></label></th>
-					<td>
-						<input type="text" class="regular-text" id="haetshopstylingsendername" name="haetshopstylingsendername" value="<?php echo get_option('haet_mail_from_name'); ?>">
-						<span class="description"><?php _e('Sender name for mails outside your store','haetshopstyling'); ?></span>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="haetshopstylingfromaddress"><?php _e('From adress','haetshopstyling'); ?></label></th>
-					<td>
-						<input type="text" class="regular-text" id="haetshopstylingfromaddress" name="haetshopstylingfromaddress" value="<?php echo get_option('haet_mail_from'); ?>">
-						<span class="description"><?php _e('From address for mails outside your store','haetshopstyling'); ?></span>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="haetshopstylingstylenonwpscmails"><?php _e('Apply HTML template to non wpsc mails','haetshopstyling'); ?></label></th>
-					<td>
-						<select  id="haetshopstylingstylenonwpscmails" name="haetshopstylingstylenonwpscmails">
-						  <option value="enable" <?php echo ($options['stylenonwpscmails']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
-						  <option value="disable" <?php echo ($options['stylenonwpscmails']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
-						</select>
-					</td>
-				</tr>
-			</tbody>
-		</table>
 
-	<h2><?php _e('Global HTML Mail Template','haetshopstyling'); ?></h2>
-	<p><?php _e('Enter your custom HTML code here. Use the placeholder {#mailcontent#} where you want your content to show up. You can also show the subject in the email body using the placeholder {#mailsubject#}','haetshopstyling'); ?></p>
-	<textarea rows="30" cols="40" class="widefat" id="haetshopstylingmailtemplate" name="haetshopstylingmailtemplate" style="font-family:'Courier New'"><?php echo stripslashes(str_replace('\\&quot;','',$options['mailtemplate'])); ?></textarea>
-	<br/><br/><a id="previewmail" class="button" href='#' ><?php _e('preview Email template','haetshopstyling'); ?></a><br/><br/>
-	<iframe id="mailtemplatepreview" style="width:800px; height:480px; border:1px solid #ccc;" ></iframe>
-	<p>
-		<?php _e('you can find a few more templates here:','haetshopstyling'); ?>
-		<a href="http://wpshopstyling.com/wp-e-commerce-html-mail-templates/wpsc-html-mail-templates/" target="_blank">http://wpshopstyling.com/wp-e-commerce-html-mail-templates/wpsc-html-mail-templates/</a>
-	</p>
-	<script>
-		jQuery("#previewmail").click(function(){
-			jQuery("#mailtemplatepreview").contents().find("html").html(jQuery("#haetshopstylingmailtemplate").val()); 
-			return false;    
-		});
-	</script>
-<?php 
+				if(!is_plugin_active( 'wp-html-mail/wp-html-mail.php' )):?>
+					<form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
+						<table class="form-table">
+							<tbody>
+								<tr valign="top">
+									<th scope="row"><label for="haetshopstylingshopsendername"><?php _e('Shop email sender name','haetshopstyling'); ?></label></th>
+									<td>
+										<input type="text" class="regular-text" id="haetshopstylingshopsendername" name="haetshopstylingshopsendername" value="<?php echo esc_attr( get_option( 'return_name' ) ); ?>">
+										<span class="description"><?php _e('Sender name for mails from your store','haetshopstyling'); ?></span>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><label for="haetshopstylingshopfromaddress"><?php _e('From adress','haetshopstyling'); ?></label></th>
+									<td>
+										<input type="text" class="regular-text" id="haetshopstylingshopfromaddress" name="haetshopstylingshopfromaddress" value="<?php echo esc_attr( get_option( 'return_email' ) ); ?>">
+										<span class="description"><?php _e('From address for mails from your store','haetshopstyling'); ?></span>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><label for="haetshopstylingcustomsender"><?php _e('Use custom sender for non wpsc mails','haetshopstyling'); ?></label></th>
+									<td>
+										<select  id="haetshopstylingcustomsender" name="haetshopstylingcustomsender">
+										  <option value="enable" <?php echo ($options['customsender']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
+										  <option value="disable" <?php echo ($options['customsender']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
+										</select>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><label for="haetshopstylingsendername"><?php _e('Email sender name','haetshopstyling'); ?></label></th>
+									<td>
+										<input type="text" class="regular-text" id="haetshopstylingsendername" name="haetshopstylingsendername" value="<?php echo get_option('haet_mail_from_name'); ?>">
+										<span class="description"><?php _e('Sender name for mails outside your store','haetshopstyling'); ?></span>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><label for="haetshopstylingfromaddress"><?php _e('From adress','haetshopstyling'); ?></label></th>
+									<td>
+										<input type="text" class="regular-text" id="haetshopstylingfromaddress" name="haetshopstylingfromaddress" value="<?php echo get_option('haet_mail_from'); ?>">
+										<span class="description"><?php _e('From address for mails outside your store','haetshopstyling'); ?></span>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><label for="haetshopstylingstylenonwpscmails"><?php _e('Apply HTML template to non wpsc mails','haetshopstyling'); ?></label></th>
+									<td>
+										<select  id="haetshopstylingstylenonwpscmails" name="haetshopstylingstylenonwpscmails">
+										  <option value="enable" <?php echo ($options['stylenonwpscmails']=="enable"?"selected":""); ?>><?php _e('enable','haetshopstyling'); ?></option>
+										  <option value="disable" <?php echo ($options['stylenonwpscmails']=="disable"?"selected":""); ?>><?php _e('disable','haetshopstyling'); ?></option>
+										</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					<h2><?php _e('Global HTML Mail Template','haetshopstyling'); ?></h2>
+					<p><?php _e('Enter your custom HTML code here. Use the placeholder {#mailcontent#} where you want your content to show up. You can also show the subject in the email body using the placeholder {#mailsubject#}','haetshopstyling'); ?></p>
+					<textarea rows="30" cols="40" class="widefat" id="haetshopstylingmailtemplate" name="haetshopstylingmailtemplate" style="font-family:'Courier New'"><?php echo stripslashes(str_replace('\\&quot;','',$options['mailtemplate'])); ?></textarea>
+					<br/><br/><a id="previewmail" class="button" href='#' ><?php _e('preview Email template','haetshopstyling'); ?></a><br/><br/>
+					<iframe id="mailtemplatepreview" style="width:800px; height:480px; border:1px solid #ccc;" ></iframe>
+					<p>
+						<?php _e('you can find a few more templates here:','haetshopstyling'); ?>
+						<a href="http://wpshopstyling.com/wp-e-commerce-html-mail-templates/wpsc-html-mail-templates/" target="_blank">http://wpshopstyling.com/wp-e-commerce-html-mail-templates/wpsc-html-mail-templates/</a>
+					</p>
+					<script>
+						jQuery("#previewmail").click(function(){
+							jQuery("#mailtemplatepreview").contents().find("html").html(jQuery("#haetshopstylingmailtemplate").val()); 
+							return false;    
+						});
+					</script>
+				<?php else: ?> 
+					<p class="description"><br><?php _e('Please configure your mail template on the "Email template" settings page.','haetshopstyling'); ?>
+				<?php endif; 
 			break;        
 			case 'resultspage' :
 				if(!$this->isAllowed('resultspage')){

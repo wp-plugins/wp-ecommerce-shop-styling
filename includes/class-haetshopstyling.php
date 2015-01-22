@@ -35,6 +35,7 @@ class HaetShopStyling {
 			'template' => stripslashes("<p>&nbsp;</p><p><img class=\"alignnone size-full wp-image-68\" title=\"logo\" src=\"".HAET_SHOP_STYLING_URL."images/logo.jpg\" alt=\"\" width=\"250\" height=\"49\" style=\"border: 0px none;\"/></p><p style=\"text-align: right;\">Companyname </p><p style=\"text-align: right;\">adressline 1</p><p style=\"text-align: right;\">12345 city</p><p style=\"text-align: right;\"> </p><p style=\"text-align: left;\">{billingfirstname} {billinglastname}</p><p style=\"text-align: left;\">{billingaddress}</p><p style=\"text-align: left;\">{billingpostcode} {billingcity}</p><p style=\"text-align: left;\"> </p><p style=\"text-align: right;\">Invoice: {purchase_id}</p><p style=\"text-align: right;\">Date: {date}</p><p style=\"text-align: right;\"> </p><h1 style=\"text-align: left;\">Invoice</h1><p style=\"text-align: left;\">{#productstable#}</p><p style=\"text-align: left;\"> </p><p style=\"text-align: right;\">Products total: {total_product_price}</p><p style=\"text-align: right;\">Shipping total: {total_shipping}</p><p style=\"text-align: right;\">Tax: {total_tax}</p><p style=\"text-align: right;\">Discount: {coupon_amount}</p><p style=\"text-align: right;\"><strong>Total: {cart_total}</strong></p><p style=\"text-align: right;\"> </p><p style=\"text-align: right;\"> </p><p style=\"text-align: center;\">Thank you for your purchase</p><p>&nbsp;</p>"),
 			'footercenter' => "your company | adressline 1 | 12345 city | office@yourcompany.net\nBank account no.: 0000000000000000000000",
             'footerright' => "Page {PAGE_NUM} of {PAGE_COUNT}",
+            'footerleft'  => "",
             'footerleftfont' => 'dejavu serif',
             'footerleftstyle' => 'normal',
             'footerleftcolor' => '#999999',
@@ -236,6 +237,9 @@ class HaetShopStyling {
     }
 
 	function printAdminPage(){    
+        if(isset( $_GET['dismiss_wp_html_mail_notice'] ) ){
+            update_option('haetshopstyling_dismiss_wp_html_mail_notice',1);
+        }
 
 		if ( isset ( $_GET['tab'] ) ) 
 			$tab=$_GET['tab']; 
@@ -381,11 +385,6 @@ class HaetShopStyling {
 			echo '</strong></p></div>';	
 		} 
 		
-	   
-			
-			
-		add_filter('mce_external_plugins', array(&$this,'customizeEditorPlugins'));
-		add_filter('tiny_mce_before_init', array(&$this,'customizeEditor'));
 		
 		$tabs = array( 
 					'mailcontent' => __('Email Content','haetshopstyling'),
@@ -426,18 +425,39 @@ class HaetShopStyling {
 		return $select;
 	}
 	
+
+    function addEditorButton(){
+        // check user permissions
+        if ( !current_user_can( 'edit_posts' ) && !current_user_can( 'edit_pages' ) ) {
+            return;
+        }
+        // check if WYSIWYG is enabled
+        if ( 'true' == get_user_option( 'rich_editing' ) ) {
+            add_filter( 'mce_external_plugins', array(&$this,'registerEditorPlugins') );
+            add_filter( 'mce_buttons', array(&$this,'registerEditorButtons'),100 );
+            add_filter('tiny_mce_before_init', array(&$this,'customizeEditor'),100);
+        }
+    }
+
+    function registerEditorButtons($buttons){
+        array_push( $buttons, 'haet_shopstyling_placeholder' );
+        return $buttons;
+    }
+
+    function registerEditorPlugins($plugin_array) {
+        $plugin_array['haet_shopstyling_placeholder'] = HAET_SHOP_STYLING_URL . 'js/editor.js.php';
+        return $plugin_array;
+    }
+
 	function customizeEditor($in) {
 		$in['remove_linebreaks']=false;
 		$in['remove_redundant_brs'] = false;
 		$in['wpautop']=false;
+        $in['toolbar1'] .=',haet_shopstyling_placeholder'; 
 		return $in;
 	}
 	
-	function customizeEditorPlugins($plugin_array) {
-		$plugin_array['invoicefields'] = HAET_SHOP_STYLING_URL . 'js/editor_invoice_fields.js.php';
-		$plugin_array['checkoutformfields'] = HAET_SHOP_STYLING_URL . 'js/editor_checkoutform_fields.js.php';
-		return $plugin_array;
-	}
+	
 
   
 
@@ -464,10 +484,12 @@ class HaetShopStyling {
 		global $wpdb;
 		$decimal_separator = get_option('wpsc_decimal_separator');
 		$params=get_transient("haet_cart_params_{$purchase_id}");
-		if($params===false  || $preview){
-			$params['debug'] .= '['.date(DATE_ATOM).'] cart_item_count:'.wpsc_cart_item_count().'<br>';
-			$params['debug'] .= '['.date(DATE_ATOM).']<pre>'.print_r($checkout_fields).'</pre><br>';                        
 
+		if($params===false  || $preview){
+            if(isset($params['debug'])){
+    			$params['debug'] .= '['.date(DATE_ATOM).'] cart_item_count:'.wpsc_cart_item_count().'<br>';
+    			$params['debug'] .= '['.date(DATE_ATOM).']<pre>'.print_r($checkout_fields).'</pre><br>';                        
+            }
 			$params[]= array('unique_name'=>'purchase_id','value'=>$purchase_id);
 
 			$sql = "SELECT date,base_shipping,gateway,totalprice,billing_region,shipping_region,processed
@@ -523,7 +545,7 @@ class HaetShopStyling {
 			set_transient( "haet_cart_params_{$purchase_id}", $params, 60 * 60 * 24 * 30 );
 		}
 
-		if(!$params['checkout_fields_loaded']){
+		if(!isset($params['checkout_fields_loaded']) || !$params['checkout_fields_loaded']){
 			$form_sql = $wpdb->prepare('SELECT IF (unique_name = "",CONCAT("field_",CAST(form_id AS CHAR(2))),unique_name) as unique_name,value
 				FROM '.$wpdb->prefix.'wpsc_submited_form_data 
 				LEFT JOIN '.$wpdb->prefix.'wpsc_checkout_forms ON '.$wpdb->prefix.'wpsc_submited_form_data.form_id = '.$wpdb->prefix.'wpsc_checkout_forms.id 
@@ -936,29 +958,33 @@ class HaetShopStyling {
 
 		$style_this_mail = ($is_shop_mail || $options['stylenonwpscmails']!='disable');
 
-		if($style_this_mail){
-			$message = preg_replace('/\<http(.*)\>/', '<a href="http$1">http$1</a>', $message); //replace links like <http://... with <a href="http://..."
-	        if($is_shop_mail)
-	            $message = str_replace('{#mailcontent#}',$message,$options['mailtemplate']);
-	        else
-	            $message = str_replace('{#mailcontent#}',nl2br($message),$options['mailtemplate']);
+        if(!is_plugin_active( 'wp-html-mail/wp-html-mail.php' )){
+    		if($style_this_mail){
+    			$message = preg_replace('/\<http(.*)\>/', '<a href="http$1">http$1</a>', $message); //replace links like <http://... with <a href="http://..."
+    	        if($is_shop_mail)
+    	            $message = str_replace('{#mailcontent#}',$message,$options['mailtemplate']);
+    	        else
+    	            $message = str_replace('{#mailcontent#}',nl2br($message),$options['mailtemplate']);
 
-			$message = str_replace('{#mailsubject#}',$subject,$message);
-			$message = stripslashes(str_replace('\\&quot;','',$message));
+    			$message = str_replace('{#mailsubject#}',$subject,$message);
+    			$message = stripslashes(str_replace('\\&quot;','',$message));
 
-	        if(stripos('x'.$headers, 'Content-Type: text/html;')==false) {
-	            $headers .= "\r\nContent-Type: text/html; charset=".get_bloginfo( 'charset' ).";\r\n";
-	        }
-	    }
-		//add_filter( 'wp_mail_content_type', create_function('', 'return "text/html";'));
-		
-		if ($is_shop_mail){
-			add_filter( 'wp_mail_from', 'wpsc_replace_reply_address', 0 );
-			add_filter( 'wp_mail_from_name', 'wpsc_replace_reply_name', 0 );
-		}else if($options['customsender']=='enable'){
-			add_filter( 'wp_mail_from', array($this,'setMailFromAddress'), 0 );
-			add_filter( 'wp_mail_from_name', array($this,'setMailSenderName'), 0 );
-		}
+    	        if(stripos('x'.$headers, 'Content-Type: text/html;')==false) {
+    	            $headers .= "\r\nContent-Type: text/html; charset=".get_bloginfo( 'charset' ).";\r\n";
+    	        }
+    	    }
+    		//add_filter( 'wp_mail_content_type', create_function('', 'return "text/html";'));
+    		
+    		if ($is_shop_mail){
+    			add_filter( 'wp_mail_from', 'wpsc_replace_reply_address', 0 );
+    			add_filter( 'wp_mail_from_name', 'wpsc_replace_reply_name', 0 );
+    		}else if($options['customsender']=='enable'){
+    			add_filter( 'wp_mail_from', array($this,'setMailFromAddress'), 0 );
+    			add_filter( 'wp_mail_from_name', array($this,'setMailSenderName'), 0 );
+    		}
+        }else{
+            $message.='<!--haetshopstyling-->'; //add a flag for WP HTML MAIL
+        }
 		
 		//translate (in case of qtranslate)
         if(is_plugin_active('qtranslate/qtranslate.php')){

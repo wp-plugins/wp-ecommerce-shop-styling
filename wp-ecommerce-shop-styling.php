@@ -3,7 +3,7 @@
 Plugin Name: WP E-Commerce shop styling
 Plugin URI: http://wpshopstyling.com/
 Description: Send customized HTML mails, custom transaction results and PDF invoices with placeholders from your WP-Ecommerce store 
-Version: 2.2
+Version: 2.4
 Author: haet webdevelopment
 Author URI: http://haet.at
 License: GPLv2 or later
@@ -40,7 +40,6 @@ load_plugin_textdomain('haetshopstyling', false, dirname( plugin_basename( __FIL
 
 
 
-
 if (class_exists("HaetShopStyling")) {
 	$wp_haetshopstyling = new HaetShopStyling();
 }
@@ -73,10 +72,12 @@ if (isset($wp_haetshopstyling)) {
     add_filter( 'wpsc_manage_purchase_logs_custom_column', array(&$wp_haetshopstyling, 'addPurchaseLogColumnContent'),10,3 );
 
     add_action( 'admin_init', array(&$wp_haetshopstyling, 'adminPageScriptsAndStyles'));
+    add_action( 'admin_head', array(&$wp_haetshopstyling, 'addEditorButton'));
 
     //create or update tables
     add_action( 'plugins_loaded', array(&$wp_haetshopstyling, 'createTables') );
 }
+
 
 function haetshopstyling_init(){
     if(!isset($wp_haetshopstyling)) 
@@ -93,8 +94,25 @@ function add_haetshopstyling_adminpage() {
 			return;
 		}
 		if (function_exists('add_options_page')) {
-                    add_options_page(__('style your store','haetshopstyling'), __('Shop styling','haetshopstyling'), 'manage_options', basename(__FILE__), array(&$wp_haetshopstyling, 'printAdminPage'));
+            add_options_page(__('style your store','haetshopstyling'), __('Shop styling','haetshopstyling'), 'manage_options', basename(__FILE__), array(&$wp_haetshopstyling, 'printAdminPage'));
 		}
 }
 	
+
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
+function suggest_wp_html_mail() {
+    ?>
+    <div class="updated">
+        <p><?php printf( 
+                    __( '<strong>Notice:</strong> For advanced responsive email styling we recommend to install the free WP HTML MAIL plugin. <a href="%s">Install Plugin</a> <br><a href="options-general.php?page=wp-ecommerce-shop-styling.php&dismiss_wp_html_mail_notice">Dismiss this notice</a> ', 'haetshopstyling' ), 
+                    wp_nonce_url( network_admin_url( 'update.php?action=install-plugin&plugin=wp-html-mail' ), 'install-plugin_wp-html-mail' )
+            ); ?></p>
+    </div>
+    <?php
+}
+if(!is_plugin_active( 'wp-html-mail/wp-html-mail.php' ) && !get_option('haetshopstyling_dismiss_wp_html_mail_notice') && !isset($_GET['dismiss_wp_html_mail_notice']) )
+    add_action( 'admin_notices', 'suggest_wp_html_mail' );
+
+
+
 
