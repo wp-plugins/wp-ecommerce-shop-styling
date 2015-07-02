@@ -253,7 +253,7 @@
 					</td>
 				</tr>-->
 				<tr valign="top">
-					<th scope="row"><label for="haetshopstylingdisablepdf"><?php _e('Disable PDF invoice','haetshopstyling'); ?></label></th>
+					<th scope="row"><label for="haetshopstylingdisablepdf"><?php _e('Send PDF invoice','haetshopstyling'); ?></label></th>
 					<td>
 						<select  id="haetshopstylingdisablepdf" name="haetshopstylingdisablepdf">
 						  <option value="enable" <?php echo ($options['disablepdf']=="enable"?"selected":""); ?>><?php _e('send with order confirmation','haetshopstyling'); ?></option>

@@ -498,7 +498,7 @@ class HaetShopStyling {
 			$params2 = $wpdb->get_results($sql,ARRAY_A);
 			
 			$params[]= array('unique_name'=>'date','value'=>date_i18n(get_option('date_format'),$params2[0]['date']));
-			$params[]= array('unique_name'=>'base_shipping','value'=>$params2[0]['base_shipping']);
+			$params[]= array('unique_name'=>'base_shipping','value'=>$this->currencyDisplay($params2[0]['base_shipping']));
 			$params[]= array('unique_name'=>'total_shipping','value'=>wpsc_cart_shipping());
 			$params[]= array('unique_name'=>'shipping_option','value'=>$this->wpsc_cart_shipping_option()); // added by Matej Rokos - adds shipping_option
 			$params[]= array('unique_name'=>'total_product_price','value'=>wpsc_cart_total_widget(false,false,false));
@@ -877,12 +877,10 @@ class HaetShopStyling {
 			if(isset($_GET['email_buyer_id']) || !get_transient( "{$purchase_id}_invoice_email_sent") ){ //if "resend receipt to buyer"
 				$filename = $options['filename'].'-'.$purchase_id.'.pdf';
 				if ( $this->isAllowed('invoice') 
-					&& (
-						$options['disablepdf']=="enable"
-						|| ( $options['disablepdf']=="success" && $subject==__( 'Purchase Receipt', 'wpsc' ) )
-						|| ( $options['disablepdf']=="success" && $subject==__( 'Transaction Report', 'wpsc' ) )
-						|| ( $options['disablepdf']=="admin" && $subject==__( 'Transaction Report', 'wpsc' ) )
-					)){// && file_exists(HAET_INVOICE_PATH.$filename ) ){
+                        && (
+                            $options['disablepdf']=="enable"
+                            || ( $options['disablepdf']=="success" && $subject==__( 'Purchase Receipt', 'wpsc' ) )
+                        )){// && file_exists(HAET_INVOICE_PATH.$filename ) ){
 					if( count($params) >0 ){
                         $invoice = new HaetInvoice($options,$params);
                         $invoice->generate($filename); 
@@ -903,7 +901,7 @@ class HaetShopStyling {
 		switch($subject) {
 		case __( 'Transaction Report', 'wpsc' ): 
 					$filename = $options['filename'].'-'.$purchase_id.'.pdf';
-					if ( $this->isAllowed('invoice') && $options['send_pdf_to_admin']=="enable" && $options['disablepdf']=="enable" && file_exists(HAET_INVOICE_PATH.$filename ) ){
+					if ( $this->isAllowed('invoice') && $options['send_pdf_to_admin']=="enable" && $options['disablepdf']!="disable" && file_exists(HAET_INVOICE_PATH.$filename ) ){
 						$attachments=array(HAET_INVOICE_PATH.$filename);
 					}
                     $message =  stripslashes(str_replace('\\&quot;','',$options['body_adminreport'])) ;
