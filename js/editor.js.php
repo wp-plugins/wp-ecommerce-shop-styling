@@ -77,6 +77,7 @@
                             'fieldvalue' => 'tax_numeric',
                             'fieldname'  => __('Total tax numeric','haetshopstyling')
                             );
+        $invoice_placeholders = apply_filters( 'shopstyling_editor_placeholders', $invoice_placeholders );
 
         $form_sql = "
                 SELECT *

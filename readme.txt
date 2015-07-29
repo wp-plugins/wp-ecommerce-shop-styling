@@ -3,7 +3,7 @@ Contributors: haet
 Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice,tax,wp-ecommerce,e-commerce
 Requires at least: 3.4.2
 Tested up to: 4.2.2
-Stable tag: 2.6
+Stable tag: 2.7
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -74,6 +74,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 == Changelog ==
 
+*   2.7: added a filter for custom placeholders [Article: Add custom placeholder to WP eCommerce Emails](http://etzelstorfer.com/en/add-custom-placeholder-to-wp-ecommerce-emails/)
 *   2.6: fixed security bug
 *   2.5: fixed a bug with formatting of shipping costs and sending invoice only on successful payment
 *	2.3: added Czech translation and fixed a compatibility issue with qtranslate.
