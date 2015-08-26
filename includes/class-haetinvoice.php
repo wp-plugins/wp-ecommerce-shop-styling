@@ -45,8 +45,8 @@ class HaetInvoice {
 				</body>
 			  </html>';
 
-		//$tmpfile=HAET_INVOICE_PATH."preview.html";
-		//file_put_contents($tmpfile,$html);
+		$tmpfile=HAET_INVOICE_PATH."preview.html";
+		file_put_contents($tmpfile,$html);
 		require_once(HAET_SHOP_STYLING_PATH.'includes/dompdf/dompdf_config.inc.php');    
 		$pdf = new DOMPDF();
 		$pdf->set_paper($this->options['paper']);
@@ -134,14 +134,14 @@ class HaetInvoice {
 	 * @param string $body 
 	 */
 	private function imgUrl2Path( $body ){
-		$url = $_SERVER['HTTP_HOST'];
-		$url1 = "http://" . $_SERVER['HTTP_HOST'];
-		$url2 = "https://" . $_SERVER['HTTP_HOST'];
-		$rel_address = str_replace($url2, '', str_replace($url1, '',HAET_SHOP_STYLING_URL) );
-		$base_path = str_replace($rel_address,'',HAET_SHOP_STYLING_PATH);
+        $url = get_site_url();
+        $path = untrailingslashit( get_home_path() );
+        $body = preg_replace("/(.*\<img.*)(".str_replace('/', '\/', $url).")(.*>.*)/", "$1".$path."$3", $body);
 
-		$body = preg_replace('#\<img(.*)src=\".*'.$url.'(.*)\"(.*)\>#Uis', '<img$1src="'.$base_path.'$2"$3\>', $body);
-		$body = preg_replace('#\<img(.*)src=\'.*'.$url.'(.*)\'(.*)\>#Uis', '<img$1src="'.$base_path.'$2"$3\>', $body);
+        if(substr( strtoupper(PHP_OS) ,0,3) == "WIN")
+            $body = preg_replace_callback("/(.*<img.*src=[\"\'])([^\"\']*)([\"\'].*)/", function($match){
+                return $match[1].str_replace( "/", '\\', $match[2]).$match[3];
+            }, $body);
 
 		return $body;
 	}

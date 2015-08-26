@@ -280,7 +280,7 @@
 			$products_table = '<table id="products-table" style="width:600px">';
 			$products_table .= '<tr>';
 
-			for ($col=1;$col <= count($options["columnfield"]); $col++){
+			for ($col=1;$col < count($options["columnfield"]); $col++){
 				if($options["columnfield"][$col]!='')
 					$products_table .= "<th  class='".$options["columnfield"][$col]."'>".$options["columntitle"][$col]."</th>";
 			}
@@ -321,7 +321,7 @@
 			); 
 			$num_columns=0;
 			foreach ($options["columnfield"] AS $field)
-				if($field!='' AND !($field!='download' && $this->getProcessedState($purchase_id)==3 ))
+				if($field!='')
 					$num_columns++;
 					
 			foreach ($items AS $item){

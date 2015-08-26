@@ -11,71 +11,71 @@
         $invoice_placeholders=array();
         $invoice_placeholders[] = array(
                             'fieldvalue' => '#productstable#',
-                            'fieldname'  => __('products table','haetshopstyling')
+                            'fieldname'  =>  esc_attr(  __('products table','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'payment_gateway',
-                            'fieldname'  => __('Payment gateway','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Payment gateway','haetshopstyling') )
                             );      
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'payment_instructions',
-                            'fieldname'  => __('Payment instructions','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Payment instructions','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'order_status',
-                            'fieldname'  => __('Order Status','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Order Status','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'date',
-                            'fieldname'  => __('date','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('date','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'base_shipping',
-                            'fieldname'  => __('Shipping base','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Shipping base','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'purchase_id',
-                            'fieldname'  => __('invoice number','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('invoice number','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'total_shipping',
-                            'fieldname'  => __('Total shipping','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Total shipping','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'shipping_option',
-                            'fieldname'  => __('Shipping option','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Shipping option','haetshopstyling') )
                             );          
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'total_product_price',
-                            'fieldname'  => __('Total product price','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Total product price','haetshopstyling') )
                             );  
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'total_tax',
-                            'fieldname'  => __('Total tax','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Total tax','haetshopstyling') )
                             );  
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'coupon_amount',
-                            'fieldname'  => __('Discount','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Discount','haetshopstyling') )
                             );                                                                                                 
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'cart_total',
-                            'fieldname'  => __('Total price','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Total price','haetshopstyling') )
                             );      
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'tracking_id',
-                            'fieldname'  => __('Tracking ID','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Tracking ID','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'total_numeric',
-                            'fieldname'  => __('Total price numeric','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Total price numeric','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'total_numeric_without_tax',
-                            'fieldname'  => __('Total numeric without tax','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Total numeric without tax','haetshopstyling') )
                             );
         $invoice_placeholders[] = array(
                             'fieldvalue' => 'tax_numeric',
-                            'fieldname'  => __('Total tax numeric','haetshopstyling')
+                            'fieldname'  =>  esc_attr( __('Total tax numeric','haetshopstyling') )
                             );
         $invoice_placeholders = apply_filters( 'shopstyling_editor_placeholders', $invoice_placeholders );
 

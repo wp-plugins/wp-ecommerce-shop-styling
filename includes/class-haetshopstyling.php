@@ -428,14 +428,14 @@ class HaetShopStyling {
 
     function addEditorButton(){
         // check user permissions
-        if ( !current_user_can( 'edit_posts' ) && !current_user_can( 'edit_pages' ) ) {
+        if ( !current_user_can( 'edit_posts' ) || !current_user_can( 'edit_pages' ) ) {
             return;
         }
         // check if WYSIWYG is enabled
         if ( 'true' == get_user_option( 'rich_editing' ) ) {
             add_filter( 'mce_external_plugins', array(&$this,'registerEditorPlugins') );
             add_filter( 'mce_buttons', array(&$this,'registerEditorButtons'),100 );
-            add_filter('tiny_mce_before_init', array(&$this,'customizeEditor'),100);
+            add_filter( 'tiny_mce_before_init', array(&$this,'customizeEditor'),200);
         }
     }
 
@@ -453,13 +453,12 @@ class HaetShopStyling {
 		$in['remove_linebreaks']=false;
 		$in['remove_redundant_brs'] = false;
 		$in['wpautop']=false;
-        $in['toolbar1'] .=',haet_shopstyling_placeholder'; 
+        if( FALSE === strpos($in['toolbar1'], 'haet_shopstyling_placeholder')
+            && FALSE === strpos($in['toolbar2'], 'haet_shopstyling_placeholder') )
+            $in['toolbar1'] .=',haet_shopstyling_placeholder'; 
 		return $in;
 	}
 	
-	
-
-  
 
 	function showLogInvoiceLink(){
 		$options = $this->getOptions();
