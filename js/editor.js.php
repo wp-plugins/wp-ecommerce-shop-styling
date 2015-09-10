@@ -50,6 +50,10 @@
                             'fieldname'  =>  esc_attr( __('Total product price','haetshopstyling') )
                             );  
         $invoice_placeholders[] = array(
+                            'fieldvalue' => 'total_without_tax',
+                            'fieldname'  =>  esc_attr( __('Total without tax','haetshopstyling') )
+                            );  
+        $invoice_placeholders[] = array(
                             'fieldvalue' => 'total_tax',
                             'fieldname'  =>  esc_attr( __('Total tax','haetshopstyling') )
                             );  

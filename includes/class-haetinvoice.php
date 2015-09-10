@@ -135,7 +135,7 @@ class HaetInvoice {
 	 */
 	private function imgUrl2Path( $body ){
         $url = get_site_url();
-        $path = untrailingslashit( get_home_path() );
+        $path = untrailingslashit( ABSPATH );
         $body = preg_replace("/(.*\<img.*)(".str_replace('/', '\/', $url).")(.*>.*)/", "$1".$path."$3", $body);
 
         if(substr( strtoupper(PHP_OS) ,0,3) == "WIN")

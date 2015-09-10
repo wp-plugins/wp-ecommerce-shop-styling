@@ -12,11 +12,11 @@
 		}
 		#products-table th{
 			text-align:right;
-			border-bottom:0.2pt solid #606060;
+			border-bottom:2px solid #606060;
 		}
 		#products-table .product-line td{
 			text-align:right;
-			border-top:0.1pt solid #606060;
+			border-top:1px solid #606060;
 		}
 
 		#products-table .product-line .product_name,#products-table .personalization{

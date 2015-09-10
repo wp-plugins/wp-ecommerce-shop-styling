@@ -1,9 +1,9 @@
 === WP e-Commerce Shop Styling ===
 Contributors: haet 
-Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice,tax,wp-ecommerce,e-commerce
+Tags: wpecommerce,ecommerce,wpsc,wpec,shop,store,invoice,tax,wp-ecommerce,e-commerce,email,mail
 Requires at least: 3.4.2
 Tested up to: 4.3
-Stable tag: 2.8
+Stable tag: 2.9
 License: GPLv2 or later
 
 Customize your WP ecommerce store with HTML mail templates, message content, transaction results and PDF invoices with WYSIWYG editor and placeholders
@@ -17,7 +17,7 @@ vailable in English, German, Spanish, Italian, Dutch, Swedish, Hungarian and Fre
 
 
 = HTML mail templates =
-All Wordpress and WP Ecommerce mails are converted to HTML mails and formatted with a custom template. You can add your company logo, contact details or even some additional informations to all your mails.
+All Wordpress and WP Ecommerce mails are converted to HTML mails and formatted with a custom template. You can add your company logo, contact details or even some additional informations to all your mails. Also supports [WP HTML Mail](https://wordpress.org/plugins/wp-html-mail/) for even better responsive email templates without any coding.
 
 
 
@@ -68,11 +68,13 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 1. Customize the content of your product listing
 2. send your own personalized emails
-3. HTML mail template
-4. create your own PDF invoice
+3. Create email template in HTML or simply use free WP HTML Mail plugin to create responsive mails
+4. automatically generate PDF invoice
 
 
 == Changelog ==
+
+*   2.9: Fixed PDF problem with some payment gateways, updated german translation, added another placeholder
 *   2.8: Improved PDF support for Windows servers, fixed a bug in placeholder toolbar
 *   2.7: added a filter for custom placeholders [Article: Add custom placeholder to WP eCommerce Emails](http://etzelstorfer.com/en/add-custom-placeholder-to-wp-ecommerce-emails/)
 *   2.6: fixed security bug

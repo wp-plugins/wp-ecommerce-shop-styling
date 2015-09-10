@@ -3,7 +3,7 @@
 Plugin Name: WP E-Commerce shop styling
 Plugin URI: http://wpshopstyling.com/
 Description: Send customized HTML mails, custom transaction results and PDF invoices with placeholders from your WP-Ecommerce store 
-Version: 2.8
+Version: 2.9
 Author: haet webdevelopment
 Author URI: http://haet.at
 License: GPLv2 or later

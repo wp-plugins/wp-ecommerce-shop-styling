@@ -502,6 +502,7 @@ class HaetShopStyling {
 			$params[]= array('unique_name'=>'shipping_option','value'=>$this->wpsc_cart_shipping_option()); // added by Matej Rokos - adds shipping_option
 			$params[]= array('unique_name'=>'total_product_price','value'=>wpsc_cart_total_widget(false,false,false));
 			$params[]= array('unique_name'=>'total_tax','value'=>str_replace( '(','',str_replace(')','',wpsc_cart_tax())) );
+            $params[]= array('unique_name'=>'total_without_tax','value'=>$this->currencyDisplay( $params2[0]['totalprice']-wpsc_cart_tax(false)) );
 			$params[]= array('unique_name'=>'coupon_amount','value'=>wpsc_coupon_amount());
 			$params[]= array('unique_name'=>'cart_total','value'=>wpsc_cart_total());
 
@@ -568,7 +569,7 @@ class HaetShopStyling {
 		$items = $this->getCartItems($purchase_id);   
 		$products_table = '<table id="products-table">';
 		$products_table .= "<tr>\n";
-		for ($col=1;$col < count($options["columnfield"]); $col++){
+		for ($col=1;$col <= count($options["columnfield"]); $col++){
 			if($options["columnfield"][$col]!='' && !($options["columnfield"][$col]=='download' && $this->getProcessedState($purchase_id)!=3))
 				$products_table .= "<th class='".$options["columnfield"][$col]."'>".__($options["columntitle"][$col])."</th>";
 		}
@@ -615,7 +616,7 @@ class HaetShopStyling {
 			$item['price_sum']= $this->currencyDisplay($item['price_sum']);
 
 			$products_table .= "<tr class='product-line'>\n";
-			for ($col=1;$col <= $num_columns; $col++){
+			for ($col=1; $col <= count($options["columnfield"]); $col++){
 				if($options["columnfield"][$col]=='download' ){
 					if($this->getProcessedState($purchase_id)==3 && isset($item['download'])){
 						$products_table .= "<td class='".$options["columnfield"][$col]."'>";
@@ -647,7 +648,7 @@ class HaetShopStyling {
         $params[]= array('unique_name'=>'total_product_baseprice','value'=>$this->currencyDisplay($total_product_baseprice_numeric));
         $params[]= array('unique_name'=>'total_product_saving','value'=>$this->currencyDisplay($total_product_baseprice_numeric - $total_product_price_numeric));
 
-		$products_table .= '</table>';
+		$products_table .= '</table>';//<pre>'.print_r($options["columnfield"],true).'</pre><pre>'.print_r($items,true).'</pre>';
 		$params[]= array('unique_name'=>'#productstable#','value'=>$products_table);
 
 		$params = apply_filters( 'shopstyling_placeholders', $params );
